@@ -82,7 +82,12 @@ class App extends React.Component {
             path={url.dashboard}
             render={(props) => {
               return this.state.loggedIn ? (
-                <SideBar {...props} whenLoggedIn={this.handleLoggedIn} />
+                <SideBar
+                  {...props}
+                  whenLoggedOut={this.handleLoggedOut}
+                  id={localStorage.getItem("_id")}
+                  isloggedIn={this.state.loggedIn}
+                />
               ) : (
                 <Redirect to={url.login} />
               );
@@ -112,6 +117,20 @@ class App extends React.Component {
                 /> /*if user is login then redirect user to dashboard*/
               ) : (
                 <Register {...props} whenLoggedIn={this.handleLoggedIn} />
+              );
+            }}
+          />
+
+          <Route
+            exact
+            path={"/"}
+            render={(props) => {
+              return this.state.loggedIn ? (
+                <Redirect
+                  to={url.dashboard}
+                /> /*if user is login then redirect user to dashboard*/
+              ) : (
+                <Redirect to={url.login} />
               );
             }}
           />

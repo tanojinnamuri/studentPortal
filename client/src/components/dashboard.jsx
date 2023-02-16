@@ -1,10 +1,144 @@
 import React, { Component } from "react";
-
+import ProjectModal from "./ProjectModal";
+import { MDBDataTable } from "mdbreact";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 class Dashborad extends Component {
   constructor(props) {
     super(props);
   }
-  state = {};
+  state = {
+    data: {
+      columns: [
+        {
+          label: "Name",
+          field: "name",
+          sort: "asc",
+          width: 150,
+        },
+        {
+          label: "Aosition",
+          field: "abstract",
+          sort: "asc",
+          width: 270,
+        },
+        {
+          label: "Poster",
+          field: "poster",
+          sort: "asc",
+          width: 200,
+        },
+        {
+          label: "Demo Video",
+          field: "demoVideo",
+          sort: "asc",
+          width: 100,
+        },
+        {
+          label: "artfact Link",
+          field: "artfactLink",
+          sort: "asc",
+          width: 150,
+        },
+        {
+          label: "Team Members",
+          field: "teamMembers",
+          sort: "asc",
+          width: 150,
+        },
+        ,
+        {
+          label: "department",
+          field: "department",
+          sort: "asc",
+          width: 100,
+        },
+        ,
+        {
+          label: "year",
+          field: "year",
+          sort: "asc",
+          width: 100,
+        },
+      ],
+      rows: [],
+    },
+  };
+
+  async getAllData() {
+    await axios
+      .get("/api/projects/getAll")
+      .then((res) => {
+        this.setState({
+          data: {
+            columns: [
+              {
+                label: "Name",
+                field: "name",
+                sort: "asc",
+                width: 150,
+              },
+              {
+                label: "Aosition",
+                field: "abstract",
+                sort: "asc",
+                width: 270,
+              },
+              {
+                label: "Poster",
+                field: "poster",
+                sort: "asc",
+                width: 200,
+              },
+              {
+                label: "Demo Video",
+                field: "demoVideo",
+                sort: "asc",
+                width: 100,
+              },
+              {
+                label: "artfact Link",
+                field: "artfactLink",
+                sort: "asc",
+                width: 150,
+              },
+              {
+                label: "Team Members",
+                field: "teamMembers",
+                sort: "asc",
+                width: 150,
+              },
+              ,
+              {
+                label: "department",
+                field: "department",
+                sort: "asc",
+                width: 100,
+              },
+              ,
+              {
+                label: "year",
+                field: "year",
+                sort: "asc",
+                width: 100,
+              },
+            ],
+            rows: res.data,
+          },
+        });
+      })
+      .catch((err) => {
+        if (err.response && Array.isArray(err.response.data.messages)) {
+          const msgs = err.response.data.messages.map((v) =>
+            toast.error(v.msg)
+          );
+        }
+        throw err;
+      });
+  }
+  async componentDidMount() {
+    await this.getAllData();
+  }
   render() {
     return (
       <>
@@ -39,7 +173,22 @@ class Dashborad extends Component {
                       <h3 className="card-title">Submitted Projects</h3>
                     </div>
                     {/* /.card-header */}
-                    <div className="card-body"></div>
+                    <div className="card-body">
+                      <div className="row">
+                        <ProjectModal
+                          {...this.props}
+                          refreshData={this.getAllData}
+                        />
+                      </div>
+                      <div className="">
+                        <MDBDataTable
+                          striped
+                          bordered
+                          small
+                          data={this.state.data}
+                        />
+                      </div>
+                    </div>
                     {/* /.card-body */}
                   </div>
                 </div>
@@ -51,6 +200,17 @@ class Dashborad extends Component {
           </section>
           {/* /.content */}
         </div>
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         {/* /.content-wrapper */}
       </>
     );
