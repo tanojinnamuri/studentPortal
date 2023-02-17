@@ -4,6 +4,9 @@ import Modal from "react-bootstrap/Modal";
 import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./style.css"
+
 class ProjectModal extends Component {
   constructor(props) {
     super(props);
@@ -79,8 +82,8 @@ class ProjectModal extends Component {
     return (
       <>
         <Button
-          className="float-right"
-          variant="primary"
+          className="float-right custbtn"
+          
           onClick={() => this.handleShow()}
         >
           Add new Project

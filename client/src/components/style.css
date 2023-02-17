@@ -1,0 +1,40 @@
+h1, h2, h3{
+    font-family: 'TradeGothicLTStd-BdCn20', Helvetica, Arial, sans-serif;
+    letter-spacing: 0;
+    line-height: 1.2em;
+    color: #46166b;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-family: 'PublicSans', sans-serif;
+}
+
+h5{
+
+    font-family: 'PublicSans', sans-serif;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    color: #555;
+}
+
+.form-control{
+    font-family: 'PublicSans', sans-serif;
+}
+
+
+
+.custbtn {
+    color: #fff;
+    display: inline-block;
+    font-family: 'TradeGothicLTStd-BdCn20', Helvetica, Arial, sans-serif;
+    font-size: 1.3rem;
+    line-height: 1em;
+    padding: 0.9rem 3.3rem;
+    background-color: #46166b !important;
+    border-color: #46166b !important;
+}

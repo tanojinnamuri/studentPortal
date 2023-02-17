@@ -4,6 +4,9 @@ import url from "../utils/url_config";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavbarField from "./NavbarField";
+import "./style.css";
 
 class Register extends Component {
   constructor(props) {
@@ -74,23 +77,25 @@ class Register extends Component {
   }
   render() {
     return (
+      <div>
+        <NavbarField/>
       <div className="hold-transition register-page">
+      <h1>Project Management</h1>
         <div className="register-box">
           <div className="register-logo">
             <a href="#">
-              <b>Project</b> Management
             </a>
           </div>
           <div className="card">
             <div className="card-body register-card-body">
-              <p className="login-box-msg">Register a new user</p>
+              <h5 className="login-box-msg">Register a new user</h5>
               <form action="" method="post">
                 <div className="input-group mb-3">
                   <input
                     type="text"
                     className="form-control"
                     name="firstname"
-                    placeholder="first Name"
+                    placeholder="First Name"
                     onChange={(e) => this.handleChange(e)}
                   />
                   <div className="input-group-append">
@@ -104,7 +109,7 @@ class Register extends Component {
                     type="text"
                     className="form-control"
                     name="lastname"
-                    placeholder="last Name"
+                    placeholder="Last Name"
                     onChange={(e) => this.handleChange(e)}
                   />
                   <div className="input-group-append">
@@ -132,7 +137,7 @@ class Register extends Component {
                     type="email"
                     name="email"
                     className="form-control"
-                    placeholder="Email"
+                    placeholder="Email Address"
                     onChange={(e) => this.handleChange(e)}
                   />
                   <div className="input-group-append">
@@ -160,7 +165,7 @@ class Register extends Component {
                     type="password"
                     className="form-control"
                     name="confirmpassword"
-                    placeholder="Retype password"
+                    placeholder="Re-Enter password"
                     onChange={(e) => this.handleChange(e)}
                   />
                   <div className="input-group-append">
@@ -176,7 +181,8 @@ class Register extends Component {
                     className="form-control"
                     onChange={(e) => this.handleChange(e)}
                   >
-                    <option value={"Student"} selected>
+                    <option value="" disabled selected>Select your option</option>
+                    <option value={"Student"} >
                       Student
                     </option>
                     <option value={"Viewer"}>Viewer</option>
@@ -198,9 +204,9 @@ class Register extends Component {
                   {/* /.col */}
                 </div>
               </form>
-
+                      <br></br>
               <Link to={url.login} className="text-center">
-                already Have Account
+                Already have an Account? Login
               </Link>
             </div>
             {/* /.form-box */}
@@ -218,6 +224,7 @@ class Register extends Component {
           draggable
           pauseOnHover
         />
+      </div>
       </div>
     );
   }

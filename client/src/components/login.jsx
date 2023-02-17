@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import url from "../utils/url_config";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavbarField from "./NavbarField";
+import "./style.css";
+import Button from "react-bootstrap/Button";
 
 class Login extends Component {
   constructor(props) {
@@ -53,76 +57,83 @@ class Login extends Component {
   }
   render() {
     return (
-      <div className="hold-transition login-page">
-        <div className="login-box">
-          <div className="login-logo">
-            <a href="../../index2.html">
-              <b>Project</b> Management
-            </a>
-          </div>
-          {/* /.login-logo */}
-          <div className="card">
-            <div className="card-body login-card-body">
-              <p className="login-box-msg">Sign in to start your session</p>
-              <form onSubmit={(e) => this.handleSubmit(e)}>
-                <div className="input-group mb-3">
-                  <input
-                    type="email"
-                    className="form-control"
-                    name="email"
-                    placeholder="Email"
-                    required
-                    onChange={(e) => this.handleChange(e)}
-                  />
-                  <div className="input-group-append">
-                    <div className="input-group-text">
-                      <span className="fas fa-envelope" />
-                    </div>
-                  </div>
-                </div>
-                <div className="input-group mb-3">
-                  <input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    placeholder="Password"
-                    required
-                    onChange={(e) => this.handleChange(e)}
-                  />
-                  <div className="input-group-append">
-                    <div className="input-group-text">
-                      <span className="fas fa-lock" />
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  {/* /.col */}
-                  <div className="col-12">
-                    <button type="submit" className="btn btn-primary btn-block">
-                      Sign In
-                    </button>
-                  </div>
-                  {/* /.col */}
-                </div>
-              </form>
-              <p className="mb-0">
-                <Link to={url.register} className="text-center">
-                  Register a new membership
-                </Link>
-              </p>
+      <div>
+        <NavbarField />
+
+
+        <div className="hold-transition login-page align-top">
+          <h1>Project Management</h1>
+
+          <div className="login-box">
+            <div className="login-logo">
+              <a href="../../index2.html">
+                {/* <h1>Project Management</h1> */}
+              </a>
             </div>
-            <ToastContainer
-              position="top-left"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-            />
-            {/* /.login-card-body */}
+            {/* /.login-logo */}
+            <div className="card">
+              <div className="card-body login-card-body">
+                <h5 className="login-box-msg">Welcome!</h5>
+                <form onSubmit={(e) => this.handleSubmit(e)}>
+                  <div className="input-group mb-3">
+                    <input
+                      type="email"
+                      className="form-control"
+                      name="email"
+                      placeholder="Email Address"
+                      required
+                      onChange={(e) => this.handleChange(e)}
+                    />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-envelope" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="input-group mb-3">
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      placeholder="Password"
+                      required
+                      onChange={(e) => this.handleChange(e)}
+                    />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-lock" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    {/* /.col */}
+                    <div className="col-12">
+                      <Button type="submit" className="custbtn">
+                        Log In
+                      </Button>
+                    </div>
+                    {/* /.col */}
+                  </div>
+                </form>
+                <p className="mb-0">
+                  <Link to={url.register} className="text-center">
+                   Not a Member? Register
+                  </Link>
+                </p>
+              </div>
+              <ToastContainer
+                position="top-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
+              {/* /.login-card-body */}
+            </div>
           </div>
         </div>
       </div>

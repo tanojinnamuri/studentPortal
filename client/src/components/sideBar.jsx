@@ -4,12 +4,15 @@ import url from "../utils/url_config";
 import { Link, useHistory } from "react-router-dom";
 import Dashboard from "./dashboard";
 import { ToastContainer, toast } from "react-toastify";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import NavbarField from "./NavbarField";
+
 class SideBar extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +28,7 @@ class SideBar extends Component {
   render() {
     return (
       <>
+      <NavbarField/>
         <Router>
           <div className="hold-transition sidebar-mini">
             <div className="wrapper">
@@ -33,9 +37,9 @@ class SideBar extends Component {
                 {/* Left navbar links */}
                 <ul className="navbar-nav">
                   <li className="nav-item d-none d-sm-inline-block">
-                    <Link to={url.dashboard} className="nav-link">
+                    {/* <Link to={url.dashboard} className="nav-link">
                       Home
-                    </Link>
+                    </Link> */}
                   </li>
                 </ul>
               </nav>

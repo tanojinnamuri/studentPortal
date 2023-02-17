@@ -1,0 +1,15 @@
+.mainnavbar{
+    background-color: #333;
+    padding-bottom: 0%;
+}
+img{
+
+        max-width: 100%;
+        vertical-align: middle;
+        border: 0;
+        overflow-clip-margin: content-box;
+        overflow: clip;
+        height: 70px;
+        margin-top: 10px;
+        padding-left: 5px;
+}

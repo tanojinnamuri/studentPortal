@@ -3,6 +3,9 @@ import ProjectModal from "./ProjectModal";
 import { MDBDataTable } from "mdbreact";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavbarField from "./NavbarField";
+
 class Dashborad extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +20,7 @@ class Dashborad extends Component {
           width: 150,
         },
         {
-          label: "Aosition",
+          label: "Abstract",
           field: "abstract",
           sort: "asc",
           width: 270,
@@ -79,7 +82,7 @@ class Dashborad extends Component {
                 width: 150,
               },
               {
-                label: "Aosition",
+                label: "Abstract",
                 field: "abstract",
                 sort: "asc",
                 width: 270,
@@ -142,75 +145,77 @@ class Dashborad extends Component {
   render() {
     return (
       <>
-        {/* Content Wrapper. Contains page content */}
-        <div className="content-wrapper">
-          {/* Content Header (Page header) */}
-          <section className="content-header">
-            <div className="container-fluid">
-              <div className="row mb-2">
-                <div className="col-sm-6">
-                  <h1>Projects</h1>
-                </div>
-                <div className="col-sm-6">
-                  <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item">
-                      <a href="#">Home</a>
-                    </li>
-                    <li className="breadcrumb-item active">Projects</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-            {/* /.container-fluid */}
-          </section>
-          {/* Main content */}
-          <section className="content">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-12">
-                  <div className="card">
-                    <div className="card-header">
-                      <h3 className="card-title">Submitted Projects</h3>
-                    </div>
-                    {/* /.card-header */}
-                    <div className="card-body">
-                      <div className="row">
-                        <ProjectModal
-                          {...this.props}
-                          refreshData={this.getAllData}
-                        />
-                      </div>
-                      <div className="">
-                        <MDBDataTable
-                          striped
-                          bordered
-                          small
-                          data={this.state.data}
-                        />
-                      </div>
-                    </div>
-                    {/* /.card-body */}
+        <div>
+          {/* Content Wrapper. Contains page content */}
+          <div className="content-wrapper">
+            {/* Content Header (Page header) */}
+            <section className="content-header">
+              <div className="container-fluid">
+                <div className="row mb-2">
+                  <div className="col-sm-6">
+                    <h1>Projects</h1>
+                  </div>
+                  <div className="col-sm-6">
+                    <ol className="breadcrumb float-sm-right">
+                      <li className="breadcrumb-item">
+                        <a href="#">Home</a>
+                      </li>
+                      <li className="breadcrumb-item active">Projects</li>
+                    </ol>
                   </div>
                 </div>
-                {/* /.col */}
               </div>
-              {/* /.row */}
-            </div>
-            {/* /.container-fluid */}
-          </section>
-          {/* /.content */}
+              {/* /.container-fluid */}
+            </section>
+            {/* Main content */}
+            <section className="content">
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="card">
+                      <div className="card-header">
+                        <h3 className="card-title">Submitted Projects</h3>
+                      </div>
+                      {/* /.card-header */}
+                      <div className="card-body">
+                        <div className="row">
+                          <ProjectModal
+                            {...this.props}
+                            refreshData={this.getAllData}
+                          />
+                        </div>
+                        <div className="">
+                          <MDBDataTable
+                            striped
+                            bordered
+                            small
+                            data={this.state.data}
+                          />
+                        </div>
+                      </div>
+                      {/* /.card-body */}
+                    </div>
+                  </div>
+                  {/* /.col */}
+                </div>
+                {/* /.row */}
+              </div>
+              {/* /.container-fluid */}
+            </section>
+            {/* /.content */}
+          </div>
+          <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </div>
-        <ToastContainer
-          position="top-left"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         {/* /.content-wrapper */}
       </>
     );
