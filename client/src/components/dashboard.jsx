@@ -67,7 +67,7 @@ class Dashborad extends Component {
 
   async getAllData() {
     await axios
-      .get("/api/projects/getAll")
+      .get("http://localhost:3000/api/projects/getAll")
       .then((res) => {
         this.setState({
           data: {

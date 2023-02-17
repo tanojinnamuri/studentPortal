@@ -30,7 +30,7 @@ class ProjectModal extends Component {
     e.preventDefault();
 
     axios
-      .post("/api/projects/add", {
+      .post("http://localhost:3000/api/projects/add", {
         name: this.state.name,
         abstract: this.state.abstract,
         poster: this.state.poster,

@@ -36,7 +36,7 @@ class Register extends Component {
       toast.error("password and confirm password are not matched");
     } else {
       axios
-        .post(`/api/users/register`, {
+        .post(`http://localhost:3000/api/users/register`, {
           firstname: this.state.firstname,
           lastname: this.state.lastname,
           username: this.state.username,
