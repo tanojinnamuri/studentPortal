@@ -4,8 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "./style.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
 
 class ProjectModal extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class ProjectModal extends Component {
     demoVideo: "",
     artfactLink: "",
     teamMembers: "",
-    department: "",
+    department: "ComputerScience",
     year: "",
   };
   handleClose = () => {
@@ -81,7 +81,7 @@ class ProjectModal extends Component {
   render() {
     return (
       <>
-        <Button
+        {/* <Button
           className="float-right custbtn"
           
           onClick={() => this.handleShow()}
@@ -89,10 +89,11 @@ class ProjectModal extends Component {
           Add new Project
         </Button>
 
-        <Modal show={this.state.show} onHide={() => this.handleClose()}>
+        <Modal show={this.state.show} onHide={() => this.handleClose()}> */}
+        <div className="container">
           <Form onSubmit={(e) => this.handleSubmit(e)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Add new Project</Modal.Title>
+            <Modal.Header>
+              <Modal.Title className="text-center">Add new Project</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form.Group
@@ -129,7 +130,7 @@ class ProjectModal extends Component {
               >
                 <Form.Label>Project Poster</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="file"
                   placeholder=""
                   autoFocus
                   required
@@ -141,7 +142,7 @@ class ProjectModal extends Component {
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
               >
-                <Form.Label>Demo Video</Form.Label>
+                <Form.Label>Demo Video Link</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder=""
@@ -183,14 +184,17 @@ class ProjectModal extends Component {
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>Department</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder=""
+                <Form.Select
                   autoFocus
                   required
                   name="department"
                   onChange={(e) => this.handleChange(e)}
-                />
+                >
+                  <option value="ComputerScience">Computer Science</option>
+                  <option value="Biology">BioLogy</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Physics">Physics</option>
+                </Form.Select>
               </Form.Group>
 
               <Form.Group
@@ -199,7 +203,7 @@ class ProjectModal extends Component {
               >
                 <Form.Label>Year</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder=""
                   autoFocus
                   required
@@ -209,15 +213,14 @@ class ProjectModal extends Component {
               </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={() => this.handleClose()}>
-                Close
-              </Button>
               <Button variant="primary" type="submit">
-                submit
+                Save
               </Button>
             </Modal.Footer>
           </Form>
-        </Modal>
+        </div>
+
+        {/* </Modal> */}
       </>
     );
   }

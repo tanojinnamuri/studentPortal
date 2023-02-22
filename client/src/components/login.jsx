@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import url from "../utils/url_config";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import NavbarField from "./NavbarField";
 import "./style.css";
 import Button from "react-bootstrap/Button";
@@ -58,8 +58,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <NavbarField />
-
+        <NavbarField showLogout={false} />
 
         <div className="hold-transition login-page align-top">
           <h1>Project Management</h1>
@@ -117,7 +116,7 @@ class Login extends Component {
                 </form>
                 <p className="mb-0">
                   <Link to={url.register} className="text-center">
-                   Not a Member? Register
+                    Not a Member? Register
                   </Link>
                 </p>
               </div>

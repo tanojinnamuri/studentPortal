@@ -12,6 +12,8 @@ import Login from "./components/login.jsx";
 import auth_axios from "./utils/auth_axios.js";
 import url from "./utils/url_config.js";
 import SideBar from "./components/sideBar.jsx";
+import Home from "./components/Home.jsx";
+import ProjectModal from "./components/ProjectModal.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -130,7 +132,26 @@ class App extends React.Component {
                   to={url.dashboard}
                 /> /*if user is login then redirect user to dashboard*/
               ) : (
-                <Redirect to={url.login} />
+                <Home {...props} />
+              );
+            }}
+          />
+
+          <Route
+            exact
+            path={url.addProject}
+            render={(props) => {
+              return this.state.loggedIn ? (
+                <SideBar
+                  {...props}
+                  whenLoggedOut={this.handleLoggedOut}
+                  id={localStorage.getItem("_id")}
+                  isloggedIn={this.state.loggedIn}
+                />
+              ) : (
+                <Redirect
+                  to={url.login}
+                /> /*if user is login then redirect user to dashboard*/
               );
             }}
           />

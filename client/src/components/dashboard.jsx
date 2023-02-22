@@ -3,8 +3,10 @@ import ProjectModal from "./ProjectModal";
 import { MDBDataTable } from "mdbreact";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import NavbarField from "./NavbarField";
+import Button from "react-bootstrap/Button";
+import url from "../utils/url_config";
 
 class Dashborad extends Component {
   constructor(props) {
@@ -142,12 +144,20 @@ class Dashborad extends Component {
   async componentDidMount() {
     await this.getAllData();
   }
+
+  handleShow = () => {
+    if (this.props.disableAddNew) {
+      this.props.history.push(url.login);
+    } else {
+      window.location.href = url.addProject;
+    }
+  };
   render() {
     return (
       <>
         <div>
           {/* Content Wrapper. Contains page content */}
-          <div className="content-wrapper">
+          <div className="">
             {/* Content Header (Page header) */}
             <section className="content-header">
               <div className="container-fluid">
@@ -179,10 +189,12 @@ class Dashborad extends Component {
                       {/* /.card-header */}
                       <div className="card-body">
                         <div className="row">
-                          <ProjectModal
-                            {...this.props}
-                            refreshData={this.getAllData}
-                          />
+                          <Button
+                            className="float-right custbtn"
+                            onClick={() => this.handleShow()}
+                          >
+                            Add new Project
+                          </Button>
                         </div>
                         <div className="">
                           <MDBDataTable
