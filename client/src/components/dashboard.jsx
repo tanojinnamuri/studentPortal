@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import NavbarField from "./NavbarField";
 import Button from "react-bootstrap/Button";
 import url from "../utils/url_config";
+import { Link } from "react-router-dom";
 
 class Dashborad extends Component {
   constructor(props) {
@@ -74,6 +75,16 @@ class Dashborad extends Component {
     await axios
       .get("http://localhost:3000/api/projects/getAll")
       .then((res) => {
+        let data = [];
+
+        res.data.forEach((element) => {
+          let newData = element;
+          newData.name = <Link>{newData.name}</Link>;
+          newData.poster = <img src={newData.poster} alt="Red dot" />;
+
+          data.push(newData);
+        });
+
         this.setState({
           data: {
             columns: [
@@ -128,7 +139,7 @@ class Dashborad extends Component {
                 width: 100,
               },
             ],
-            rows: res.data,
+            rows: data,
           },
         });
       })

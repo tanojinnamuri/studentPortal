@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
+import url from "../utils/url_config";
 
 class ProjectModal extends Component {
   constructor(props) {
@@ -93,7 +94,7 @@ class ProjectModal extends Component {
       .then(async (res) => {
         if (res.data === "OK") {
           toast.success("Project added successfully");
-          this.handleClose();
+
           this.setState({
             show: false,
             name: "",
@@ -105,7 +106,7 @@ class ProjectModal extends Component {
             department: "",
             year: "",
           });
-          await this.props.refreshData();
+          window.location.href = url.dashboard;
         } else {
           toast.error("There is an issue in saving the project");
         }
