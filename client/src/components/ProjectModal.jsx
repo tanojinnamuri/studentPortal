@@ -265,7 +265,7 @@ class ProjectModal extends Component {
               </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="primary" type="submit">
+              <Button  className="float-right custbtn" type="submit">
                 Save
               </Button>
             </Modal.Footer>
