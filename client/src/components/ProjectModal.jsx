@@ -90,6 +90,7 @@ class ProjectModal extends Component {
         teamMembers: this.state.teamMembers,
         department: this.state.department,
         year: this.state.year,
+        submittedBy: localStorage.getItem("_id"),
       })
       .then(async (res) => {
         if (res.data === "OK") {
@@ -238,14 +239,18 @@ class ProjectModal extends Component {
                   name="department"
                   onChange={(e) => this.handleChange(e)}
                 >
-                  <option value="Select your department ......">Select your department ......</option>
+                  <option value="Select your department ......">
+                    Select your department ......
+                  </option>
                   <option value="ComputerScience">Computer Science</option>
                   <option value="Biology">BioLogy</option>
                   <option value="Chemistry">Chemistry</option>
                   <option value="Physics">Physics</option>
                   <option value="Data Science">Data Science</option>
                   <option value="Economics">Economics</option>
-                  <option value="Information Science">Information Science</option>
+                  <option value="Information Science">
+                    Information Science
+                  </option>
                 </Form.Select>
               </Form.Group>
 
@@ -265,7 +270,7 @@ class ProjectModal extends Component {
               </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-              <Button  className="float-right custbtn" type="submit">
+              <Button className="float-right custbtn" type="submit">
                 Save
               </Button>
             </Modal.Footer>

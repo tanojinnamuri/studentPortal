@@ -25,6 +25,10 @@ const projectchema = mongoose.Schema(
         },
       },
     ],
+    submittedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
@@ -49,6 +53,30 @@ projectchema.method("getAllProjects", async function () {
 projectchema.method("getProjectById", async function (_id) {
   let Project = this.model("Project");
   let pro = await Project.findOne({ _id }).populate({
+    path: "feedback.userId",
+    select: "-pswd", // exclude the password field
+  });
+  if (!pro) {
+    throw new APIError(404, "No project found");
+  }
+  return pro;
+});
+
+projectchema.method("getProjectByDepartment", async function (department) {
+  let Project = this.model("Project");
+  let pro = await Project.find({ department: department }).populate({
+    path: "feedback.userId",
+    select: "-pswd", // exclude the password field
+  });
+  if (!pro) {
+    throw new APIError(404, "No project found");
+  }
+  return pro;
+});
+
+projectchema.method("getProjectByYear", async function (year) {
+  let Project = this.model("Project");
+  let pro = await Project.find({ year: year }).populate({
     path: "feedback.userId",
     select: "-pswd", // exclude the password field
   });

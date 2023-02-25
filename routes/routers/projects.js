@@ -53,6 +53,36 @@ router.get(
   }
 );
 
+router.get(
+  "/projects/getProject/:type/:query",
+  processValidationErrors,
+  (req, res, next) => {
+    const project = new Project();
+
+    if (req.params.type == "department") {
+      project
+        .getProjectByDepartment(req.params.query)
+        .then((data) => {
+          if (data.length == 0) {
+            throw new APIError(404, "There is no project with this query");
+          }
+          res.send(data);
+        })
+        .catch(next);
+    } else {
+      project
+        .getProjectByYear(req.params.query)
+        .then((data) => {
+          if (data.length == 0) {
+            throw new APIError(404, "There is no project with this query");
+          }
+          res.send(data);
+        })
+        .catch(next);
+    }
+  }
+);
+
 router.post(
   "/projects/addFeedback",
   // ejwtauth,
