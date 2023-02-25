@@ -14,6 +14,8 @@ import url from "./utils/url_config.js";
 import SideBar from "./components/sideBar.jsx";
 import Home from "./components/Home.jsx";
 import ProjectModal from "./components/ProjectModal.jsx";
+import ProjectDetails from "./components/projectDetails.jsx";
+import Details from "./components/details.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -128,11 +130,10 @@ class App extends React.Component {
             path={"/"}
             render={(props) => {
               return this.state.loggedIn ? (
-                <Redirect
-                  to={url.dashboard}
-                /> /*if user is login then redirect user to dashboard*/
+                <Redirect to={url.dashboard} />
               ) : (
                 <Home {...props} />
+                // <ProjectDetails />
               );
             }}
           />
@@ -152,6 +153,23 @@ class App extends React.Component {
                 <Redirect
                   to={url.login}
                 /> /*if user is login then redirect user to dashboard*/
+              );
+            }}
+          />
+
+          <Route
+            exact
+            path={url.projectDetail}
+            render={(props) => {
+              return this.state.loggedIn ? (
+                <SideBar
+                  {...props}
+                  whenLoggedOut={this.handleLoggedOut}
+                  id={localStorage.getItem("_id")}
+                  isloggedIn={this.state.loggedIn}
+                />
+              ) : (
+                <Details {...props} />
               );
             }}
           />

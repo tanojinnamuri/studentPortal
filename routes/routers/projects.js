@@ -36,4 +36,43 @@ router.get("/projects/getAll", processValidationErrors, (req, res, next) => {
     .catch(next);
 });
 
+router.get(
+  "/projects/getProject/:id",
+  processValidationErrors,
+  (req, res, next) => {
+    const project = new Project();
+    project
+      .getProjectById(req.params.id)
+      .then((data) => {
+        if (data.length == 0) {
+          throw new APIError(404, "There is no project with this id");
+        }
+        res.send(data);
+      })
+      .catch(next);
+  }
+);
+
+router.post(
+  "/projects/addFeedback",
+  // ejwtauth,
+  processValidationErrors,
+  (req, res, next) => {
+    const project = new Project({
+      _id: req.body.projectId,
+      feedback: {
+        userId: req.body.user_id,
+        comment: req.body.comment,
+      },
+    });
+
+    project
+      .addUserFeedBack()
+      .then((data) => {
+        res.sendStatus(data ? 200 : 400);
+      })
+      .catch(next);
+  }
+);
+
 module.exports = router;

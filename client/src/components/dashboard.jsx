@@ -79,7 +79,9 @@ class Dashborad extends Component {
 
         res.data.forEach((element) => {
           let newData = element;
-          newData.name = <Link>{newData.name}</Link>;
+          newData.name = (
+            <Link to={`/detail/${newData._id}`}>{newData.name}</Link>
+          );
           newData.poster = <img src={newData.poster} alt="Red dot" />;
 
           data.push(newData);

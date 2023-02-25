@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import NavbarField from "./NavbarField";
 import ProjectModal from "./ProjectModal";
+import ProjectDetails from "./projectDetails";
 
 class SideBar extends Component {
   constructor(props) {
@@ -38,6 +39,9 @@ class SideBar extends Component {
             </Route>
             <Route path={url.addProject}>
               <ProjectModal userId={this.props.id} {...this.props} />
+            </Route>
+            <Route path={url.projectDetail}>
+              <ProjectDetails userId={this.props.id} {...this.props} />
             </Route>
           </Switch>
         </Router>

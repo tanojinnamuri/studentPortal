@@ -24,6 +24,7 @@
     "morgan": "~1.9.1",
     "process": "^0.11.10",
     "pug": "2.0.0-beta11",
+    "underscore": "^1.13.6",
     "uuidv4": "^6.2.6",
     "validator": "^13.5.2",
     "winston": "^3.3.3"
