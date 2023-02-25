@@ -19,6 +19,7 @@ class Register extends Component {
       password: "",
       role: "Student",
       confirmpassword: "",
+      department: "",
       errorMessages: [],
       successMessages: [],
     };
@@ -32,6 +33,7 @@ class Register extends Component {
       this.state.username.length == 0 ||
       this.state.email.length == 0 ||
       this.state.password.length == 0 ||
+      this.state.department.length == 0 ||
       this.state.confirmpassword.length == 0
     ) {
       toast.error("Please fill all fields before sign up");
@@ -46,6 +48,7 @@ class Register extends Component {
           email: this.state.email,
           pswd: this.state.password,
           role: this.state.role,
+          department: this.state.department,
         })
         .then((res) => {
           this.setState({ errorMessages: [] });
@@ -181,11 +184,31 @@ class Register extends Component {
                       onChange={(e) => this.handleChange(e)}
                     >
                       <option value="" disabled selected>
-                        Select your option
+                        Select your role
                       </option>
                       <option value={"Student"}>Student</option>
                       <option value={"Viewer"}>Viewer</option>
                       <option value={"Rewiewer"}>Rewiewer</option>
+                    </select>
+                  </div>
+                  <div className="input-group mb-3">
+                    <select
+                      name="department"
+                      className="form-control"
+                      onChange={(e) => this.handleChange(e)}
+                    >
+                      <option value="Select your department ......">
+                        Select your department ......
+                      </option>
+                      <option value="ComputerScience">Computer Science</option>
+                      <option value="Biology">BioLogy</option>
+                      <option value="Chemistry">Chemistry</option>
+                      <option value="Physics">Physics</option>
+                      <option value="Data Science">Data Science</option>
+                      <option value="Economics">Economics</option>
+                      <option value="Information Science">
+                        Information Science
+                      </option>
                     </select>
                   </div>
                   <div className="row">

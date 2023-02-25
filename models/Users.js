@@ -38,6 +38,9 @@ const userschema = mongoose.Schema(
       default: roles.S,
       enum: [roles.S, roles.R, roles.V],
     },
+    department: {
+      type: String,
+    },
     status: {
       type: String,
       default: status.A,

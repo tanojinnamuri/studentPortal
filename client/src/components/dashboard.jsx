@@ -66,6 +66,13 @@ class Dashborad extends Component {
           sort: "asc",
           width: 100,
         },
+
+        {
+          label: "Approved",
+          field: "isApproved",
+          sort: "asc",
+          width: 100,
+        },
       ],
       rows: [],
     },
@@ -139,6 +146,13 @@ class Dashborad extends Component {
               {
                 label: "year",
                 field: "year",
+                sort: "asc",
+                width: 100,
+              },
+
+              {
+                label: "Approved",
+                field: "isApproved",
                 sort: "asc",
                 width: 100,
               },
@@ -240,6 +254,12 @@ class Dashborad extends Component {
                 {
                   label: "year",
                   field: "year",
+                  sort: "asc",
+                  width: 100,
+                },
+                {
+                  label: "Approved",
+                  field: "isApproved",
                   sort: "asc",
                   width: 100,
                 },
