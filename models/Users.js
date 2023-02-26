@@ -41,6 +41,7 @@ const userschema = mongoose.Schema(
     department: {
       type: String,
     },
+
     status: {
       type: String,
       default: status.A,
@@ -71,6 +72,16 @@ userschema.method("checkIfUserWithEmailExists", async function (email) {
   if (user == null) {
     throw new APIError(404, "No user with this email exists");
   }
+  return user;
+});
+
+userschema.method("getRandomReviewer", async function (department) {
+  let User = this.model("User");
+  let user = await User.aggregate([
+    { $match: { role: roles.R, department: department } }, // filter by role
+    { $sample: { size: 2 } }, // select two random documents
+  ]);
+
   return user;
 });
 

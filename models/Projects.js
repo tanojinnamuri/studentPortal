@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const { APIError } = require("../helpers/error");
 const _ = require("underscore");
+const User = require("./Users");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const projectchema = mongoose.Schema(
   {
     name: String,
@@ -29,6 +32,14 @@ const projectchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    reviewer: [
+      {
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      },
+    ],
     isApproved: {
       type: Boolean,
       default: false,
@@ -44,6 +55,41 @@ projectchema.method("createProject", async function (project) {
   if ((await Project.findOne({ name: project.name })) !== null) {
     throw new APIError(400, "Already a same project present with same name.");
   }
+  let ids = [];
+  let user = new User();
+  await user
+    .getRandomReviewer(project.department)
+    .then((da) => {
+      if (da) {
+        da.forEach(async (element) => {
+          ids.push(element._id);
+
+          console.log(ids);
+
+          const msg = {
+            to: element.email, // Change to your recipient
+            from: process.env.SENDER, // Change to your verified sender
+            subject: `Review Project ${project.name}`,
+            text: "Kindly review project from portal",
+          };
+          await sgMail
+            .send(msg)
+            .then(() => {
+              console.log("Email sent");
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        });
+      }
+    })
+    .catch((erro) => {
+      console.log(erro);
+    });
+
+  project.reviewer = ids;
+
+  console.log(ids);
 
   return await Project.create(project);
 });
