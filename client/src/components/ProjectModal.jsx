@@ -428,7 +428,7 @@ class ProjectModal extends Component {
                   className="form-input-wide jf-required"
                   data-layout="full"
                 >
-                  <div data-wrapper-react="true">
+                  <div>
                     <span
                       className="form-sub-label-container"
                       style={{ verticalAlign: "top" }}
@@ -464,7 +464,6 @@ class ProjectModal extends Component {
                         className="form-textbox validate[required]"
                         size={15}
                         onChange={(e) => this.handleChange(e)}
-                        defaultValue
                         required
                       />
                       <label
@@ -666,10 +665,8 @@ class ProjectModal extends Component {
                     <input
                       type="text"
                       className="form-textbox validate[required, Fill Mask]"
-                      data-defaultvalue
                       style={{ width: "310px" }}
                       size={310}
-                      data-masked="true"
                       required
                       tabIndex={0}
                       inputMode="text"
@@ -723,7 +720,6 @@ class ProjectModal extends Component {
                       name="studentEmail"
                       onChange={(e) => this.handleChange(e)}
                       className="form-textbox validate[required, Email, disallowFree]"
-                      data-defaultvalue
                       style={{ width: "310px" }}
                       size={310}
                       required
@@ -928,7 +924,6 @@ class ProjectModal extends Component {
                   aria-labelledby="label_188"
                   tabIndex={0}
                   data-customhint="Type here..."
-                  customhinted="true"
                   placeholder="Type here..."
                   spellCheck="false"
                 />
@@ -1267,7 +1262,6 @@ class ProjectModal extends Component {
                       <Form.Control
                         type="file"
                         placeholder=""
-                        autoFocus
                         required
                         name="poster"
                         onChange={(e) => this.handleFileInputChange(e)}
@@ -1310,7 +1304,6 @@ class ProjectModal extends Component {
                       <Form.Control
                         type="text"
                         placeholder=""
-                        autoFocus
                         required
                         name="demoVideo"
                         onChange={(e) => this.handleChange(e)}
@@ -1353,7 +1346,6 @@ class ProjectModal extends Component {
                       <Form.Control
                         type="text"
                         placeholder=""
-                        autoFocus
                         name="artfactLink"
                         onChange={(e) => this.handleChange(e)}
                       />
@@ -1395,7 +1387,6 @@ class ProjectModal extends Component {
                       <Form.Control
                         type="text"
                         placeholder=""
-                        autoFocus
                         name="teamMembers"
                         onChange={(e) => this.handleChange(e)}
                       />
@@ -1450,7 +1441,7 @@ class ProjectModal extends Component {
                   className="form-input-wide jf-required"
                   data-layout="full"
                 >
-                  <div data-wrapper-react="true">
+                  <div>
                     <span
                       className="form-sub-label-container"
                       style={{ verticalAlign: "top" }}
@@ -1463,7 +1454,6 @@ class ProjectModal extends Component {
                         className="form-textbox validate[required]"
                         autoComplete="section-input_104 given-name"
                         size={10}
-                        value
                         required
                       />
                       <label
@@ -1486,10 +1476,8 @@ class ProjectModal extends Component {
                         name="superVisorLastname"
                         onChange={(e) => this.handleChange(e)}
                         className="form-textbox validate[required]"
-                        data-defaultvalue
                         autoComplete="section-input_104 family-name"
                         size={15}
-                        defaultValue
                         required
                       />
                       <label
@@ -1535,10 +1523,8 @@ class ProjectModal extends Component {
                     name="superVisorEmail"
                     onChange={(e) => this.handleChange(e)}
                     className="form-textbox validate[required, Email]"
-                    data-defaultvalue
                     style={{ width: "310px" }}
                     size={310}
-                    defaultValue
                     data-component="email"
                     aria-labelledby="label_105"
                     required
@@ -1723,7 +1709,7 @@ class ProjectModal extends Component {
                   className="form-input-wide jf-required"
                   data-layout="full"
                 >
-                  <div data-wrapper-react="true">
+                  <div>
                     <span
                       className="form-sub-label-container"
                       style={{ verticalAlign: "top" }}

@@ -91,6 +91,7 @@ router.post(
               res.send({
                 _id: _user._id,
                 token,
+                email: _user.email,
                 student: true,
                 viewer: false,
                 reviewer: false,
@@ -100,6 +101,7 @@ router.post(
               res.send({
                 _id: _user._id,
                 token,
+                email: _user.email,
                 student: false,
                 viewer: false,
                 reviewer: true,
@@ -109,6 +111,7 @@ router.post(
               res.send({
                 _id: _user._id,
                 token,
+                email: _user.email,
                 student: false,
                 viewer: true,
                 reviewer: false,

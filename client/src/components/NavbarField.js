@@ -40,6 +40,13 @@ class NavbarField extends Component {
                   >
                     Logout
                   </Nav.Link>
+                  <Nav.Link
+                    className="navLink-top"
+                    style={{ color: "#eeb211" }}
+                    eventKey={2}
+                  >
+                    {localStorage.getItem("email")}
+                  </Nav.Link>
                 </>
               ) : (
                 <>
