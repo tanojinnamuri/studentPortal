@@ -6,12 +6,20 @@ class Home extends Component {
   constructor(props) {
     super(props);
   }
-  state = {};
+  state = { showSearch: false };
+
+  showSearchBar = () => {
+    this.setState({ showSearch: !this.state.showSearch });
+  };
   render() {
     return (
       <>
-        <NavbarField />
-        <Dashborad disableAddNew={true} {...this.props} />
+        <NavbarField handleSearch={this.showSearchBar} />
+        <Dashborad
+          disableAddNew={true}
+          {...this.props}
+          showSearchBar={this.state.showSearch}
+        />
       </>
     );
   }

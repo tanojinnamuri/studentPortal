@@ -17368,3 +17368,8 @@ iframe[data-client-id="5295b800485bd19f5d000005"] {
 .isBuilder iframe[data-client-id="5295b800485bd19f5d000005"] {
   pointer-events: none;
 }
+
+
+.whiteColor{
+  color: white;
+}

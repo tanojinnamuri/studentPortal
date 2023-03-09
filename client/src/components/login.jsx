@@ -35,6 +35,7 @@ class Login extends Component {
 
         localStorage.setItem("email", res.data.email);
 
+        localStorage.setItem("isReviewer", res.data.reviewer);
         setTimeout(() => {
           // tell parent that user loggedIn
           this.props.whenLoggedIn();

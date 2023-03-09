@@ -95,68 +95,77 @@ class Dashborad extends Component {
 
           data.push(newData);
         });
+        let col = [
+          {
+            label: "Name",
+            field: "name",
+            sort: "asc",
+            width: 150,
+          },
+          {
+            label: "Abstract",
+            field: "abstract",
+            sort: "asc",
+            width: 270,
+          },
+          {
+            label: "Poster",
+            field: "poster",
+            sort: "asc",
+            width: 200,
+          },
+          {
+            label: "Demo Video",
+            field: "demoVideo",
+            sort: "asc",
+            width: 100,
+          },
+          {
+            label: "artfact Link",
+            field: "artfactLink",
+            sort: "asc",
+            width: 150,
+          },
+          {
+            label: "Team Members",
+            field: "teamMembers",
+            sort: "asc",
+            width: 150,
+          },
+          ,
+          {
+            label: "department",
+            field: "department",
+            sort: "asc",
+            width: 100,
+          },
+          ,
+          {
+            label: "year",
+            field: "year",
+            sort: "asc",
+            width: 100,
+          },
 
+          {
+            label: "Approved",
+            field: "isApproved",
+            sort: "asc",
+            width: 100,
+          },
+        ];
+
+        if (localStorage.getItem("isReviewer") === true) {
+          col.push({
+            label: "Approved",
+            field: "isApproved",
+            sort: "asc",
+            width: 100,
+          });
+        }
         this.setState({
           data: {
-            columns: [
-              {
-                label: "Name",
-                field: "name",
-                sort: "asc",
-                width: 150,
-              },
-              {
-                label: "Abstract",
-                field: "abstract",
-                sort: "asc",
-                width: 270,
-              },
-              {
-                label: "Poster",
-                field: "poster",
-                sort: "asc",
-                width: 200,
-              },
-              {
-                label: "Demo Video",
-                field: "demoVideo",
-                sort: "asc",
-                width: 100,
-              },
-              {
-                label: "artfact Link",
-                field: "artfactLink",
-                sort: "asc",
-                width: 150,
-              },
-              {
-                label: "Team Members",
-                field: "teamMembers",
-                sort: "asc",
-                width: 150,
-              },
-              ,
-              {
-                label: "department",
-                field: "department",
-                sort: "asc",
-                width: 100,
-              },
-              ,
-              {
-                label: "year",
-                field: "year",
-                sort: "asc",
-                width: 100,
-              },
-
-              {
-                label: "Approved",
-                field: "isApproved",
-                sort: "asc",
-                width: 100,
-              },
-            ],
+            columns: col,
             rows: data,
           },
         });
@@ -195,7 +204,10 @@ class Dashborad extends Component {
           res.data.forEach((element) => {
             let newData = element;
             newData.name = (
-              <Link onClick={() => this.changeScreen(element._id)}>
+              <Link
+                style={{ fontWeight: "bold" }}
+                onClick={() => this.changeScreen(element._id)}
+              >
                 {newData.name}
               </Link>
             );
@@ -303,7 +315,7 @@ class Dashborad extends Component {
               <div className="container-fluid">
                 <div className="row mb-2">
                   <div className="col-sm-6">
-                    <h1>Projects</h1>
+                    <h1>UAlbany Projects</h1>
                   </div>
                   <div className="col-sm-6">
                     <ol className="breadcrumb float-sm-right">
@@ -328,91 +340,102 @@ class Dashborad extends Component {
                       </div>
                       {/* /.card-header */}
                       <div className="card-body">
-                        <div className="row m-0">
-                          <div className="col-md-4 col-sm-12 col-12">
-                            <label className="">Type</label>
-                            <span className="required-class"> *</span>
-                            <div className="form-group">
-                              <select
-                                name="type"
-                                id="cityId"
-                                onChange={(e) => this.handleChange(e)}
-                                className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
-                              >
-                                <option value="" disabled="">
-                                  Select
-                                </option>
-                                <option value={"department"}>Department</option>
-                                <option value={"year"}>Year</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="col-md-4 col-sm-4 col-12">
-                            <label className="">Query</label>
-                            <span className="required-class"> *</span>
-                            <div className="form-group">
-                              {this.state.type == "department" ? (
-                                <>
-                                  <select
-                                    name="query"
-                                    className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
-                                    onChange={(e) => this.handleChange(e)}
-                                  >
-                                    <option value={""}>value</option>
-                                    <option value="ComputerScience">
-                                      Computer Science
-                                    </option>
-                                    <option value="Biology">BioLogy</option>
-                                    <option value="Chemistry">Chemistry</option>
-                                    <option value="Physics">Physics</option>
-                                    <option value="Data Science">
-                                      Data Science
-                                    </option>
-                                    <option value="Economics">Economics</option>
-                                    <option value="Information Science">
-                                      Information Science
-                                    </option>
-                                  </select>
-                                </>
-                              ) : (
-                                <input
-                                  name="query"
-                                  id="title"
-                                  type="text"
+                        {this.props.showSearchBar ? (
+                          <div className="row m-0">
+                            <div className="col-md-4 col-sm-12 col-12">
+                              <label className="">Type</label>
+                              <span className="required-class"> *</span>
+                              <div className="form-group">
+                                <select
+                                  name="type"
+                                  id="cityId"
                                   onChange={(e) => this.handleChange(e)}
                                   className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
-                                  value={this.state.query}
-                                />
-                              )}
-                            </div>
-                          </div>
-                          <div className="col-md-4 col-sm-4 col-12">
-                            <label className="m-0">Action</label>
-                            <div className="">
-                              <div className="col-12 col-md-10 p-0">
-                                <div
-                                  role="group"
-                                  className="pull-right btn-group"
                                 >
-                                  <button
-                                    className="btn btn-success"
-                                    onClick={() => this.filterData()}
+                                  <option value="" disabled="">
+                                    Select
+                                  </option>
+                                  <option value={"department"}>
+                                    Department
+                                  </option>
+                                  <option value={"year"}>Year</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div className="col-md-4 col-sm-4 col-12">
+                              <label className="">Query</label>
+                              <span className="required-class"> *</span>
+                              <div className="form-group">
+                                {this.state.type == "department" ? (
+                                  <>
+                                    <select
+                                      name="query"
+                                      className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
+                                      onChange={(e) => this.handleChange(e)}
+                                    >
+                                      <option value={""}>value</option>
+                                      <option value="ComputerScience">
+                                        Computer Science
+                                      </option>
+                                      <option value="Biology">BioLogy</option>
+                                      <option value="Chemistry">
+                                        Chemistry
+                                      </option>
+                                      <option value="Physics">Physics</option>
+                                      <option value="Data Science">
+                                        Data Science
+                                      </option>
+                                      <option value="Economics">
+                                        Economics
+                                      </option>
+                                      <option value="Information Science">
+                                        Information Science
+                                      </option>
+                                    </select>
+                                  </>
+                                ) : (
+                                  <input
+                                    name="query"
+                                    id="title"
+                                    type="text"
+                                    onChange={(e) => this.handleChange(e)}
+                                    className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
+                                    value={this.state.query}
+                                  />
+                                )}
+                              </div>
+                            </div>
+                            <div className="col-md-4 col-sm-4 col-12">
+                              <label className="m-0">Action</label>
+                              <div className="">
+                                <div className="col-12 col-md-10 p-0">
+                                  <div
+                                    role="group"
+                                    className="pull-right btn-group"
                                   >
-                                    <i className="fa  fa-filter" />
-                                    Apply
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="btn btn-success"
-                                    onClick={() => this.cancel()}
-                                  >
-                                    View All
-                                  </button>
+                                    <button
+                                      className="btn btn-success"
+                                      onClick={() => this.filterData()}
+                                    >
+                                      <i className="fa  fa-filter" />
+                                      Apply
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="btn btn-success"
+                                      onClick={() => this.cancel()}
+                                    >
+                                      View All
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        ) : (
+                          <></>
+                        )}
+
                         <div className="row float-right"></div>
 
                         <br />

@@ -7,7 +7,7 @@ import Nav from "react-bootstrap/Nav";
 
 import React, { Component } from "react";
 import url from "../utils/url_config";
-
+import { MDBIcon } from "mdb-react-ui-kit";
 class NavbarField extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +47,13 @@ class NavbarField extends Component {
                   >
                     {localStorage.getItem("email")}
                   </Nav.Link>
+
+                  <MDBIcon
+                    fas
+                    icon="search"
+                    className="mt-3 ml-3 whiteColor"
+                    onClick={() => this.props.handleSearch()}
+                  />
                 </>
               ) : (
                 <>
@@ -65,6 +72,12 @@ class NavbarField extends Component {
                   >
                     Signup
                   </Nav.Link>
+                  <MDBIcon
+                    fas
+                    icon="search"
+                    className="mt-3 ml-3 whiteColor"
+                    onClick={() => this.props.handleSearch()}
+                  />
                 </>
               )}
             </Nav>

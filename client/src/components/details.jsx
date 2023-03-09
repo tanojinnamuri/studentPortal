@@ -11,7 +11,7 @@ class Details extends Component {
     return (
       <>
         <>
-          <NavbarField />
+          <NavbarField showSearch={false} />
           <ProjectDetails disableAddNew={true} {...this.props} />
         </>
       </>

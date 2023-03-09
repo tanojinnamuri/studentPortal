@@ -76,7 +76,7 @@ projectchema.method("createProject", async function (project) {
     .then((da) => {
       if (da) {
         da.forEach(async (element) => {
-          ids.push(element._id);
+          ids.push({ userId: element._id });
 
           console.log(ids);
 

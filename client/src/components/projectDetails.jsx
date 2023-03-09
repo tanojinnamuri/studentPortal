@@ -124,6 +124,9 @@ class ProjectDetails extends Component {
                 <h3 className="text-primary">
                   {this.state.projectDetails.name}
                 </h3>
+
+                <h5 className="mt-5 text-muted">Project Poster</h5>
+                <img src={this.state.projectDetails.poster} alt="Red dot" />
                 <p className="text-muted">
                   {this.state.projectDetails.abstract}
                 </p>
@@ -146,7 +149,12 @@ class ProjectDetails extends Component {
                     Demo Video Link
                     <b className="d-block">
                       {" "}
-                      <a href={this.state.projectDetails.demoVideo}>Video</a>
+                      <a
+                        href={this.state.projectDetails.demoVideo}
+                        target="_blank"
+                      >
+                        Video
+                      </a>
                     </b>
                   </p>
 
@@ -154,14 +162,15 @@ class ProjectDetails extends Component {
                     artfack Link
                     <b className="d-block">
                       {" "}
-                      <a href={this.state.projectDetails.artfactLink}>
+                      <a
+                        href={this.state.projectDetails.artfactLink}
+                        target="_blank"
+                      >
                         artfact
                       </a>
                     </b>
                   </p>
                 </div>
-                <h5 className="mt-5 text-muted">Project Poster</h5>
-                <img src={this.state.projectDetails.poster} alt="Red dot" />
               </div>
             </div>
           </div>
