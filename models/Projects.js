@@ -73,15 +73,15 @@ projectchema.method("createProject", async function (project) {
   let user = new User();
   await user
     .getRandomReviewer(project.department)
-    .then((da) => {
+    .then(async (da) => {
       if (da) {
-        da.forEach(async (element) => {
-          ids.push({ userId: element._id });
+        for (let us of da) {
+          ids.push({ userId: us._id });
 
-          console.log(ids);
+          console.log(us);
 
           const msg = {
-            to: element.email, // Change to your recipient
+            to: us.email, // Change to your recipient
             from: process.env.SENDER, // Change to your verified sender
             subject: `Review Project ${project.name}`,
             text: "Kindly review project from portal",
@@ -94,7 +94,27 @@ projectchema.method("createProject", async function (project) {
             .catch((error) => {
               console.error(error);
             });
-        });
+        }
+        // da.forEach(async (element) => {
+        //   ids.push({ userId: element._id });
+
+        //   console.log(ids);
+
+        //   const msg = {
+        //     to: element.email, // Change to your recipient
+        //     from: process.env.SENDER, // Change to your verified sender
+        //     subject: `Review Project ${project.name}`,
+        //     text: "Kindly review project from portal",
+        //   };
+        //   await sgMail
+        //     .send(msg)
+        //     .then(() => {
+        //       console.log("Email sent");
+        //     })
+        //     .catch((error) => {
+        //       console.error(error);
+        //     });
+        // });
       }
     })
     .catch((erro) => {

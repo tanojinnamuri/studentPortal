@@ -102,7 +102,7 @@ class ProjectModal extends Component {
         demoVideo: this.state.demoVideo,
         artfactLink: this.state.artfactLink,
         teamMembers: this.state.teamMembers,
-        department: this.state.department,
+        department: this.state.department.trim(),
         year: this.state.year,
         submittedBy: localStorage.getItem("_id"),
         presenterFirstName: this.state.presenterFirstName,

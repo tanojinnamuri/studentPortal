@@ -66,13 +66,6 @@ class Dashborad extends Component {
           sort: "asc",
           width: 100,
         },
-
-        {
-          label: "Approved",
-          field: "isApproved",
-          sort: "asc",
-          width: 100,
-        },
       ],
       rows: [],
     },
@@ -92,6 +85,10 @@ class Dashborad extends Component {
             <Link to={`/detail/${newData._id}`}>{newData.name}</Link>
           );
           newData.poster = <img src={newData.poster} alt="Red dot" />;
+
+          if (localStorage.getItem("isReviewer") === true) {
+            newData.action = <button>Approve</button>;
+          }
 
           data.push(newData);
         });
@@ -146,23 +143,8 @@ class Dashborad extends Component {
             sort: "asc",
             width: 100,
           },
-
-          {
-            label: "Approved",
-            field: "isApproved",
-            sort: "asc",
-            width: 100,
-          },
         ];
 
-        if (localStorage.getItem("isReviewer") === true) {
-          col.push({
-            label: "Approved",
-            field: "isApproved",
-            sort: "asc",
-            width: 100,
-          });
-        }
         this.setState({
           data: {
             columns: col,
@@ -266,12 +248,6 @@ class Dashborad extends Component {
                 {
                   label: "year",
                   field: "year",
-                  sort: "asc",
-                  width: 100,
-                },
-                {
-                  label: "Approved",
-                  field: "isApproved",
                   sort: "asc",
                   width: 100,
                 },

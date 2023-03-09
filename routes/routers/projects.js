@@ -17,6 +17,7 @@ const { processValidationErrors, APIError } = require("../../helpers/error");
 const { param, body } = require("express-validator");
 
 router.post("/projects/add", processValidationErrors, (req, res, next) => {
+  console.log(req.body);
   let project = new Project();
   project
     .createProject(req.body)

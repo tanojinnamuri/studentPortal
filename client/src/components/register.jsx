@@ -200,7 +200,7 @@ class Register extends Component {
                       <option value="Select your department ......">
                         Select your department ......
                       </option>
-                      <option value="ComputerScience">Computer Science</option>
+                      <option value="Computer Science">Computer Science</option>
                       <option value="Biology">BioLogy</option>
                       <option value="Chemistry">Chemistry</option>
                       <option value="Physics">Physics</option>

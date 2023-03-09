@@ -76,12 +76,11 @@ userschema.method("checkIfUserWithEmailExists", async function (email) {
 });
 
 userschema.method("getRandomReviewer", async function (department) {
+  console.log(department);
   let User = this.model("User");
-  let user = await User.aggregate([
-    { $match: { role: roles.R, department: department } }, // filter by role
-    { $sample: { size: 2 } }, // select two random documents
-  ]);
+  let user = await User.find({ role: roles.R });
 
+  console.log("user = ", user);
   return user;
 });
 
