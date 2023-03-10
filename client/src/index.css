@@ -17369,7 +17369,74 @@ iframe[data-client-id="5295b800485bd19f5d000005"] {
   pointer-events: none;
 }
 
-
-.whiteColor{
+.whiteColor {
   color: white;
+}
+
+/* FOOTER */
+footer.footer {
+  /* padding: 0; */
+  color: white;
+  background-color: #222;
+}
+footer.footer .footer-new {
+  position: relative;
+  background: radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0) 90%
+    ),
+    url("https://www.albany.edu/themes/custom/albany/images/campus-center.jpg");
+  padding: 5em 1em 1.5em 1em;
+  min-height: 400px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+footer.footer .footer-new a,
+footer.footer .footer-new p {
+  color: #fff;
+  font-size: 0.8em;
+  line-height: 1.2em;
+  font-weight: normal;
+  text-align: center;
+  padding: 1em 0px;
+}
+footer.footer .footer-logo {
+  padding-bottom: 1em;
+  max-width: 100%;
+}
+footer.footer .footer-icon {
+  font-size: 1.7em !important;
+  padding: 0px 0.7em !important;
+}
+footer.footer .footer-end {
+  background-color: #222;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: normal;
+  text-align: center;
+}
+footer.footer .footer-end .address-phone {
+  padding: 0.5em 0 0;
+}
+footer.footer .footer-end .copyright {
+  padding: 0.5em 0 2em;
+  text-align: center;
+}
+footer.footer .footer-end a {
+  color: #fff;
+}
+
+.sorting_desc {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  background-color: #46166b !important;
+  color: white !important;
+}
+
+table.dataTable thead > tr > th.sorting_desc {
+  font-size: "18px" !important;
+  font-weight: "bold" !important;
+  background-color: "#46166B" !important;
+  color: "white" !important;
 }

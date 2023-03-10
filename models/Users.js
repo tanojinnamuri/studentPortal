@@ -78,7 +78,7 @@ userschema.method("checkIfUserWithEmailExists", async function (email) {
 userschema.method("getRandomReviewer", async function (department) {
   console.log(department);
   let User = this.model("User");
-  let user = await User.find({ role: roles.R });
+  let user = await User.find({ role: roles.R, department: department });
 
   console.log("user = ", user);
   return user;

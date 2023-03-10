@@ -21,51 +21,70 @@ class Dashborad extends Component {
           field: "name",
           sort: "asc",
           width: 150,
+          headerStyle: {
+            fontSize: "18px",
+            fontWeight: "bold",
+            backgroundColor: "#46166B",
+            color: "white",
+          },
         },
         {
           label: "Abstract",
           field: "abstract",
           sort: "asc",
           width: 270,
+          headerStyle: {
+            fontSize: "18px",
+            fontWeight: "bold",
+            backgroundColor: "#46166B",
+            color: "white",
+          },
         },
-        {
-          label: "Poster",
-          field: "poster",
-          sort: "asc",
-          width: 200,
-        },
-        {
-          label: "Demo Video",
-          field: "demoVideo",
-          sort: "asc",
-          width: 100,
-        },
-        {
-          label: "artfact Link",
-          field: "artfactLink",
-          sort: "asc",
-          width: 150,
-        },
+        // {
+        //   label: "Poster",
+        //   field: "poster",
+        //   sort: "asc",
+        //   width: 200,
+        // },
+        // {
+        //   label: "Demo Video",
+        //   field: "demoVideo",
+        //   sort: "asc",
+        //   width: 100,
+        // },
+        // {
+        //   label: "artfact Link",
+        //   field: "artfactLink",
+        //   sort: "asc",
+        //   width: 150,
+        // },
         {
           label: "Team Members",
           field: "teamMembers",
           sort: "asc",
           width: 150,
+          headerStyle: {
+            fontSize: "18px",
+            fontWeight: "bold",
+            backgroundColor: "#46166B",
+            color: "white",
+          },
         },
-        ,
-        {
-          label: "department",
-          field: "department",
-          sort: "asc",
-          width: 100,
-        },
-        ,
-        {
-          label: "year",
-          field: "year",
-          sort: "asc",
-          width: 100,
-        },
+        // ,
+        // {
+        //   label: "department",
+        //   field: "department",
+        //   sort: "asc",
+        //   width: 100,
+        // },
+        // ,
+        // {
+        //   label: "year",
+        //   field: "year",
+        //   sort: "asc",
+        //   width: 100,
+
+        // },
       ],
       rows: [],
     },
@@ -98,51 +117,69 @@ class Dashborad extends Component {
             field: "name",
             sort: "asc",
             width: 150,
+            headerStyle: {
+              fontSize: "18px",
+              fontWeight: "bold",
+              backgroundColor: "#46166B",
+              color: "white",
+            },
           },
           {
             label: "Abstract",
             field: "abstract",
             sort: "asc",
             width: 270,
+            headerStyle: {
+              fontSize: "18px",
+              fontWeight: "bold",
+              backgroundColor: "#46166B",
+              color: "white",
+            },
           },
-          {
-            label: "Poster",
-            field: "poster",
-            sort: "asc",
-            width: 200,
-          },
-          {
-            label: "Demo Video",
-            field: "demoVideo",
-            sort: "asc",
-            width: 100,
-          },
-          {
-            label: "artfact Link",
-            field: "artfactLink",
-            sort: "asc",
-            width: 150,
-          },
+          // {
+          //   label: "Poster",
+          //   field: "poster",
+          //   sort: "asc",
+          //   width: 200,
+          // },
+          // {
+          //   label: "Demo Video",
+          //   field: "demoVideo",
+          //   sort: "asc",
+          //   width: 100,
+          // },
+          // {
+          //   label: "artfact Link",
+          //   field: "artfactLink",
+          //   sort: "asc",
+          //   width: 150,
+          // },
           {
             label: "Team Members",
             field: "teamMembers",
             sort: "asc",
             width: 150,
+            headerStyle: {
+              fontSize: "18px",
+              fontWeight: "bold",
+              backgroundColor: "#46166B",
+              color: "white",
+            },
           },
-          ,
-          {
-            label: "department",
-            field: "department",
-            sort: "asc",
-            width: 100,
-          },
-          ,
-          {
-            label: "year",
-            field: "year",
-            sort: "asc",
-            width: 100,
-          },
+          // ,
+          // {
+          //   label: "department",
+          //   field: "department",
+          //   sort: "asc",
+          //   width: 100,
+          // },
+          // ,
+          // {
+          //   label: "year",
+          //   field: "year",
+          //   sort: "asc",
+          //   width: 100,
+          // },
         ];
 
         this.setState({
@@ -416,18 +453,22 @@ class Dashborad extends Component {
 
                         <br />
                         <div className="row">
-                          <Button
-                            className="float-right custbtn"
-                            onClick={() => this.handleShow()}
-                          >
-                            Add new Project
-                          </Button>
+                          {this.props.disableAddNew ? (
+                            <></>
+                          ) : (
+                            <Button
+                              className="float-right custbtn"
+                              onClick={() => this.handleShow()}
+                            >
+                              Add new Project
+                            </Button>
+                          )}
                         </div>
                         <div className="">
                           <MDBDataTable
                             striped
                             bordered
-                            small
+                            hover
                             data={this.state.data}
                           />
                         </div>
