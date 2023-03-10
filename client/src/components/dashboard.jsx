@@ -70,6 +70,19 @@ class Dashborad extends Component {
             color: "white",
           },
         },
+
+        {
+          label: "Project Approved",
+          field: "isApproved",
+          sort: "asc",
+          width: 150,
+          headerStyle: {
+            fontSize: "18px",
+            fontWeight: "bold",
+            backgroundColor: "#46166B",
+            color: "white",
+          },
+        },
         // ,
         // {
         //   label: "department",
@@ -93,8 +106,15 @@ class Dashborad extends Component {
   };
 
   async getAllData() {
+    let isReviewer = localStorage.getItem("isReviewer");
     await axios
-      .get("http://localhost:3000/api/projects/getAll")
+      .get(
+        isReviewer
+          ? `http://localhost:3000/api/projects/getAllReviverProjects/${localStorage.getItem(
+              "_id"
+            )}`
+          : "http://localhost:3000/api/projects/getAll"
+      )
       .then((res) => {
         let data = [];
 
@@ -104,11 +124,7 @@ class Dashborad extends Component {
             <Link to={`/detail/${newData._id}`}>{newData.name}</Link>
           );
           newData.poster = <img src={newData.poster} alt="Red dot" />;
-
-          if (localStorage.getItem("isReviewer") === true) {
-            newData.action = <button>Approve</button>;
-          }
-
+          newData.isApproved = element.isApproved ? "Approved" : "Not Approved";
           data.push(newData);
         });
         let col = [
@@ -157,6 +173,18 @@ class Dashborad extends Component {
           {
             label: "Team Members",
             field: "teamMembers",
+            sort: "asc",
+            width: 150,
+            headerStyle: {
+              fontSize: "18px",
+              fontWeight: "bold",
+              backgroundColor: "#46166B",
+              color: "white",
+            },
+          },
+          {
+            label: "Project Approved",
+            field: "isApproved",
             sort: "asc",
             width: 150,
             headerStyle: {
@@ -453,7 +481,8 @@ class Dashborad extends Component {
 
                         <br />
                         <div className="row">
-                          {this.props.disableAddNew ? (
+                          {this.props.disableAddNew ||
+                          localStorage.getItem("isReviewer") ? (
                             <></>
                           ) : (
                             <Button

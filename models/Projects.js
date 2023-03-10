@@ -64,6 +64,15 @@ const projectchema = mongoose.Schema(
   }
 );
 
+projectchema.method("ApproveProject", async function (projectId) {
+  let Project = this.model("Project");
+
+  return await Project.findOneAndUpdate(
+    { _id: projectId }, // find the project with the specified ID
+    { isApproved: true }, // update the isApproved field to true
+    { new: true } // return the updated project document
+  );
+});
 projectchema.method("createProject", async function (project) {
   let Project = this.model("Project");
   if ((await Project.findOne({ name: project.name })) !== null) {
@@ -196,6 +205,10 @@ projectchema.method("addUserFeedBack", async function () {
     { $push: { feedback: this.feedback } },
     { multi: true }
   );
+});
+
+projectchema.method("getAllProjectBasedUponReviewer", async function (userid) {
+  return await this.model("Project").find({ "reviewer.userId": userid });
 });
 
 module.exports = mongoose.model("Project", projectchema);
