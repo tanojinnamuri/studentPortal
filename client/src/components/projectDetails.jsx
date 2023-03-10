@@ -145,18 +145,26 @@ class ProjectDetails extends Component {
                     </b>
                   </p>
 
-                  <p className="text-sm">
-                    Demo Video Link
+                  <h4 className="">
+                    Demo Video
                     <b className="d-block">
-                      {" "}
+                      <iframe
+                        width={630}
+                        height={345}
+                        src={this.state.projectDetails.demoVideo}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                      {/* {" "}
                       <a
                         href={this.state.projectDetails.demoVideo}
                         target="_blank"
                       >
                         Video
-                      </a>
+                      </a> */}
                     </b>
-                  </p>
+                  </h4>
 
                   <p className="text-sm">
                     artfack Link
