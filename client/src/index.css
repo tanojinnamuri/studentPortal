@@ -17434,9 +17434,16 @@ footer.footer .footer-end a {
   color: white !important;
 }
 
-table.dataTable thead > tr > th.sorting_desc {
-  font-size: "18px" !important;
-  font-weight: "bold" !important;
-  background-color: "#46166B" !important;
-  color: "white" !important;
+.sorting_asc {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  background-color: #46166b !important;
+  color: white !important;
+}
+
+.sorting {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  background-color: #46166b !important;
+  color: white !important;
 }
