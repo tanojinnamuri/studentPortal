@@ -13,8 +13,12 @@ class NavbarField extends Component {
     super(props);
   }
   state = {};
+  
+  
+
   render() {
     return (
+     
       <>
         <Navbar bg="" variant="dark" className="mainnavbar">
           <Container>
@@ -46,6 +50,7 @@ class NavbarField extends Component {
                     eventKey={2}
                   >
                     {localStorage.getItem("email")}
+                  
                   </Nav.Link>
 
                   <MDBIcon

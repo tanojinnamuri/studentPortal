@@ -327,17 +327,29 @@ class Dashborad extends Component {
             <section className="content-header">
               <div className="container-fluid">
                 <div className="row mb-2">
-                  <div className="col-sm-6">
+                  <div className="col-sm-9">
                     <h1>UAlbany Projects</h1>
                   </div>
-                  <div className="col-sm-6">
+                  <div className=" col-sm-3">
+                          {this.props.disableAddNew ? (
+                            <></>
+                          ) : (
+                            <Button
+                              className="btn custbtn1"
+                              onClick={() => this.handleShow()}
+                            >
+                              Add new Project
+                            </Button>
+                          )}
+                        </div>
+                  {/* <div className="col-sm-6">
                     <ol className="breadcrumb float-sm-right">
                       <li className="breadcrumb-item">
                         <a href="#">Home</a>
                       </li>
                       <li className="breadcrumb-item active">Projects</li>
                     </ol>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               {/* /.container-fluid */}
@@ -351,6 +363,7 @@ class Dashborad extends Component {
                       <div className="card-header">
                         <h3 className="card-title">Submitted Projects</h3>
                       </div>
+                    
                       {/* /.card-header */}
                       <div className="card-body">
                         {this.props.showSearchBar ? (
@@ -376,7 +389,7 @@ class Dashborad extends Component {
                               </div>
                             </div>
                             <div className="col-md-4 col-sm-4 col-12">
-                              <label className="">Query</label>
+                              <label className="">Select {this.state.type}</label>
                               <span className="required-class"> *</span>
                               <div className="form-group">
                                 {this.state.type == "department" ? (
@@ -419,7 +432,7 @@ class Dashborad extends Component {
                               </div>
                             </div>
                             <div className="col-md-4 col-sm-4 col-12">
-                              <label className="m-0">Action</label>
+                              <label className="m-0">Filter</label>
                               <div className="">
                                 <div className="col-12 col-md-10 p-0">
                                   <div
@@ -427,7 +440,7 @@ class Dashborad extends Component {
                                     className="pull-right btn-group"
                                   >
                                     <button
-                                      className="btn btn-success"
+                                      className="btn custbtn1"
                                       onClick={() => this.filterData()}
                                     >
                                       <i className="fa  fa-filter" />
@@ -435,7 +448,7 @@ class Dashborad extends Component {
                                     </button>
                                     <button
                                       type="button"
-                                      className="btn btn-success"
+                                      className="btn custbtn1"
                                       onClick={() => this.cancel()}
                                     >
                                       View All
@@ -452,23 +465,14 @@ class Dashborad extends Component {
                         <div className="row float-right"></div>
 
                         <br />
-                        <div className="row">
-                          {this.props.disableAddNew ? (
-                            <></>
-                          ) : (
-                            <Button
-                              className="float-right custbtn"
-                              onClick={() => this.handleShow()}
-                            >
-                              Add new Project
-                            </Button>
-                          )}
-                        </div>
-                        <div className="">
+                     
+                        <div className="tablestyle">
                           <MDBDataTable
                             striped
                             bordered
                             hover
+                            noBottomColumns 
+                            searchLabel=""
                             data={this.state.data}
                           />
                         </div>
