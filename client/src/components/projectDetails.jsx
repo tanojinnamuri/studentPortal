@@ -47,7 +47,30 @@ class ProjectDetails extends Component {
     }
   };
 
+  ApproveProject = async () => {
+    await axios
+      .get(
+        `http://localhost:3000/api/projects/ApproveProject/${this.props.match.params.id}`
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          window.location = "/";
+        }
+      })
+      .catch((err) => {
+        if (err.response && Array.isArray(err.response.data.messages)) {
+          const msgs = err.response.data.messages.map((v) =>
+            toast.error(v.msg)
+          );
+        }
+        throw err;
+      });
+  };
+
   async componentDidMount() {
+    if (this.props.match.params.id === undefined) {
+      window.location.reload();
+    }
     await axios
       .get(
         `http://localhost:3000/api/projects/getProject/${this.props.match.params.id}`
@@ -178,6 +201,18 @@ class ProjectDetails extends Component {
                       </a>
                     </b>
                   </p>
+
+                  {localStorage.getItem("isReviewer") &&
+                  !this.state.projectDetails.isApproved ? (
+                    <button
+                      className="float-right custbtn"
+                      onClick={() => this.ApproveProject()}
+                    >
+                      Approve This Project
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>

@@ -38,6 +38,20 @@ router.get("/projects/getAll", processValidationErrors, (req, res, next) => {
 });
 
 router.get(
+  "/projects/getAllReviverProjects/:id",
+  processValidationErrors,
+  (req, res, next) => {
+    let project = new Project();
+    project
+      .getAllProjectBasedUponReviewer(req.params.id)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch(next);
+  }
+);
+
+router.get(
   "/projects/getProject/:id",
   processValidationErrors,
   (req, res, next) => {
@@ -48,6 +62,20 @@ router.get(
         if (data.length == 0) {
           throw new APIError(404, "There is no project with this id");
         }
+        res.send(data);
+      })
+      .catch(next);
+  }
+);
+
+router.get(
+  "/projects/ApproveProject/:id",
+  processValidationErrors,
+  (req, res, next) => {
+    const project = new Project();
+    project
+      .ApproveProject(req.params.id)
+      .then((data) => {
         res.send(data);
       })
       .catch(next);
