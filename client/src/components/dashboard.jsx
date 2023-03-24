@@ -106,14 +106,16 @@ class Dashborad extends Component {
   };
 
   async getAllData() {
+    debugger
     let isReviewer = localStorage.getItem("isReviewer");
     await axios
       .get(
-        isReviewer
-          ? `http://localhost:3000/api/projects/getAllReviverProjects/${localStorage.getItem(
-              "_id"
-            )}`
-          : "http://localhost:3000/api/projects/getAll"
+        // isReviewer
+        //   ? `http://localhost:3000/api/projects/getAllReviverProjects/${localStorage.getItem(
+        //       "_id"
+        //     )}`
+          // :
+           "http://localhost:3000/api/projects/getAll"
       )
       .then((res) => {
         let data = [];

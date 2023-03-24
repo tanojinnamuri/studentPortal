@@ -16,6 +16,7 @@ import Home from "./components/Home.jsx";
 import ProjectModal from "./components/ProjectModal.jsx";
 import ProjectDetails from "./components/projectDetails.jsx";
 import Details from "./components/details.jsx";
+import VideoPlayer from "./components/videoplayer.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -137,6 +138,19 @@ class App extends React.Component {
               );
             }}
           />
+
+{/* <Route
+            exact
+            path={"/"}
+            render={(props) => {
+              return this.state.loggedIn ? (
+                <Redirect to={url.dashboard} />
+              ) : (
+                <VideoPlayer {...props} />
+                // <ProjectDetails />
+              );
+            }}
+          /> */}
 
           <Route
             exact

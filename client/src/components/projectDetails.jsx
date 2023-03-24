@@ -3,6 +3,10 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import url from "../utils/url_config";
+import ReactPlayer from 'react-player';
+
+
+
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -99,7 +103,7 @@ class ProjectDetails extends Component {
       <>
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Projects Detail</h3>
+            <h3 className="card-title">Project Details</h3>
           </div>
           <div className="card-body">
             <div className="row">
@@ -144,33 +148,41 @@ class ProjectDetails extends Component {
                 </div>
               </div> */}
               <div className="col-12 col-md-12 col-lg-8 order-1 order-md-2">
-                <h3 className="text-primary">
+                <h3 className="primary-heading">
                   {this.state.projectDetails.name}
                 </h3>
 
-                <h5 className="mt-5 text-muted">Project Poster</h5>
-                <img src={this.state.projectDetails.poster} alt="Red dot" />
+ 
+                <img  style={{ width: "1000px", height: "auto"   }}
+                src={this.state.projectDetails.poster} alt="Red dot" />
                 <p className="text-muted">
                   {this.state.projectDetails.abstract}
                 </p>
                 <br />
                 <div className="text-muted">
-                  <p className="text-sm">
+                  <h5 className="mt-5 my-heading">
                     Department
+                    </h5>
                     <b className="d-block">
                       {this.state.projectDetails.department}
                     </b>
-                  </p>
-                  <p className="text-sm">
+                
+                  <h5 className="mt-5 my-heading">
                     Team Members
+                    </h5>
                     <b className="d-block">
                       {this.state.projectDetails.teamMembers}
                     </b>
-                  </p>
+                 
 
-                  <h4 className="">
+                  <h5 className="mt-5 my-heading">
                     Demo Video
-                    <b className="d-block">
+                    </h5>
+                   <div>
+                   <ReactPlayer url={this.state.projectDetails.demoVideo}/>
+    </div>
+
+                    {/* <b className="d-block">
                       <iframe
                         width={630}
                         height={345}
@@ -178,29 +190,24 @@ class ProjectDetails extends Component {
                         title="YouTube video player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
-                      />
-                      {/* {" "}
-                      <a
-                        href={this.state.projectDetails.demoVideo}
-                        target="_blank"
-                      >
-                        Video
-                      </a> */}
-                    </b>
-                  </h4>
+                      /> */}
+                              
+                    {/* </b> */}
+                 
 
-                  <p className="text-sm">
-                    artfack Link
+                  <h5 className="mt-5 my-heading">
+                    Artfack Link
+                    </h5>
                     <b className="d-block">
                       {" "}
                       <a
                         href={this.state.projectDetails.artfactLink}
                         target="_blank"
                       >
-                        artfact
+                        {this.state.projectDetails.artfactLink}
                       </a>
                     </b>
-                  </p>
+                  
 
                   {localStorage.getItem("isReviewer") &&
                   !this.state.projectDetails.isApproved ? (
