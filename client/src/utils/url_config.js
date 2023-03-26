@@ -4,6 +4,7 @@ const url = {
   dashboard: "/dashboard",
   addProject: "/addProject",
   projectDetail: "/detail/:id",
+  sample: "/sample",
   BASE_URL: "http://localhost:3000",
 };
 

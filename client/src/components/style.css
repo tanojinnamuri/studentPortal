@@ -188,3 +188,20 @@ a.text-muted:focus {
   .card-header{
 background-color: #333333;
   }
+
+  .project-box {
+    width: 200px;
+    height: 250px;
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+  }
+  
+
+  .project-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+  
+  

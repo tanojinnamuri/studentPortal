@@ -106,7 +106,7 @@ class Dashborad extends Component {
   };
 
   async getAllData() {
-    debugger
+    
     let isReviewer = localStorage.getItem("isReviewer");
     await axios
       .get(

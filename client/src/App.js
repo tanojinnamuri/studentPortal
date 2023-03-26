@@ -139,9 +139,9 @@ class App extends React.Component {
             }}
           />
 
-{/* <Route
+<Route
             exact
-            path={"/"}
+            path={url.sample}
             render={(props) => {
               return this.state.loggedIn ? (
                 <Redirect to={url.dashboard} />
@@ -150,7 +150,7 @@ class App extends React.Component {
                 // <ProjectDetails />
               );
             }}
-          /> */}
+          />
 
           <Route
             exact

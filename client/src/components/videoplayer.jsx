@@ -1,15 +1,33 @@
-import React from 'react';
-import ReactPlayer from 'react-player';
+import ProjectCard from './ProjectCard';
+import React, { useState, useEffect } from 'react';
 
-const VideoPlayer = () => {
-  const videoUrl = 'https://www.youtube.com/watch?v=co4_ahEDCho';
+const ProjectList = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/projects/getAll')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Projects:', data);
+        setProjects(data);
+      })
+      .catch(error => console.log(error));
+  }, []);
 
   return (
-    <div className="video-player">
-      <h1>My Video Player</h1>
-      <ReactPlayer url={videoUrl} />
+    <div className="project-list">
+      {projects.map((project) => {
+        console.log('Project:', project);
+        return (
+          <ProjectCard
+            key={project._id}
+            name={project.name}
+            image={project.abstract}
+          />
+        );
+      })}
     </div>
   );
 };
 
-export default VideoPlayer;
+export default ProjectList;
