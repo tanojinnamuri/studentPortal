@@ -1,4 +1,4 @@
-import ProjectCard from './ProjectCard';
+import './sample.css';
 import React, { useState, useEffect } from 'react';
 
 const ProjectList = () => {
@@ -15,19 +15,23 @@ const ProjectList = () => {
   }, []);
 
   return (
-    <div className="project-list">
-      {projects.map((project) => {
-        console.log('Project:', project);
-        return (
-          <ProjectCard
-            key={project._id}
-            name={project.name}
-            image={project.abstract}
-          />
-        );
-      })}
-    </div>
-  );
+  
+        <div className="project-list">
+          {projects.map((project) => (
+            <div className="project-card" key={project.id}>
+              <h2>{project.name}</h2>
+              <div className="project-details">
+                <p><strong>Team Members:</strong> {project.teamMembers.join}</p>
+                <p><strong>Creation Date:</strong> {project.creationDate}</p>
+              </div>
+              <div className="project-description">
+                <p>{project.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    
 };
 
 export default ProjectList;

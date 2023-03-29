@@ -77,12 +77,7 @@ class NavbarField extends Component {
                   >
                     Signup
                   </Nav.Link>
-                  <MDBIcon
-                    fas
-                    icon="search"
-                    className="mt-3 ml-3 whiteColor"
-                    onClick={() => this.props.handleSearch()}
-                  />
+                
                 </>
               )}
             </Nav>

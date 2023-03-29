@@ -1,121 +1,33 @@
-import React, { Component } from "react";
-import ProjectModal from "./ProjectModal";
-import { MDBDataTable } from "mdbreact";
+import React, { Component, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavbarField from "./NavbarField";
 import Button from "react-bootstrap/Button";
 import url from "../utils/url_config";
 import { Link } from "react-router-dom";
+import './sample.css';
 
 class Dashborad extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      projects: [],
+      type: '',
+      query: '',
+      departmentOptions: [],
+      yearOptions: [],
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.filterData = this.filterData.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
-  state = {
-    data: {
-      columns: [
-        {
-          label: "Name",
-          field: "name",
-          sort: "asc",
-          width: 150,
-          headerStyle: {
-            fontSize: "18px",
-            fontWeight: "bold",
-            backgroundColor: "#46166B",
-            color: "white",
-          },
-        },
-        {
-          label: "Abstract",
-          field: "abstract",
-          sort: "asc",
-          width: 270,
-          headerStyle: {
-            fontSize: "18px",
-            fontWeight: "bold",
-            backgroundColor: "#46166B",
-            color: "white",
-          },
-        },
-        // {
-        //   label: "Poster",
-        //   field: "poster",
-        //   sort: "asc",
-        //   width: 200,
-        // },
-        // {
-        //   label: "Demo Video",
-        //   field: "demoVideo",
-        //   sort: "asc",
-        //   width: 100,
-        // },
-        // {
-        //   label: "artfact Link",
-        //   field: "artfactLink",
-        //   sort: "asc",
-        //   width: 150,
-        // },
-        {
-          label: "Team Members",
-          field: "teamMembers",
-          sort: "asc",
-          width: 150,
-          headerStyle: {
-            fontSize: "18px",
-            fontWeight: "bold",
-            backgroundColor: "#46166B",
-            color: "white",
-          },
-        },
-
-        {
-          label: "Project Approved",
-          field: "isApproved",
-          sort: "asc",
-          width: 150,
-          headerStyle: {
-            fontSize: "18px",
-            fontWeight: "bold",
-            backgroundColor: "#46166B",
-            color: "white",
-          },
-        },
-        // ,
-        // {
-        //   label: "department",
-        //   field: "department",
-        //   sort: "asc",
-        //   width: 100,
-        // },
-        // ,
-        // {
-        //   label: "year",
-        //   field: "year",
-        //   sort: "asc",
-        //   width: 100,
-
-        // },
-      ],
-      rows: [],
-    },
-    type: "",
-    query: "",
-  };
 
   async getAllData() {
-    
-    let isReviewer = localStorage.getItem("isReviewer");
+
+    // let isReviewer = localStorage.getItem("isReviewer");
     await axios
       .get(
-        // isReviewer
-        //   ? `http://localhost:3000/api/projects/getAllReviverProjects/${localStorage.getItem(
-        //       "_id"
-        //     )}`
-          // :
-           "http://localhost:3000/api/projects/getAll"
+        "http://localhost:3000/api/projects/getAll"
       )
       .then((res) => {
         let data = [];
@@ -123,126 +35,57 @@ class Dashborad extends Component {
         res.data.forEach((element) => {
           let newData = element;
           newData.name = (
-            <Link to={`/detail/${newData._id}`}>{newData.name}</Link>
+            <Link to={`/detail/${newData._id}`} className="projectName">{newData.name}</Link>
           );
           newData.poster = <img src={newData.poster} alt="Red dot" />;
           newData.isApproved = element.isApproved ? "Approved" : "Not Approved";
           data.push(newData);
-        });
-        let col = [
-          {
-            label: "Name",
-            field: "name",
-            sort: "asc",
-            width: 150,
-            headerStyle: {
-              fontSize: "18px",
-              fontWeight: "bold",
-              backgroundColor: "#46166B",
-              color: "white",
-            },
-          },
-          {
-            label: "Abstract",
-            field: "abstract",
-            sort: "asc",
-            width: 270,
-            headerStyle: {
-              fontSize: "18px",
-              fontWeight: "bold",
-              backgroundColor: "#46166B",
-              color: "white",
-            },
-          },
-          // {
-          //   label: "Poster",
-          //   field: "poster",
-          //   sort: "asc",
-          //   width: 200,
-          // },
-          // {
-          //   label: "Demo Video",
-          //   field: "demoVideo",
-          //   sort: "asc",
-          //   width: 100,
-          // },
-          // {
-          //   label: "artfact Link",
-          //   field: "artfactLink",
-          //   sort: "asc",
-          //   width: 150,
-          // },
-          {
-            label: "Team Members",
-            field: "teamMembers",
-            sort: "asc",
-            width: 150,
-            headerStyle: {
-              fontSize: "18px",
-              fontWeight: "bold",
-              backgroundColor: "#46166B",
-              color: "white",
-            },
-          },
-          {
-            label: "Project Approved",
-            field: "isApproved",
-            sort: "asc",
-            width: 150,
-            headerStyle: {
-              fontSize: "18px",
-              fontWeight: "bold",
-              backgroundColor: "#46166B",
-              color: "white",
-            },
-          },
-          // ,
-          // {
-          //   label: "department",
-          //   field: "department",
-          //   sort: "asc",
-          //   width: 100,
-          // },
-          // ,
-          // {
-          //   label: "year",
-          //   field: "year",
-          //   sort: "asc",
-          //   width: 100,
-          // },
-        ];
-
-        this.setState({
-          data: {
-            columns: col,
-            rows: data,
-          },
+          this.setState({ projects: data });
         });
       })
       .catch((err) => {
         if (err.response && Array.isArray(err.response.data.messages)) {
           const msgs = err.response.data.messages.map((v) =>
-            toast.error(v.msg)
+            toast.error(v.msgs)
           );
+          console.log(msgs);
         }
         throw err;
       });
   }
 
+  async getdepartmentList(){
+    await axios
+      .get(
+        "http://localhost:3000/api/departments/getAll"
+      )
+      .then((res) => {
+        let data = [];
+
+          this.setState({ departmentOptions: res.data });
+        
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
   changeScreen = (id) => {
     window.location.href = `/detail/${id}`;
   };
   handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    if (name === 'type') {
+      this.setState({ query: '', type: value });
+    } else {
+      this.setState({ [name]: value });
+    }
   }
   cancel = async () => {
     await this.getAllData();
   };
 
   filterData = async () => {
-    if (this.state.type != "" && this.state.query != "") {
+    if (this.state.type !== "" && this.state.query !== "") {
       await axios
         .get(
           `http://localhost:3000/api/projects/getProject/${this.state.type}/${this.state.query}`
@@ -304,14 +147,12 @@ class Dashborad extends Component {
                   sort: "asc",
                   width: 150,
                 },
-                ,
                 {
                   label: "department",
                   field: "department",
                   sort: "asc",
                   width: 100,
                 },
-                ,
                 {
                   label: "year",
                   field: "year",
@@ -322,12 +163,14 @@ class Dashborad extends Component {
               rows: data,
             },
           });
+
         })
         .catch((err) => {
           if (err.response && Array.isArray(err.response.data.messages)) {
             const msgs = err.response.data.messages.map((v) =>
               toast.error(v.msg)
             );
+            console.log(msgs);
           }
           throw err;
         });
@@ -337,7 +180,14 @@ class Dashborad extends Component {
   };
 
   async componentDidMount() {
+    const currentYear = new Date().getFullYear();
+    let yearOptions = [];
+    for (let year = 1990; year <= currentYear; year++) {
+      yearOptions.push({ label: year, value: year });
+    }
+    this.setState({ yearOptions });
     await this.getAllData();
+    await this.getdepartmentList();
   }
 
   handleShow = () => {
@@ -347,7 +197,31 @@ class Dashborad extends Component {
       window.location.href = url.addProject;
     }
   };
+
   render() {
+    const { projects } = this.state;
+    const Project = ({ project }) => {
+      const createdDate = new Date(project.created_at).toLocaleString('default', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    };
+    const { type, query, departmentOptions, yearOptions } = this.state;
+    let options = null;
+    if (type === 'department') {
+      options = departmentOptions.map((option) => (
+        <option key={option.DepartmentId} value={option.value}>
+          {option.DepartmentName}
+        </option>
+      ));
+    } else if (type === 'year') {
+      options = yearOptions.map((option) => (
+        <option key={option.YearId} value={option.value}>
+          {option.label}
+        </option>
+      ));
+    }
     return (
       <>
         <div>
@@ -361,25 +235,17 @@ class Dashborad extends Component {
                     <h1>UAlbany Projects</h1>
                   </div>
                   <div className=" col-sm-3">
-                          {this.props.disableAddNew ? (
-                            <></>
-                          ) : (
-                            <Button
-                              className="btn custbtn1"
-                              onClick={() => this.handleShow()}
-                            >
-                              Add new Project
-                            </Button>
-                          )}
-                        </div>
-                  {/* <div className="col-sm-6">
-                    <ol className="breadcrumb float-sm-right">
-                      <li className="breadcrumb-item">
-                        <a href="#">Home</a>
-                      </li>
-                      <li className="breadcrumb-item active">Projects</li>
-                    </ol>
-                  </div> */}
+                    {this.props.disableAddNew ? (
+                      <></>
+                    ) : (
+                      <Button
+                        className="btn custbtn1"
+                        onClick={() => this.handleShow()}
+                      >
+                        Add new Project
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
               {/* /.container-fluid */}
@@ -393,111 +259,70 @@ class Dashborad extends Component {
                       <div className="card-header">
                         <h3 className="card-title">Submitted Projects</h3>
                       </div>
-                    
+
                       {/* /.card-header */}
                       <div className="card-body">
-                        {this.props.showSearchBar ? (
-                          <div className="row m-0">
-                            <div className="col-md-4 col-sm-12 col-12">
-                              <label className="">Type</label>
-                              <span className="required-class"> *</span>
-                              <div className="form-group">
-                                <select
-                                  name="type"
-                                  id="cityId"
-                                  onChange={(e) => this.handleChange(e)}
-                                  className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
-                                >
-                                  <option value="" disabled="">
-                                    Select
-                                  </option>
-                                  <option value={"department"}>
-                                    Department
-                                  </option>
-                                  <option value={"year"}>Year</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div className="col-md-4 col-sm-4 col-12">
-                              <label className="">Select {this.state.type}</label>
-                              <span className="required-class"> *</span>
-                              <div className="form-group">
-                                {this.state.type == "department" ? (
-                                  <>
-                                    <select
-                                      name="query"
-                                      className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
-                                      onChange={(e) => this.handleChange(e)}
-                                    >
-                                      <option value={""}>value</option>
-                                      <option value="ComputerScience">
-                                        Computer Science
-                                      </option>
-                                      <option value="Biology">BioLogy</option>
-                                      <option value="Chemistry">
-                                        Chemistry
-                                      </option>
-                                      <option value="Physics">Physics</option>
-                                      <option value="Data Science">
-                                        Data Science
-                                      </option>
-                                      <option value="Economics">
-                                        Economics
-                                      </option>
-                                      <option value="Information Science">
-                                        Information Science
-                                      </option>
-                                    </select>
-                                  </>
-                                ) : (
-                                  <input
-                                    name="query"
-                                    id="title"
-                                    type="text"
-                                    onChange={(e) => this.handleChange(e)}
-                                    className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
-                                    value={this.state.query}
-                                  />
-                                )}
-                              </div>
-                            </div>
-                            <div className="col-md-4 col-sm-4 col-12">
-                              <label className="m-0">Filter</label>
-                              <div className="">
-                                <div className="col-12 col-md-10 p-0">
-                                  <div
-                                    role="group"
-                                    className="pull-right btn-group"
-                                  >
-                                    <button
-                                      className="btn custbtn1"
-                                      onClick={() => this.filterData()}
-                                    >
-                                      <i className="fa  fa-filter" />
-                                      Apply
-                                    </button>
-                                    <button
-                                      type="button"
-                                      className="btn custbtn1"
-                                      onClick={() => this.cancel()}
-                                    >
-                                      View All
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <></>
-                        )}
+                      <div className="row m-0">
+      <div className="col-md-4 col-sm-12 col-12">
+        <label className="">Filter Type</label>
+        <span className="required-class"> *</span>
+        <div className="form-group">
+          <select
+            name="type"
+            id="cityId"
+            onChange={this.handleChange}
+            className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
+          >
+            <option value="" disabled="">
+              Select
+            </option>
+            <option value="department">Department</option>
+            <option value="year">Year</option>
+          </select>
+        </div>
+      </div>
+      <div className="col-md-4 col-sm-4 col-12">
+        <label className="">Select {type}</label>
+        <span className="required-class"> *</span>
+        <div className="form-group">
+          <select
+            name="query"
+            className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
+            onChange={this.handleChange}
+            value={query}
+          >
+            <option value="" disabled="">
+              Select
+            </option>
+            {options}
+          </select>
+        </div>
+      </div>
+      <div className="col-md-4 col-sm-4 col-12">
+        <label className="m-0">Filter</label>
+        <div className="">
+          <div className="col-12 col-md-10 p-0">
+            <div role="group" className="pull-right btn-group">
+              <button className="btn custbtn1" onClick={this.filterData}>
+                <i className="fa  fa-filter" />
+                Apply
+              </button>
+              <button type="button" className="btn custbtn1" onClick={this.cancel}>
+                View All
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
 
                         <div className="row float-right"></div>
 
                         <br />
                         <div className="row">
                           {this.props.disableAddNew ||
-                          localStorage.getItem("isReviewer") ? (
+                            localStorage.getItem("isReviewer") ? (
                             <></>
                           ) : (
                             <Button
@@ -509,14 +334,38 @@ class Dashborad extends Component {
                           )}
                         </div>
                         <div className="">
-                          <MDBDataTable
+                          {/* <MDBDataTable
                             striped
                             bordered
                             hover
                             noBottomColumns 
                             searchLabel=""
                             data={this.state.data}
-                          />
+                          /> */}
+
+                          <div className="project-list">
+                            {projects.map((project) => {
+                              // Convert the creation date to the desired format
+                              const createdDate = new Date(project.createdAt).toLocaleString('default', {
+                                month: 'long',
+                                day: 'numeric',
+                                year: 'numeric'
+                              });
+
+                              return (
+                                <div className="project-card" key={project._id}>
+                                  <h2>{project.name}</h2>
+                                  <div className="project-details">
+                                    <p><strong>Team Members:</strong> {project.teamMembers}</p>
+                                    <p><strong>Creation Date:</strong> {createdDate}</p>
+                                  </div>
+                                  <div className="project-description">
+                                    <p>{project.description}</p>
+                                  </div>
+                                </div>
+                              )
+                            })}
+                          </div>
                         </div>
                       </div>
                       {/* /.card-body */}
