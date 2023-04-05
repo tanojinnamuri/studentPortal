@@ -1,0 +1,27 @@
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: beige;
+    padding: 10px;
+    position: relative;
+    width: 80%; /* Set the width to 80% of the parent element */
+    height: 200px;
+    z-index: 1; /* Set a higher z-index than the image */
+  }
+  
+  .title img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+    z-index: -1;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
