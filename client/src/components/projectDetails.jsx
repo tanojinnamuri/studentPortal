@@ -202,7 +202,7 @@ class ProjectDetails extends Component {
                       {" "}
                       <a
                         href={this.state.projectDetails.artfactLink}
-                        target="_blank"
+                        target="_blank" rel="noreferrer"
                       >
                         {this.state.projectDetails.artfactLink}
                       </a>
