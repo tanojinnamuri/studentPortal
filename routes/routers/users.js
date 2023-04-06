@@ -1,10 +1,10 @@
-const exjwt = require("express-jwt");
+
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const process = require("process");
+const exjwt = require("express-jwt");
 const User = require("./../../models/Users");
 const { status, roles } = require("./../../helpers/constant");
-
 const keys = {
   jwtsecret: process.env.jwtsecret,
 };

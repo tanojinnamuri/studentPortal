@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 const process = require("process");
 const Project = require("./../../models/Projects");
 const { status, roles } = require("./../../helpers/constant");
-
+const multer = require("multer");
+const mime = require("mime-types");
 const keys = {
   jwtsecret: process.env.jwtsecret,
 };
@@ -16,16 +17,46 @@ const router = express.Router();
 const { processValidationErrors, APIError } = require("../../helpers/error");
 const { param, body } = require("express-validator");
 
-router.post("/projects/add", processValidationErrors, (req, res, next) => {
-  console.log(req.body);
-  let project = new Project();
-  project
-    .createProject(req.body)
-    .then((data) => {
-      res.sendStatus(data ? 200 : 400);
-    })
-    .catch(next);
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    const extension = mime.extension(file.mimetype);
+    cb(null, `${file.originalname}.${extension}`);
+  },
 });
+
+// Create an instance of multer middleware to handle the file upload
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    const allowedMimes = ["video/mp4", "video/webm", "video/quicktime"];
+    if (allowedMimes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Invalid file type"));
+    }
+  },
+});
+
+router.post(
+  "/projects/add",
+  upload.single("video"),
+  processValidationErrors,
+  (req, res, next) => {
+    const { originalname, filename } = req.file;
+    let p = req.body;
+    p.demoVideo = `uploads/${filename}`;
+    let project = new Project();
+    project
+      .createProject(p)
+      .then((data) => {
+        res.sendStatus(data ? 200 : 400);
+      })
+      .catch(next);
+  }
+);
 
 router.get("/projects/getAll", processValidationErrors, (req, res, next) => {
   let project = new Project();

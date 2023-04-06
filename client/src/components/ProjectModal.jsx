@@ -17,7 +17,7 @@ class ProjectModal extends Component {
     name: "",
     abstract: "",
     poster: "",
-    demoVideo: "",
+    demoVideo: null,
     artfactLink: "",
     teamMembers: "",
     department: "ComputerScience",
@@ -93,33 +93,64 @@ class ProjectModal extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("video", this.state.demoVideo);
+    formData.append("name", this.state.name);
+    formData.append("abstract", this.state.abstract);
+    formData.append("poster", this.state.poster);
+    formData.append("artfactLink", this.state.artfactLink);
+    formData.append("teamMembers", this.state.teamMembers);
+    formData.append("department", this.state.department.trim());
+    formData.append("year", this.state.year);
+    formData.append("submittedBy", localStorage.getItem("_id"));
+    formData.append("presenterFirstName", this.state.presenterFirstName);
+    formData.append("presenterLastName", this.state.presenterLastName.trim());
+    formData.append("homeTown", this.state.homeTown);
+    formData.append("studentStatus", this.state.studentStatus);
+    formData.append("studentIdNumber", this.state.studentIdNumber);
+    formData.append("studentEmail", this.state.studentEmail);
+    formData.append("presenter", this.state.presenter);
+    formData.append("presentationFormat", this.state.presentationFormat);
+    formData.append("presentationArea", this.state.presentationArea);
+    formData.append("superVisorFirstname", this.state.superVisorFirstname);
+    formData.append("superVisorLastname", this.state.superVisorLastname);
+    formData.append("superVisorEmail", this.state.superVisorEmail);
+    formData.append(
+      "presenterSignatureFirstname",
+      this.state.presenterSignatureFirstname
+    );
+    formData.append(
+      "presenterSignatureLastname",
+      this.state.presenterSignatureLastname
+    );
+    // {
+    //   name: this.state.name,
+    //   abstract: this.state.abstract,
+    //   poster: this.state.poster,
+    //   demoVideo: this.state.demoVideo,
+    //   artfactLink: this.state.artfactLink,
+    //   teamMembers: this.state.teamMembers,
+    //   department: this.state.department.trim(),
+    //   year: this.state.year,
+    //   submittedBy: localStorage.getItem("_id"),
+    //   presenterFirstName: this.state.presenterFirstName,
+    //   presenterLastName: this.state.presenterLastName,
+    //   homeTown: this.state.homeTown,
+    //   studentStatus: this.state.studentStatus,
+    //   studentIdNumber: this.state.studentIdNumber,
+    //   studentEmail: this.state.studentEmail,
+    //   presenter: this.state.presenter,
+    //   presentationFormat: this.state.presentationFormat,
+    //   presentationArea: this.state.presentationArea,
+    //   superVisorFirstname: this.state.superVisorFirstname,
+    //   superVisorLastname: this.state.superVisorLastname,
+    //   superVisorEmail: this.state.superVisorEmail,
+    //   presenterSignatureFirstname: this.state.presenterSignatureFirstname,
+    //   presenterSignatureLastname: this.state.presenterSignatureLastname,
+    // }
 
     axios
-      .post("http://localhost:3000/api/projects/add", {
-        name: this.state.name,
-        abstract: this.state.abstract,
-        poster: this.state.poster,
-        demoVideo: this.state.demoVideo,
-        artfactLink: this.state.artfactLink,
-        teamMembers: this.state.teamMembers,
-        department: this.state.department.trim(),
-        year: this.state.year,
-        submittedBy: localStorage.getItem("_id"),
-        presenterFirstName: this.state.presenterFirstName,
-        presenterLastName: this.state.presenterLastName,
-        homeTown: this.state.homeTown,
-        studentStatus: this.state.studentStatus,
-        studentIdNumber: this.state.studentIdNumber,
-        studentEmail: this.state.studentEmail,
-        presenter: this.state.presenter,
-        presentationFormat: this.state.presentationFormat,
-        presentationArea: this.state.presentationArea,
-        superVisorFirstname: this.state.superVisorFirstname,
-        superVisorLastname: this.state.superVisorLastname,
-        superVisorEmail: this.state.superVisorEmail,
-        presenterSignatureFirstname: this.state.presenterSignatureFirstname,
-        presenterSignatureLastname: this.state.presenterSignatureLastname,
-      })
+      .post("http://localhost:3000/api/projects/add", formData)
       .then(async (res) => {
         if (res.data === "OK") {
           toast.success("Project added successfully");
@@ -163,6 +194,10 @@ class ProjectModal extends Component {
         throw err;
       });
   }
+
+  handleFileInput = (event) => {
+    this.setState({ demoVideo: event.target.files[0] });
+  };
 
   handleChange(e) {
     this.setState({
@@ -1302,11 +1337,11 @@ class ProjectModal extends Component {
                       controlId="exampleForm.ControlInput1"
                     >
                       <Form.Control
-                        type="text"
+                        type="file"
                         placeholder=""
                         required
                         name="demoVideo"
-                        onChange={(e) => this.handleChange(e)}
+                        onChange={(e) => this.handleFileInput(e)}
                       />
                     </Form.Group>
                   </div>

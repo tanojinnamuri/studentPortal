@@ -3,10 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import url from "../utils/url_config";
-import ReactPlayer from 'react-player';
-
-
-
+import ReactPlayer from "react-player";
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -152,37 +149,42 @@ class ProjectDetails extends Component {
                   {this.state.projectDetails.name}
                 </h3>
 
- 
-                <img  style={{ width: "1000px", height: "auto"   }}
-                src={this.state.projectDetails.poster} alt="Red dot" />
+                <img
+                  style={{ width: "1000px", height: "auto" }}
+                  src={this.state.projectDetails.poster}
+                  alt="Red dot"
+                />
                 <p className="text-muted">
                   {this.state.projectDetails.abstract}
                 </p>
                 <br />
                 <div className="text-muted">
-                  <h5 className="mt-5 my-heading">
-                    Department
-                    </h5>
-                    <b className="d-block">
-                      {this.state.projectDetails.department}
-                    </b>
-                
-                  <h5 className="mt-5 my-heading">
-                    Team Members
-                    </h5>
-                    <b className="d-block">
-                      {this.state.projectDetails.teamMembers}
-                    </b>
-                 
+                  <h5 className="mt-5 my-heading">Department</h5>
+                  <b className="d-block">
+                    {this.state.projectDetails.department}
+                  </b>
 
-                  <h5 className="mt-5 my-heading">
-                    Demo Video
-                    </h5>
-                   <div>
-                   <ReactPlayer url={this.state.projectDetails.demoVideo}/>
-    </div>
+                  <h5 className="mt-5 my-heading">Team Members</h5>
+                  <b className="d-block">
+                    {this.state.projectDetails.teamMembers}
+                  </b>
 
-                    {/* <b className="d-block">
+                  <h5 className="mt-5 my-heading">Demo Video</h5>
+                  <div>
+                    <div style={{ width: "640", height: "360" }}>
+                      <video
+                        src={
+                          "http://localhost:3000/" +
+                          this.state.projectDetails.demoVideo
+                        }
+                        style={{ width: "100%", height: "100%" }}
+                        controls
+                        autoPlay
+                      />
+                    </div>
+                  </div>
+
+                  {/* <b className="d-block">
                       <iframe
                         width={630}
                         height={345}
@@ -191,23 +193,20 @@ class ProjectDetails extends Component {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
                       /> */}
-                              
-                    {/* </b> */}
-                 
 
-                  <h5 className="mt-5 my-heading">
-                    Artfack Link
-                    </h5>
-                    <b className="d-block">
-                      {" "}
-                      <a
-                        href={this.state.projectDetails.artfactLink}
-                        target="_blank"
-                      >
-                        {this.state.projectDetails.artfactLink}
-                      </a>
-                    </b>
-                  
+                  {/* </b> */}
+
+                  <h5 className="mt-5 my-heading">Artfack Link</h5>
+                  <b className="d-block">
+                    {" "}
+                    <a
+                      href={this.state.projectDetails.artfactLink}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {this.state.projectDetails.artfactLink}
+                    </a>
+                  </b>
 
                   {localStorage.getItem("isReviewer") &&
                   !this.state.projectDetails.isApproved ? (

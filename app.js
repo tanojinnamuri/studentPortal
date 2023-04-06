@@ -24,6 +24,9 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Serve the uploaded video files using express.static middleware
+app.use("/uploads", express.static("uploads"));
+
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
 app.use(handleErrors);
