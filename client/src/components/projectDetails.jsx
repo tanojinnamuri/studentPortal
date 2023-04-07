@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import url from "../utils/url_config";
 import ReactPlayer from "react-player";
 import Rating from 'react-rating-stars-component';
+import './projectdetails.css';
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -99,211 +100,77 @@ class ProjectDetails extends Component {
   render() {
     return (
       <>
-        <div className="card">
-          <div className="card-header">
-            <h3 className="card-title">Project Details</h3>
-          </div>
-          <div className="card-body">
-            <div className="row">
-              {/* <div className="col-12 col-md-12 col-lg-4 order-2 order-md-1">
-                <div className="row">
-                  <div className="col-12 col-sm-4">
-                    <div className="info-box bg-light">
-                      <div className="info-box-content">
-                        <span className="info-box-text text-center text-muted">
-                          Estimated budget
-                        </span>
-                        <span className="info-box-number text-center text-muted mb-0">
-                          2300
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-4">
-                    <div className="info-box bg-light">
-                      <div className="info-box-content">
-                        <span className="info-box-text text-center text-muted">
-                          Total amount spent
-                        </span>
-                        <span className="info-box-number text-center text-muted mb-0">
-                          2000
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-4">
-                    <div className="info-box bg-light">
-                      <div className="info-box-content">
-                        <span className="info-box-text text-center text-muted">
-                          Estimated project duration
-                        </span>
-                        <span className="info-box-number text-center text-muted mb-0">
-                          20
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-              <div className="col-12 col-md-12 col-lg-8 order-1 order-md-2">
-                <h3 className="primary-heading">
-                  {this.state.projectDetails.name}
-                </h3>
-
-                <img
-                  style={{ width: "1000px", height: "auto" }}
-                  src={this.state.projectDetails.poster}
-                  alt="Red dot"
-                />
-                <p className="text-muted">
-                  {this.state.projectDetails.abstract}
-                </p>
-                <br />
-                <div className="text-muted">
-                  <h5 className="mt-5 my-heading">Department</h5>
-                  <b className="d-block">
-                    {this.state.projectDetails.department}
-                  </b>
-
-                  <h5 className="mt-5 my-heading">Team Members</h5>
-                  <b className="d-block">
-                    {this.state.projectDetails.teamMembers}
-                  </b>
-
-                  <h5 className="mt-5 my-heading">Demo Video</h5>
-                  <div>
-                    <div style={{ width: "640", height: "360" }}>
-                      <video
-                        src={
-                          "http://localhost:3000/" +
-                          this.state.projectDetails.demoVideo
-                        }
-                        style={{ width: "100%", height: "100%" }}
-                        controls
-                        autoPlay
-                      />
-                    </div>
-                  </div>
-
-                  {/* <b className="d-block">
-                      <iframe
-                        width={630}
-                        height={345}
-                        src={this.state.projectDetails.demoVideo}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                      /> */}
-
-                  {/* </b> */}
-
-                  <h5 className="mt-5 my-heading">Artfack Link</h5>
-                  <b className="d-block">
-                    {" "}
-                    <a
-                      href={this.state.projectDetails.artfactLink}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {this.state.projectDetails.artfactLink}
-                    </a>
-                  </b>
-
-                  {localStorage.getItem("isReviewer") &&
-                    !this.state.projectDetails.isApproved ? (
-                    <button
-                      className="float-right custbtn"
-                      onClick={() => this.ApproveProject()}
-                    >
-                      Approve This Project
-                    </button>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
+        <div class="parent-container">
+          <div class="container1">
+            <div class="image-container1">
+              <img src={this.state.projectDetails.poster} className="img1" alt="Placeholder" />
+            </div>
+            <div class="box1">
+              <h1>{this.state.projectDetails.name}</h1>
+              <p>{this.state.projectDetails.abstract}</p>
             </div>
           </div>
-          <div className="card-footer card-comments">
-            <div>
-              <link
-                href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
-                rel="stylesheet"
+          <div class="grid-container">
+            <div class="grid-item"><h4>Department</h4><p> {this.state.projectDetails.department}</p></div>
+            <div class="grid-item"><h4>Team Members</h4><p>{this.state.projectDetails.teamMembers}</p></div> </div>
+          <div className="grid-container1">
+            <div class="grid-item1"><h4>Artifact Source</h4><p>   <a
+              href={this.state.projectDetails.artfactLink}
+              target="_blank"
+              rel="noreferrer"
+            >{this.state.projectDetails.artfactLink}</a></p></div>
+          </div>
+
+          <div>
+            <div style={{ width: "640", height: "360" }}>
+              <video
+                src={
+                  "http://localhost:3000/" +
+                  this.state.projectDetails.demoVideo
+                }
+                style={{ width: "100%", height: "100%" }}
+                controls
+                autoPlay
               />
-              <div className="">
-                <div className="">
-                  <div className="panel">
-                    <Rating
-                      count={5} // Number of rating stars
-                      // Function to handle rating change
-                      size={50} // Size of the rating stars
-                      activeColor="#ffd700" // Color of the active rating stars
+            </div>
+            <div class="comment-section">
+              <div class="rating-section">
+                <h3>Rate this project</h3>
+                <Rating
+                  count={5}
+                  size={50}
+                  activeColor="#ffd700"
+                />
+              </div>
+              <div class="comment-form">
+                <h3>Leave a Comment</h3>
+                <form onSubmit={(e) => this.handleSubmit(e)}>
+                  <div class="form-group">
+                    <textarea
+                      className="form-control"
+                      rows={2}
+                      placeholder="What are you thinking?"
+                      defaultValue={""}
+                      name="comment"
+                      onChange={(e) => this.handleChange(e)}
                     />
-                    <div className="panel-body">
-                      <textarea
-                        className="form-control"
-                        rows={2}
-                        placeholder="What are you thinking?"
-                        defaultValue={""}
-                        name="comment"
-                        onChange={(e) => this.handleChange(e)}
-                      />
-                      <div className="mar-top clearfix">
-                        <button
-                          className="btn btn-sm btn-primary pull-right"
-                          type="submit"
-                          onClick={() => this.addComment()}
-                        >
-                          <i className="fa fa-pencil fa-fw" /> Share
-                        </button>
-                      </div>
-                    </div>
                   </div>
-                  <div className="panel">
-                    <div className="panel-body">
-                      {this.state.projectDetails &&
-                        this.state.projectDetails.feedback &&
-                        this.state.projectDetails.feedback.length > 0 ? (
-                        <>
-                          {this.state.projectDetails.feedback.map((element) => {
-                            return (
-                              <>
-                                <div className="media-block">
-                                  <a className="media-left" href="#"></a>
-                                  <div className="media-body">
-                                    <div className="mar-btm">
-                                      <a
-                                        href="#"
-                                        className="btn-link text-semibold media-heading box-inline"
-                                      >
-                                        {element.userId.firstname}{" "}
-                                        {element.userId.lastname}
-                                      </a>
-                                      <p className="text-muted text-sm">
-                                        {element.userId.role}
-                                      </p>
-                                    </div>
-                                    <p>{element.comment}</p>
-
-                                    {/* Comments */}
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })}
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                  <button
+                    className="btn custbtn1"
+                    type="submit"
+                    onClick={() => this.addComment()}
+                  >
+                    <i className="fa fa-pencil fa-fw" /> Share
+                  </button>
+                </form>
               </div>
             </div>
-          </div>
 
-          {/* /.card-body */}
+          </div>
         </div>
+
+
+
       </>
     );
   }

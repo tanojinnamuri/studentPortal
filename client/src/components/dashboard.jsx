@@ -327,7 +327,7 @@ class Dashborad extends Component {
                         <div className="row float-right"></div>
 
                         <br />
-                        <div className="row">
+                        {/* <div className="row">
                           {this.props.disableAddNew ||
                             localStorage.getItem("isReviewer") ? (
                             <></>
@@ -339,7 +339,7 @@ class Dashborad extends Component {
                               Add new Project
                             </Button>
                           )}
-                        </div>
+                        </div> */}
                         <div className="">
                           {/* <MDBDataTable
                             striped
