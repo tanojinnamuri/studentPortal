@@ -42,9 +42,9 @@ class Dashborad extends Component {
           //     <img src={newData.poster} alt="Project Poster" />
           //   </Link>
           // );
-          
-         // newData.poster = (<Link to = {`/detail/${newData._id}`} className="projectPoster"><img src={newData.poster} alt="Red dot" /></Link>);
-           newData.poster = <img src={newData.poster} alt="Red dot" />;
+
+          // newData.poster = (<Link to = {`/detail/${newData._id}`} className="projectPoster"><img src={newData.poster} alt="Red dot" /></Link>);
+          newData.poster = <img src={newData.poster} alt="Red dot" />;
           newData.isApproved = element.isApproved ? "Approved" : "Not Approved";
           data.push(newData);
           this.setState({ projects: data });
@@ -61,7 +61,7 @@ class Dashborad extends Component {
       });
   }
 
-  async getdepartmentList(){
+  async getdepartmentList() {
     await axios
       .get(
         "http://localhost:3000/api/departments/getAll"
@@ -69,8 +69,8 @@ class Dashborad extends Component {
       .then((res) => {
         let data = [];
 
-          this.setState({ departmentOptions: res.data });
-        
+        this.setState({ departmentOptions: res.data });
+
       })
       .catch((err) => {
         throw err;
@@ -269,60 +269,60 @@ class Dashborad extends Component {
 
                       {/* /.card-header */}
                       <div className="card-body">
-                      <div className="row m-0">
-      <div className="col-md-4 col-sm-12 col-12">
-        <label className="">Filter Type</label>
-        <span className="required-class"> *</span>
-        <div className="form-group">
-          <select
-            name="type"
-            id="cityId"
-            onChange={this.handleChange}
-            className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
-          >
-            <option value="" disabled="">
-              Select
-            </option>
-            <option value="department">Department</option>
-            <option value="year">Year</option>
-          </select>
-        </div>
-      </div>
-      <div className="col-md-4 col-sm-4 col-12">
-        <label className="">Select {type}</label>
-        <span className="required-class"> *</span>
-        <div className="form-group">
-          <select
-            name="query"
-            className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
-            onChange={this.handleChange}
-            value={query}
-          >
-            <option value="" disabled="">
-              Select
-            </option>
-            {options}
-          </select>
-        </div>
-      </div>
-      <div className="col-md-4 col-sm-4 col-12">
-        <label className="m-0">Filter</label>
-        <div className="">
-          <div className="col-12 col-md-10 p-0">
-            <div role="group" className="pull-right btn-group">
-              <button className="btn custbtn1" onClick={this.filterData}>
-                <i className="fa  fa-filter" />
-                Apply
-              </button>
-              <button type="button" className="btn custbtn1" onClick={this.cancel}>
-                View All
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
+                        <div className="row m-0">
+                          <div className="col-md-4 col-sm-12 col-12">
+                            <label className="">Filter Type</label>
+                            <span className="required-class"> *</span>
+                            <div className="form-group">
+                              <select
+                                name="type"
+                                id="cityId"
+                                onChange={this.handleChange}
+                                className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
+                              >
+                                <option value="" disabled="">
+                                  Select
+                                </option>
+                                <option value="department">Department</option>
+                                <option value="year">Year</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-4 col-sm-4 col-12">
+                            <label className="">Select {type}</label>
+                            <span className="required-class"> *</span>
+                            <div className="form-group">
+                              <select
+                                name="query"
+                                className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
+                                onChange={this.handleChange}
+                                value={query}
+                              >
+                                <option value="" disabled="">
+                                  Select
+                                </option>
+                                {options}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-4 col-sm-4 col-12">
+                            <label className="m-0">Filter</label>
+                            <div className="">
+                              <div className="col-12 col-md-10 p-0">
+                                <div role="group" className="pull-right btn-group">
+                                  <button className="btn custbtn1" onClick={this.filterData}>
+                                    <i className="fa  fa-filter" />
+                                    Apply
+                                  </button>
+                                  <button type="button" className="btn custbtn1" onClick={this.cancel}>
+                                    View All
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
 
                         <div className="row float-right"></div>
 
@@ -359,27 +359,54 @@ class Dashborad extends Component {
                                 year: 'numeric'
                               });
                               return (
-                                
+
                                 <div className="project-card" key={project._id}>
-                                     <div className="project-image">
-                                      <img  style={{ width: "60%", height: "40%" }} alt = "poster" src={project.poster.props.src} />
+                                  <div className="project-image">
+                                    <img style={{ width: "60%", height: "40%" }} alt="poster" src={project.poster.props.src} />
                                   </div>
                                   <div className="project-details">
-                                  <h2>{project.name}</h2>
-                                  <div className="project-details-list">
-                                    <p><strong>Team Members:</strong> {project.teamMembers}</p>
-                                    <p><strong>Creation Date:</strong> {createdDate}</p>
+                                    <h2>{project.name}</h2>
+                                    <div className="project-details-list">
+                                      <p><strong>Team Members:</strong> {project.teamMembers}</p>
+                                      <p><strong>Creation Date:</strong> {createdDate}</p>
+                                    </div>
+                                    <div className="project-description">
+                                      <p>{project.description}</p>
+                                    </div>
                                   </div>
-                                  <div className="project-description">
-                                    <p>{project.description}</p>
+
+                                </div>
+                                /* <div className="video">
+                                    <video style={{width:"300px"}} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls/>
+                            </div> */
+
+                              )
+                            })}
+                          </div>
+
+
+                          <div className="project-list">
+                            {projects.map((project) => {
+                              // Convert the creation date to the desired format
+                              const createdDate = new Date(project.createdAt).toLocaleString('default', {
+                                month: 'long',
+                                day: 'numeric',
+                                year: 'numeric'
+                              });
+                              return (
+
+                                <div className="project-card" key={project._id}>
+
+                                  <div className="project-details">
+                                    <div className="video">
+                                      <video style={{ width: "600px" }} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls />
+                                    </div>
+
                                   </div>
-                                  </div>
-                               
-                                  </div>
-                                  /* <div className="video">
-                                      <video style={{width:"300px"}} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls/>
-                              </div> */
-                                
+
+                                </div>
+
+
                               )
                             })}
                           </div>
