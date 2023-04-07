@@ -362,6 +362,9 @@ class Dashborad extends Component {
                                   <div className="project-description">
                                     <p>{project.description}</p>
                                   </div>
+                                  <div className="video">
+                                      <video style={{width:"300px"}} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls/>
+                                  </div>
                                 </div>
                               )
                             })}
