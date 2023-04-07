@@ -4,6 +4,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import url from "../utils/url_config";
 import ReactPlayer from "react-player";
+import Rating from 'react-rating-stars-component';
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -209,7 +210,7 @@ class ProjectDetails extends Component {
                   </b>
 
                   {localStorage.getItem("isReviewer") &&
-                  !this.state.projectDetails.isApproved ? (
+                    !this.state.projectDetails.isApproved ? (
                     <button
                       className="float-right custbtn"
                       onClick={() => this.ApproveProject()}
@@ -232,6 +233,12 @@ class ProjectDetails extends Component {
               <div className="">
                 <div className="">
                   <div className="panel">
+                    <Rating
+                      count={5} // Number of rating stars
+                      // Function to handle rating change
+                      size={50} // Size of the rating stars
+                      activeColor="#ffd700" // Color of the active rating stars
+                    />
                     <div className="panel-body">
                       <textarea
                         className="form-control"
@@ -255,8 +262,8 @@ class ProjectDetails extends Component {
                   <div className="panel">
                     <div className="panel-body">
                       {this.state.projectDetails &&
-                      this.state.projectDetails.feedback &&
-                      this.state.projectDetails.feedback.length > 0 ? (
+                        this.state.projectDetails.feedback &&
+                        this.state.projectDetails.feedback.length > 0 ? (
                         <>
                           {this.state.projectDetails.feedback.map((element) => {
                             return (

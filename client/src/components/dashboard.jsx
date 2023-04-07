@@ -37,7 +37,14 @@ class Dashborad extends Component {
           newData.name = (
             <Link to={`/detail/${newData._id}`} className="projectName">{newData.name}</Link>
           );
-          newData.poster = <img src={newData.poster} alt="Red dot" />;
+          // newData.poster = (
+          //   <Link to={`/detail/${newData._id}`} className="projectPoster">
+          //     <img src={newData.poster} alt="Project Poster" />
+          //   </Link>
+          // );
+          
+         // newData.poster = (<Link to = {`/detail/${newData._id}`} className="projectPoster"><img src={newData.poster} alt="Red dot" /></Link>);
+           newData.poster = <img src={newData.poster} alt="Red dot" />;
           newData.isApproved = element.isApproved ? "Approved" : "Not Approved";
           data.push(newData);
           this.setState({ projects: data });
@@ -351,21 +358,28 @@ class Dashborad extends Component {
                                 day: 'numeric',
                                 year: 'numeric'
                               });
-
                               return (
+                                
                                 <div className="project-card" key={project._id}>
-                                  <h2>{project.name}</h2>
+                                     <div className="project-image">
+                                      <img  style={{ width: "60%", height: "40%" }} alt = "poster" src={project.poster.props.src} />
+                                  </div>
                                   <div className="project-details">
+                                  <h2>{project.name}</h2>
+                                  <div className="project-details-list">
                                     <p><strong>Team Members:</strong> {project.teamMembers}</p>
                                     <p><strong>Creation Date:</strong> {createdDate}</p>
                                   </div>
                                   <div className="project-description">
                                     <p>{project.description}</p>
                                   </div>
-                                  <div className="video">
-                                      <video style={{width:"300px"}} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls/>
                                   </div>
-                                </div>
+                               
+                                  </div>
+                                  /* <div className="video">
+                                      <video style={{width:"300px"}} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls/>
+                              </div> */
+                                
                               )
                             })}
                           </div>

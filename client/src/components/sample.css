@@ -49,4 +49,41 @@
     color: #46166b;
     text-decoration: underline;
   }
+  .project-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 0;
+    align-items: flex-start;
+    margin-left: 1px; /* adjust this as needed */
+    width: 70%; /* adjust this as needed */
+  }
+  
+  .project-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 1px;
+    align-items: center;
+    margin-bottom: 1px;
+    
+  }
+  
+  .project-image img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .project-details h2 {
+    margin-top: 0;
+  }
+  
+  .project-details-list {
+    margin-bottom: 5px;
+  }
+  
+  .project-details-list p {
+    margin: 0;
+  }
+  
+  
   
