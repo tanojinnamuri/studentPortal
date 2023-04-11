@@ -1,4 +1,3 @@
-
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const process = require("process");
@@ -92,6 +91,8 @@ router.post(
                 _id: _user._id,
                 token,
                 email: _user.email,
+                firstname: _user.firstname,
+                lastname: _user.lastname,
                 student: true,
                 viewer: false,
                 reviewer: false,
@@ -102,6 +103,8 @@ router.post(
                 _id: _user._id,
                 token,
                 email: _user.email,
+                firstname: _user.firstname,
+                lastname: _user.lastname,
                 student: false,
                 viewer: false,
                 reviewer: true,
@@ -112,6 +115,8 @@ router.post(
                 _id: _user._id,
                 token,
                 email: _user.email,
+                firstname: _user.firstname,
+                lastname: _user.lastname,
                 student: false,
                 viewer: true,
                 reviewer: false,

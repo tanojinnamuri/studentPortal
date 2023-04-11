@@ -34,7 +34,8 @@ class Login extends Component {
         localStorage.setItem("_id", res.data._id);
 
         localStorage.setItem("email", res.data.email);
-        localStorage.setItem("firstname",res.data.firstname);
+        localStorage.setItem("firstname", res.data.firstname);
+        localStorage.setItem("lastname", res.data.lastname);
 
         localStorage.setItem("isReviewer", res.data.reviewer);
         setTimeout(() => {
