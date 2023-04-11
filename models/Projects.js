@@ -4,7 +4,20 @@ const { APIError } = require("../helpers/error");
 const _ = require("underscore");
 const User = require("./Users");
 const sgMail = require("@sendgrid/mail");
+const nodemailer = require("nodemailer");
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
+  auth: {
+    user: process.env.smtpEmail,
+    pass: process.env.smtpPassword,
+  },
+});
 const projectchema = mongoose.Schema(
   {
     name: String,
@@ -66,13 +79,32 @@ const projectchema = mongoose.Schema(
 
 projectchema.method("ApproveProject", async function (projectId) {
   let Project = this.model("Project");
-
-  return await Project.findOneAndUpdate(
+  let v = await Project.findOneAndUpdate(
     { _id: projectId }, // find the project with the specified ID
     { isApproved: true }, // update the isApproved field to true
     { new: true } // return the updated project document
   );
+
+  let user = new User();
+  let createdUser = await user.getUser(v.createdUser);
+  // send mail with defined transport object
+  let mailOptions = {
+    from: process.env.smtpEmail,
+    to: us.email,
+    subject: `Project ${project.name} created by ${createdUser.firstname} ${createdUser.lastname}`,
+    text: `Congratulation your project has been approved`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+  return v;
 });
+
 projectchema.method("createProject", async function (project) {
   let Project = this.model("Project");
   if ((await Project.findOne({ name: project.name })) !== null) {
@@ -86,23 +118,40 @@ projectchema.method("createProject", async function (project) {
       if (da) {
         for (let us of da) {
           ids.push({ userId: us._id });
+          console.log("hello , ", project);
+          console.log(project.submittedBy);
+          let createdUser = await user.getUser(project.submittedBy);
 
-          console.log(us);
-
-          const msg = {
-            to: us.email, // Change to your recipient
-            from: process.env.SENDER, // Change to your verified sender
-            subject: `Review Project ${project.name}`,
-            text: "Kindly review project from portal",
+          // send mail with defined transport object
+          let mailOptions = {
+            from: process.env.smtpEmail,
+            to: us.email,
+            subject: `Review Project ${project.name} created by ${createdUser.firstname} ${createdUser.lastname}`,
+            text: `Kindly review project from portal project the created user email is ${createdUser.email}`,
           };
-          await sgMail
-            .send(msg)
-            .then(() => {
-              console.log("Email sent");
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+          console.log("world");
+          console.log(mailOptions);
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Email sent: " + info.response);
+            }
+          });
+          // const msg = {
+          //   to: us.email, // Change to your recipient
+          //   from: process.env.SENDER, // Change to your verified sender
+          //   subject: `Review Project ${project.name}`,
+          //   text: "Kindly review project from portal",
+          // };
+          // await sgMail
+          //   .send(msg)
+          //   .then(() => {
+          //     console.log("Email sent");
+          //   })
+          //   .catch((error) => {
+          //     console.error(error);
+          //   });
         }
         // da.forEach(async (element) => {
         //   ids.push({ userId: element._id });
