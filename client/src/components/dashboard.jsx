@@ -30,24 +30,29 @@ class Dashborad extends Component {
         let data = [];
 
         res.data.forEach((element) => {
-          let newData = element;
-          newData.name = (
-            <Link to={`/detail/${newData._id}`} className="projectName">
-              {newData.name}
-            </Link>
-          );
-          // newData.poster = (
-          //   <Link to={`/detail/${newData._id}`} className="projectPoster">
-          //     <img src={newData.poster} alt="Project Poster" />
-          //   </Link>
-          // );
+          if (element.isApproved) {
+            let newData = element;
+            newData.name = (
+              <Link to={`/detail/${newData._id}`} className="projectName">
+                {newData.name}
+              </Link>
+            );
+            // newData.poster = (
+            //   <Link to={`/detail/${newData._id}`} className="projectPoster">
+            //     <img src={newData.poster} alt="Project Poster" />
+            //   </Link>
+            // );
 
-          // newData.poster = (<Link to = {`/detail/${newData._id}`} className="projectPoster"><img src={newData.poster} alt="Red dot" /></Link>);
-          newData.poster = <img src={newData.poster} alt="Red dot" />;
-          newData.isApproved = element.isApproved ? "Approved" : "Not Approved";
-          data.push(newData);
-          this.setState({ projects: data });
+            // newData.poster = (<Link to = {`/detail/${newData._id}`} className="projectPoster"><img src={newData.poster} alt="Red dot" /></Link>);
+            newData.poster = <img src={newData.poster} alt="Red dot" />;
+            newData.isApproved = element.isApproved
+              ? "Approved"
+              : "Not Approved";
+            data.push(newData);
+          }
         });
+
+        this.setState({ projects: data });
       })
       .catch((err) => {
         if (err.response && Array.isArray(err.response.data.messages)) {
