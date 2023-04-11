@@ -5,15 +5,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import url from "../utils/url_config";
 import { Link } from "react-router-dom";
-import './sample.css';
+import "./sample.css";
 
 class Dashborad extends Component {
   constructor(props) {
     super(props);
     this.state = {
       projects: [],
-      type: '',
-      query: '',
+      type: "",
+      query: "",
       departmentOptions: [],
       yearOptions: [],
     };
@@ -23,19 +23,18 @@ class Dashborad extends Component {
   }
 
   async getAllData() {
-
     // let isReviewer = localStorage.getItem("isReviewer");
     await axios
-      .get(
-        "http://localhost:3000/api/projects/getAll"
-      )
+      .get("http://localhost:3000/api/projects/getAll")
       .then((res) => {
         let data = [];
 
         res.data.forEach((element) => {
           let newData = element;
           newData.name = (
-            <Link to={`/detail/${newData._id}`} className="projectName">{newData.name}</Link>
+            <Link to={`/detail/${newData._id}`} className="projectName">
+              {newData.name}
+            </Link>
           );
           // newData.poster = (
           //   <Link to={`/detail/${newData._id}`} className="projectPoster">
@@ -63,14 +62,11 @@ class Dashborad extends Component {
 
   async getdepartmentList() {
     await axios
-      .get(
-        "http://localhost:3000/api/departments/getAll"
-      )
+      .get("http://localhost:3000/api/departments/getAll")
       .then((res) => {
         let data = [];
 
         this.setState({ departmentOptions: res.data });
-
       })
       .catch((err) => {
         throw err;
@@ -81,8 +77,8 @@ class Dashborad extends Component {
   };
   handleChange(e) {
     const { name, value } = e.target;
-    if (name === 'type') {
-      this.setState({ query: '', type: value });
+    if (name === "type") {
+      this.setState({ query: "", type: value });
     } else {
       this.setState({ [name]: value });
     }
@@ -170,7 +166,6 @@ class Dashborad extends Component {
               rows: data,
             },
           });
-
         })
         .catch((err) => {
           if (err.response && Array.isArray(err.response.data.messages)) {
@@ -208,21 +203,24 @@ class Dashborad extends Component {
   render() {
     const { projects } = this.state;
     const Project = ({ project }) => {
-      const createdDate = new Date(project.created_at).toLocaleString('default', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
+      const createdDate = new Date(project.created_at).toLocaleString(
+        "default",
+        {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }
+      );
     };
     const { type, query, departmentOptions, yearOptions } = this.state;
     let options = null;
-    if (type === 'department') {
+    if (type === "department") {
       options = departmentOptions.map((option) => (
         <option key={option.DepartmentId} value={option.value}>
           {option.DepartmentName}
         </option>
       ));
-    } else if (type === 'year') {
+    } else if (type === "year") {
       options = yearOptions.map((option) => (
         <option key={option.YearId} value={option.value}>
           {option.label}
@@ -309,12 +307,22 @@ class Dashborad extends Component {
                             <label className="m-0">Filter</label>
                             <div className="">
                               <div className="col-12 col-md-10 p-0">
-                                <div role="group" className="pull-right btn-group">
-                                  <button className="btn custbtn1" onClick={this.filterData}>
+                                <div
+                                  role="group"
+                                  className="pull-right btn-group"
+                                >
+                                  <button
+                                    className="btn custbtn1"
+                                    onClick={this.filterData}
+                                  >
                                     <i className="fa  fa-filter" />
                                     Apply
                                   </button>
-                                  <button type="button" className="btn custbtn1" onClick={this.cancel}>
+                                  <button
+                                    type="button"
+                                    className="btn custbtn1"
+                                    onClick={this.cancel}
+                                  >
                                     View All
                                   </button>
                                 </div>
@@ -322,7 +330,6 @@ class Dashborad extends Component {
                             </div>
                           </div>
                         </div>
-
 
                         <div className="row float-right"></div>
 
@@ -353,61 +360,70 @@ class Dashborad extends Component {
                           <div className="project-list">
                             {projects.map((project) => {
                               // Convert the creation date to the desired format
-                              const createdDate = new Date(project.createdAt).toLocaleString('default', {
-                                month: 'long',
-                                day: 'numeric',
-                                year: 'numeric'
+                              const createdDate = new Date(
+                                project.createdAt
+                              ).toLocaleString("default", {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
                               });
                               return (
-
                                 <div className="project-card" key={project._id}>
                                   <div className="project-image">
-                                    <img style={{ width: "60%", height: "40%" }} alt="poster" src={project.poster.props.src} />
+                                    <img
+                                      style={{ width: "60%", height: "40%" }}
+                                      alt="poster"
+                                      src={project.poster.props.src}
+                                    />
                                   </div>
                                   <div className="project-details">
                                     <h2>{project.name}</h2>
                                     <div className="project-details-list">
-                                      <p><strong>Team Members:</strong> {project.teamMembers}</p>
-                                      <p><strong>Creation Date:</strong> {createdDate}</p>
+                                      <p>
+                                        <strong>Team Members:</strong>{" "}
+                                        {project.teamMembers}
+                                      </p>
+                                      <p>
+                                        <strong>Creation Date:</strong>{" "}
+                                        {createdDate}
+                                      </p>
                                     </div>
                                     <div className="project-description">
                                       <p>{project.description}</p>
                                     </div>
                                   </div>
-
                                 </div>
                                 /* <div className="video">
                                     <video style={{width:"300px"}} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls/>
                             </div> */
-
-                              )
+                              );
                             })}
                           </div>
-
 
                           <div className="project-list">
                             {projects.map((project) => {
                               // Convert the creation date to the desired format
-                              const createdDate = new Date(project.createdAt).toLocaleString('default', {
-                                month: 'long',
-                                day: 'numeric',
-                                year: 'numeric'
+                              const createdDate = new Date(
+                                project.createdAt
+                              ).toLocaleString("default", {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
                               });
                               return (
-
                                 <div className="project-card" key={project._id}>
-
                                   <div className="project-details">
                                     <div className="video">
-                                      <video style={{ width: "600px" }} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls />
+                                      <video
+                                        style={{ width: "600px" }}
+                                        src={project.demoVideo}
+                                        autoPlay
+                                        controls
+                                      />
                                     </div>
-
                                   </div>
-
                                 </div>
-
-
-                              )
+                              );
                             })}
                           </div>
                         </div>

@@ -4,8 +4,8 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import url from "../utils/url_config";
 import ReactPlayer from "react-player";
-import Rating from 'react-rating-stars-component';
-import './projectdetails.css';
+import Rating from "react-rating-stars-component";
+import "./projectdetails.css";
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -103,7 +103,11 @@ class ProjectDetails extends Component {
         <div class="parent-container">
           <div class="container1">
             <div class="image-container1">
-              <img src={this.state.projectDetails.poster} className="img1" alt="Placeholder" />
+              <img
+                src={this.state.projectDetails.poster}
+                className="img1"
+                alt="Placeholder"
+              />
             </div>
             <div class="box1">
               <h1>{this.state.projectDetails.name}</h1>
@@ -111,23 +115,35 @@ class ProjectDetails extends Component {
             </div>
           </div>
           <div class="grid-container">
-            <div class="grid-item"><h4>Department</h4><p> {this.state.projectDetails.department}</p></div>
-            <div class="grid-item"><h4>Team Members</h4><p>{this.state.projectDetails.teamMembers}</p></div> </div>
+            <div class="grid-item">
+              <h4>Department</h4>
+              <p> {this.state.projectDetails.department}</p>
+            </div>
+            <div class="grid-item">
+              <h4>Team Members</h4>
+              <p>{this.state.projectDetails.teamMembers}</p>
+            </div>{" "}
+          </div>
           <div className="grid-container1">
-            <div class="grid-item1"><h4>Artifact Source</h4><p>   <a
-              href={this.state.projectDetails.artfactLink}
-              target="_blank"
-              rel="noreferrer"
-            >{this.state.projectDetails.artfactLink}</a></p></div>
+            <div class="grid-item1">
+              <h4>Artifact Source</h4>
+              <p>
+                {" "}
+                <a
+                  href={this.state.projectDetails.artfactLink}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {this.state.projectDetails.artfactLink}
+                </a>
+              </p>
+            </div>
           </div>
 
           <div>
             <div style={{ width: "640", height: "360" }}>
               <video
-                src={
-                  "http://localhost:3000/" +
-                  this.state.projectDetails.demoVideo
-                }
+                src={this.state.projectDetails.demoVideo}
                 style={{ width: "100%", height: "100%" }}
                 controls
                 autoPlay
@@ -136,11 +152,7 @@ class ProjectDetails extends Component {
             <div class="comment-section">
               <div class="rating-section">
                 <h3>Rate this project</h3>
-                <Rating
-                  count={5}
-                  size={50}
-                  activeColor="#ffd700"
-                />
+                <Rating count={5} size={50} activeColor="#ffd700" />
               </div>
               <div class="comment-form">
                 <h3>Leave a Comment</h3>
@@ -165,12 +177,8 @@ class ProjectDetails extends Component {
                 </form>
               </div>
             </div>
-
           </div>
         </div>
-
-
-
       </>
     );
   }

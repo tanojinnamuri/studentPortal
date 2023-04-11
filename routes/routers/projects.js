@@ -6,39 +6,63 @@ const Project = require("./../../models/Projects");
 const { status, roles } = require("./../../helpers/constant");
 const multer = require("multer");
 const mime = require("mime-types");
+const fs = require("fs");
 const keys = {
   jwtsecret: process.env.jwtsecret,
 };
-
+// Load the AWS SDK
+const AWS = require("aws-sdk");
 const ejwtauth = exjwt({ secret: keys.jwtsecret, algorithms: ["HS256"] });
+const multerS3 = require("multer-s3");
+// Configure your AWS credentials
+AWS.config.update({
+  accessKeyId: process.env.Accesskey,
+  secretAccessKey: process.env.AccessPassword,
+});
+
+// Create an S3 object
+const s3 = new AWS.S3({
+  params: {
+    Bucket: "masterprojectbucketnew",
+  },
+});
 
 const router = express.Router();
 
 const { processValidationErrors, APIError } = require("../../helpers/error");
 const { param, body } = require("express-validator");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    const extension = mime.extension(file.mimetype);
-    cb(null, `${file.originalname}.${extension}`);
+const fileFilter = (req, file, cb) => {
+  const allowedMimes = ["video/mp4", "video/webm", "video/quicktime"];
+  if (allowedMimes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type"));
+  }
+};
+
+const upload = multer({
+  // https://github.com/expressjs/multer
+  fileFilter,
+  dest: "./public/uploads/",
+
+  rename: function (fieldname, filename) {
+    return filename.replace(/\W+/g, "-").toLowerCase();
   },
 });
 
 // Create an instance of multer middleware to handle the file upload
-const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    const allowedMimes = ["video/mp4", "video/webm", "video/quicktime"];
-    if (allowedMimes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error("Invalid file type"));
-    }
-  },
-});
+// const upload = multer({
+//   storage: multer.memoryStorage(),
+//   fileFilter: (req, file, cb) => {
+//     const allowedMimes = ["video/mp4", "video/webm", "video/quicktime"];
+//     if (allowedMimes.includes(file.mimetype)) {
+//       cb(null, true);
+//     } else {
+//       cb(new Error("Invalid file type"));
+//     }
+//   },
+// });
 
 router.post(
   "/projects/add",
@@ -47,14 +71,32 @@ router.post(
   (req, res, next) => {
     const { originalname, filename } = req.file;
     let p = req.body;
-    p.demoVideo = `uploads/${filename}`;
-    let project = new Project();
-    project
-      .createProject(p)
-      .then((data) => {
-        res.sendStatus(data ? 200 : 400);
-      })
-      .catch(next);
+    var params = {
+      ACL: "public-read",
+      Bucket: "masterprojectbucketnew",
+      Body: fs.createReadStream(req.file.path),
+      Key: `uploads/${req.file.originalname}`,
+    };
+
+    s3.upload(params, (err, data) => {
+      if (err) {
+        console.log("Error occured while trying to upload to S3 bucket", err);
+        res.send(400);
+      }
+
+      if (data) {
+        fs.unlinkSync(req.file.path); // Empty temp folder
+        const locationUrl = data.Location;
+        p.demoVideo = locationUrl;
+        let project = new Project();
+        project
+          .createProject(p)
+          .then((data) => {
+            res.sendStatus(data ? 200 : 400);
+          })
+          .catch(next);
+      }
+    });
   }
 );
 
