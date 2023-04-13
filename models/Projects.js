@@ -112,6 +112,7 @@ projectchema.method("createProject", async function (project) {
   }
   let ids = [];
   let user = new User();
+  let userSent = false;
   await user
     .getRandomReviewer(project.department)
     .then(async (da) => {
@@ -121,7 +122,24 @@ projectchema.method("createProject", async function (project) {
           console.log("hello , ", project);
           console.log(project.submittedBy);
           let createdUser = await user.getUser(project.submittedBy);
+          if (!userSent) {
+            userSent = true;
+            // send mail with defined transport object
+            let mailOptions = {
+              from: process.env.smtpEmail,
+              to: createdUser.email,
+              subject: `Project ${project.name} created`,
+              text: `Emails has been sent to selected reviewers waith for reviewer approval if project approve you will get email`,
+            };
 
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log("Email sent: " + info.response);
+              }
+            });
+          }
           // send mail with defined transport object
           let mailOptions = {
             from: process.env.smtpEmail,
