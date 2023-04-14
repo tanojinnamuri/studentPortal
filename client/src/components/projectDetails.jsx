@@ -100,32 +100,32 @@ class ProjectDetails extends Component {
   render() {
     return (
       <>
-        <div class="parent-container">
-          <div class="container1">
-            <div class="image-container1">
+        <div className="parent-container">
+          <div className="container1">
+            <div className="image-container1">
               <img
                 src={this.state.projectDetails.poster}
                 className="img1"
                 alt="Placeholder"
               />
             </div>
-            <div class="box1">
+            <div className="box1">
               <h1>{this.state.projectDetails.name}</h1>
               <p>{this.state.projectDetails.abstract}</p>
             </div>
           </div>
-          <div class="grid-container">
-            <div class="grid-item">
+          <div className="grid-container">
+            <div className="grid-item">
               <h4>Department</h4>
               <p> {this.state.projectDetails.department}</p>
             </div>
-            <div class="grid-item">
+            <div className="grid-item">
               <h4>Team Members</h4>
               <p>{this.state.projectDetails.teamMembers}</p>
             </div>{" "}
           </div>
           <div className="grid-container1">
-            <div class="grid-item1">
+            <div className="grid-item1">
               <h4>Artifact Source</h4>
               <p>
                 {" "}
@@ -142,22 +142,28 @@ class ProjectDetails extends Component {
 
           <div>
             <div style={{ width: "640", height: "360" }}>
-              <video
+        <div style = {{border: "13px solid #ddd", marginLeft: "30px" , marginRight : "30px"}}>
+
+                <video
                 src={this.state.projectDetails.demoVideo}
                 style={{ width: "100%", height: "100%" }}
                 controls
                 autoPlay
+                muted
               />
-            </div>
-            <div class="comment-section">
-              <div class="rating-section">
-                <h3>Rate this project</h3>
-                <Rating count={5} size={50} activeColor="#ffd700" />
+      
               </div>
-              <div class="comment-form">
-                <h3>Leave a Comment</h3>
+            </div>
+            <div className="comment-section" style = {{border: "13px solid #ddd", marginLeft: "30px" , marginRight : "30px"
+          ,padding : "30px"}}>
+              <div className="rating-section">
+                <h4>Rate this project</h4>
+                <Rating count={5} size={30} activeColor="#ffd700" />
+              </div>
+              <div className="comment-form">
+                <h4>Leave a Comment</h4>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
-                  <div class="form-group">
+                  <div className="form-group">
                     <textarea
                       className="form-control"
                       rows={2}

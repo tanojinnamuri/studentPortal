@@ -1,0 +1,25 @@
+.project-list1 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    background-color: #f5f5f5;
+    padding: 20px;
+  }
+  
+  .project-card1 {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+  }
+  .project-card1:hover {
+    background-color: #EEB211;
+  }
+  .project-image1 img {
+    width: 800px;
+    height: 400px;
+  }
+  
+  

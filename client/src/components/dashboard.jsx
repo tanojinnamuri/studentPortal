@@ -235,6 +235,19 @@ class Dashborad extends Component {
     return (
       <>
         <div>
+          <nav style={{ backgroundColor: '#333', padding: '10px' }}>
+            <ul>
+              <li>
+                <a href="/videosview" >Videos</a>
+              </li>
+              <li>
+                <a href="/photosview" >Photos</a>
+              </li>
+              <li>
+                <a href="/contact">Document</a>
+              </li>
+            </ul>
+          </nav>
           {/* Content Wrapper. Contains page content */}
           <div className="">
             {/* Content Header (Page header) */}
@@ -405,7 +418,7 @@ class Dashborad extends Component {
                             })}
                           </div>
 
-                          <div className="project-list">
+                          {/* <div className="project-list">
                             {projects.map((project) => {
                               // Convert the creation date to the desired format
                               const createdDate = new Date(
@@ -424,13 +437,14 @@ class Dashborad extends Component {
                                         src={project.demoVideo}
                                         autoPlay
                                         controls
+                                        muted
                                       />
                                     </div>
                                   </div>
                                 </div>
                               );
                             })}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       {/* /.card-body */}

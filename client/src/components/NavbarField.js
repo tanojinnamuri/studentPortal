@@ -50,15 +50,16 @@ class NavbarField extends Component {
                     {localStorage.getItem("lastname")}
                   </Nav.Link>
 
-                  <MDBIcon
-                    fas
-                    icon="search"
-                    className="mt-3 ml-3 whiteColor"
-                    onClick={() => this.props.handleSearch()}
-                  />
                 </>
               ) : (
                 <>
+                 <Nav.Link
+                    className="navLink-top"
+                    style={{ color: "#eeb211" }}
+                    href={url.dashboard}
+                  >
+                    Home
+                  </Nav.Link>
                   <Nav.Link
                     className="navLink-top"
                     style={{ color: "#eeb211" }}

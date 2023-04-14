@@ -14,7 +14,7 @@ class Home extends Component {
   render() {
     return (
       <>
-        <NavbarField handleSearch={this.showSearchBar} showSearch={true} />
+        <NavbarField />
         <Dashborad
           disableAddNew={true}
           {...this.props}
