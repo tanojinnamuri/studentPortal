@@ -177,6 +177,7 @@ class Dashborad extends Component {
             const msgs = err.response.data.messages.map((v) =>
               toast.error(v.msg)
             );
+              this.setState({ projects: [] });
             console.log(msgs);
           }
           throw err;

@@ -163,7 +163,7 @@ class ProjectModal extends Component {
             artfactLink: "",
             teamMembers: "",
             department: "",
-            year: "",
+            year:  new Date().getFullYear(),
           });
           window.location.href = "/";
         } else {
