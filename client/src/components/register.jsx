@@ -22,7 +22,7 @@ class Register extends Component {
       department: "",
       errorMessages: [],
       successMessages: [],
-      departmentList : []
+      departmentList: []
     };
   }
 
@@ -75,7 +75,13 @@ class Register extends Component {
   }
 
   async componentDidMount() {
-    await this.getdepartmentList();
+    try {
+      const response = await axios.get("http://localhost:3000/api/departments/getAll");
+      const departmentList = response.data;
+      this.setState({ departmentList });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async getdepartmentList() {
@@ -211,19 +217,19 @@ class Register extends Component {
                     </select>
                   </div>
                   <div className="input-group mb-3">
-                  <select
-            name="department"
-            className="form-control"
-            value={department}
-            onChange={this.handleChange}
-          >
-            <option value="">Select your department ......</option>
-            {departmentList.map((item) => (
-                <option key={item.DepartmentId} value={item.value}>
-                {item.DepartmentName}
-              </option>
-            ))}
-          </select>
+                    <select
+                      name="department"
+                      className="form-control"
+                      value={department}
+                      onChange={this.handleChange}
+                    >
+                      <option value="">Select your department ......</option>
+                      {departmentList.map((item) => (
+                        <option key={item.DepartmentId} value={item.value}>
+                          {item.DepartmentName}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="row">
                     <div className="col-12">
