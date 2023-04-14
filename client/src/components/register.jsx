@@ -22,6 +22,7 @@ class Register extends Component {
       department: "",
       errorMessages: [],
       successMessages: [],
+      departmentList : []
     };
   }
 
@@ -73,12 +74,30 @@ class Register extends Component {
     }
   }
 
+  async componentDidMount() {
+    await this.getdepartmentList();
+  }
+
+  async getdepartmentList() {
+    await axios
+      .get("http://localhost:3000/api/departments/getAll")
+      .then((res) => {
+        let data = [];
+
+        this.setState({ departmentList: res.data });
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     });
   }
   render() {
+    const { departmentList, department } = this.state;
     return (
       <div>
         <NavbarField showLogout={false} />
@@ -192,24 +211,19 @@ class Register extends Component {
                     </select>
                   </div>
                   <div className="input-group mb-3">
-                    <select
-                      name="department"
-                      className="form-control"
-                      onChange={(e) => this.handleChange(e)}
-                    >
-                      <option value="Select your department ......">
-                        Select your department ......
-                      </option>
-                      <option value="Computer Science">Computer Science</option>
-                      <option value="Biology">BioLogy</option>
-                      <option value="Chemistry">Chemistry</option>
-                      <option value="Physics">Physics</option>
-                      <option value="Data Science">Data Science</option>
-                      <option value="Economics">Economics</option>
-                      <option value="Information Science">
-                        Information Science
-                      </option>
-                    </select>
+                  <select
+            name="department"
+            className="form-control"
+            value={department}
+            onChange={this.handleChange}
+          >
+            <option value="">Select your department ......</option>
+            {departmentList.map((item) => (
+                <option key={item.DepartmentId} value={item.value}>
+                {item.DepartmentName}
+              </option>
+            ))}
+          </select>
                   </div>
                   <div className="row">
                     <div className="col-12">
