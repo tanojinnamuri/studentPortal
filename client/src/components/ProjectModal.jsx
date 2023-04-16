@@ -37,7 +37,13 @@ class ProjectModal extends Component {
     superVisorEmail: "",
     presenterSignatureFirstname: "",
     presenterSignatureLastname: "",
+<<<<<<< HEAD
     departmentList : []
+=======
+    projectDocument: "",
+    projectDocumentFile: null,
+    otherdocument: [],
+>>>>>>> d6e6d4f2ed69c44a4479d7709523df945c4a4588
   };
   handleClose = () => {
     this.setState({ show: false });
@@ -111,6 +117,48 @@ class ProjectModal extends Component {
     });
   };
 
+  handleMultiplefiles = (e) => {
+    let finalBase64 = [];
+    let files = e.target.files;
+
+    for (let file of files) {
+      this.getBase64(file)
+        .then((result) => {
+          finalBase64.push(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    this.setState({
+      otherdocument: finalBase64,
+    });
+  };
+
+  handleSingleDocumentfile = (e) => {
+    let { file } = this.state;
+
+    file = e.target.files[0];
+
+    this.getBase64(file)
+      .then((result) => {
+        file["base64"] = result;
+        console.log("File Is", file);
+        this.setState({
+          projectDocument: result,
+          file,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    this.setState({
+      projectDocumentFile: e.target.files[0],
+    });
+  };
+
   async handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData();
@@ -143,6 +191,8 @@ class ProjectModal extends Component {
       "presenterSignatureLastname",
       this.state.presenterSignatureLastname
     );
+    formData.append("singledocument", this.state.projectDocument);
+    formData.append("otherdocument", this.state.otherdocument);
     // {
     //   name: this.state.name,
     //   abstract: this.state.abstract,
@@ -183,7 +233,7 @@ class ProjectModal extends Component {
             artfactLink: "",
             teamMembers: "",
             department: "",
-            year:  new Date().getFullYear(),
+            year: new Date().getFullYear(),
           });
           window.location.href = "/";
         } else {
@@ -1319,6 +1369,101 @@ class ProjectModal extends Component {
                 </div>
               </li>
 
+              <li
+                className="form-line jf-required"
+                data-type="control_radio"
+                id="id_226"
+                question-order={68}
+              >
+                <label
+                  className="form-label form-label-top form-label-auto"
+                  id="label_226"
+                  htmlFor="input_226"
+                >
+                  Please select document pdf file for project
+                  <span
+                    className="form-required"
+                    aria-label="Required"
+                    aria-describedby="requirement_description_0"
+                  >
+                    *
+                  </span>
+                </label>
+                <div
+                  id="cid_226"
+                  className="form-input-wide jf-required"
+                  data-layout="full"
+                >
+                  <div
+                    className="form-single-column"
+                    role="group"
+                    aria-labelledby="label_226"
+                    data-component="radio"
+                  >
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                    >
+                      <Form.Control
+                        type="file"
+                        placeholder=""
+                        required
+                        name="pdfdocument"
+                        accept="application/pdf"
+                        onChange={(e) => this.handleSingleDocumentfile(e)}
+                      />
+                    </Form.Group>
+                  </div>
+                </div>
+              </li>
+
+              <li
+                className="form-line jf-required"
+                data-type="control_radio"
+                id="id_226"
+                question-order={68}
+              >
+                <label
+                  className="form-label form-label-top form-label-auto"
+                  id="label_226"
+                  htmlFor="input_226"
+                >
+                  Please select other document for project
+                  <span
+                    className="form-required"
+                    aria-label="Required"
+                    aria-describedby="requirement_description_0"
+                  >
+                    *
+                  </span>
+                </label>
+                <div
+                  id="cid_226"
+                  className="form-input-wide jf-required"
+                  data-layout="full"
+                >
+                  <div
+                    className="form-single-column"
+                    role="group"
+                    aria-labelledby="label_226"
+                    data-component="radio"
+                  >
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                    >
+                      <Form.Control
+                        type="file"
+                        placeholder=""
+                        required
+                        name="otherfile"
+                        multiple
+                        onChange={(e) => this.handleMultiplefiles(e)}
+                      />
+                    </Form.Group>
+                  </div>
+                </div>
+              </li>
               <li
                 className="form-line jf-required"
                 data-type="control_radio"
