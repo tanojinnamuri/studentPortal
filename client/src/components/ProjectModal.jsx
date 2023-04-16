@@ -20,7 +20,7 @@ class ProjectModal extends Component {
     demoVideo: null,
     artfactLink: "",
     teamMembers: "",
-    department: "ComputerScience",
+    department: "",
     year: "",
     file: null,
     presenterFirstName: "",
@@ -37,6 +37,7 @@ class ProjectModal extends Component {
     superVisorEmail: "",
     presenterSignatureFirstname: "",
     presenterSignatureLastname: "",
+    departmentList : []
   };
   handleClose = () => {
     this.setState({ show: false });
@@ -44,6 +45,12 @@ class ProjectModal extends Component {
   handleShow = () => {
     this.setState({ show: true });
   };
+
+
+  async componentDidMount() {
+    await this.getdepartmentList();
+  }
+
 
   getBase64 = (file) => {
     return new Promise((resolve) => {
@@ -66,6 +73,19 @@ class ProjectModal extends Component {
       console.log(fileInfo);
     });
   };
+
+  async getdepartmentList() {
+    await axios
+      .get("http://localhost:3000/api/departments/getAll")
+      .then((res) => {
+        let data = [];
+
+        this.setState({ departmentList: res.data });
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
 
   handleFileInputChange = (e) => {
     console.log(e.target.files[0]);
@@ -184,12 +204,20 @@ class ProjectModal extends Component {
     this.setState({ demoVideo: event.target.files[0] });
   };
 
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
+
   render() {
+    const {  departmentList} = this.state;
+    let options = null;
+
+      options = departmentList.map((option) => (
+        <option key={option.DepartmentId} value={option.value}>
+          {option.DepartmentName}
+        </option>
+      ));
     return (
       <>
         {/* <Button
@@ -1569,120 +1597,19 @@ class ProjectModal extends Component {
                   className="form-input-wide"
                   data-layout="half"
                 >
-                  <select
-                    className="form-dropdown"
-                    name="department"
-                    onChange={(e) => this.handleChange(e)}
-                    style={{ width: "310px" }}
-                    data-component="dropdown"
-                    aria-label="Academic Department "
-                  >
-                    <option value>Please select</option>
-                    <option value="Accounting and Law">
-                      Accounting and Law
-                    </option>
-                    <option value="Africana Studies ">Africana Studies</option>
-                    <option value="Anthropology ">Anthropology</option>
-                    <option value="Art and Art History ">
-                      Art and Art History
-                    </option>
-                    <option value="Atmospheric and Environmental Sciences ">
-                      Atmospheric and Environmental Sciences
-                    </option>
-                    <option value="Biological Sciences ">
-                      Biological Sciences
-                    </option>
-                    <option value="Biomedical Sciences ">
-                      Biomedical Sciences
-                    </option>
-                    <option value="Chemistry ">Chemistry</option>
-                    <option value="Communication ">Communication</option>
-                    <option value="Computer Science ">Computer Science</option>
-                    <option value="East Asian Studies ">
-                      East Asian Studies
-                    </option>
-                    <option value="Economics ">Economics</option>
-                    <option value="Educational and Counseling Psychology ">
-                      Educational and Counseling Psychology
-                    </option>
-                    <option value="Educational Policy & Leadership ">
-                      Educational Policy &amp; Leadership
-                    </option>
-                    <option value="Educational Theory and Practice ">
-                      Educational Theory and Practice
-                    </option>
-                    <option value="Electrical and Computer Engineering ">
-                      Electrical and Computer Engineering
-                    </option>
-                    <option value="Emergency Preparedness and Homeland Security, and Cybersecurity">
-                      Emergency Preparedness and Homeland Security, and
-                      Cybersecurity
-                    </option>
-                    <option value="English ">English</option>
-                    <option value="Environmental Health Sciences ">
-                      Environmental Health Sciences
-                    </option>
-                    <option value="Environmental and Sustainable Engineering ">
-                      Environmental and Sustainable Engineering
-                    </option>
-                    <option value="Epidemiology and Biostatistics ">
-                      Epidemiology and Biostatistics
-                    </option>
-                    <option value="Finance">Finance</option>
-                    <option value="Geography and Planning ">
-                      Geography and Planning
-                    </option>
-                    <option value="Health Policy, Management and Behavior ">
-                      Health Policy, Management and Behavior
-                    </option>
-                    <option value="History ">History</option>
-                    <option value="Informatics">Informatics</option>
-                    <option value="Information Security and Digital Forensics">
-                      Information Security and Digital Forensics
-                    </option>
-                    <option value="Information Systems and Business Analytics">
-                      Information Systems and Business Analytics
-                    </option>
-                    <option value="Languages, Literatures, & Cultures ">
-                      Languages, Literatures, &amp; Cultures
-                    </option>
-                    <option value="Latin American, Caribbean and U.S. Latino Studies ">
-                      Latin American, Caribbean and U.S. Latino Studies
-                    </option>
-                    <option value="Literacy Teaching and Learning ">
-                      Literacy Teaching and Learning
-                    </option>
-                    <option value="Management">Management</option>
-                    <option value="Marching Band">Marching Band</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Mathematics and Statistics ">
-                      Mathematics and Statistics
-                    </option>
-                    <option value="Music and Theatre">Music and Theatre</option>
-                    <option value="Nanoscale Science & Engineering ">
-                      Nanoscale Science &amp; Engineering
-                    </option>
-                    <option value="Philosophy ">Philosophy</option>
-                    <option value="Physics ">Physics</option>
-                    <option value="Political Science ">
-                      Political Science
-                    </option>
-                    <option value="Psychology ">Psychology</option>
-                    <option value="Public Administration and Policy ">
-                      Public Administration and Policy
-                    </option>
-                    <option value="Sociology ">Sociology</option>
-                    <option value="University Libraries">
-                      University Libraries
-                    </option>
-                    <option value="Women's, Gender, and Sexuality Studies ">
-                      Women's, Gender, and Sexuality Studies
-                    </option>
-                    <option value="Writing and Critical Inquiry">
-                      Writing and Critical Inquiry
-                    </option>
-                    <option value="Other">Other</option>
-                  </select>
+                 <select
+            name="department"
+            className="form-control"
+            value={this.state.department}
+            onChange={this.handleChange}
+          >
+            <option value="">Select your department ......</option>
+            {departmentList.map((item) => (
+                <option key={item.DepartmentId} value={item.value}>
+                {item.DepartmentName}
+              </option>
+            ))}
+          </select>
                 </div>
               </li>
 

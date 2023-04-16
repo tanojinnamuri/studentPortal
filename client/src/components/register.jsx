@@ -22,7 +22,7 @@ class Register extends Component {
       department: "",
       errorMessages: [],
       successMessages: [],
-      departmentList: []
+      departmentList : []
     };
   }
 
@@ -83,7 +83,6 @@ class Register extends Component {
       console.error(error);
     }
   }
-
   async getdepartmentList() {
     await axios
       .get("http://localhost:3000/api/departments/getAll")
@@ -97,13 +96,23 @@ class Register extends Component {
       });
   }
 
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
+  
+  
+  
   render() {
-    const { departmentList, department } = this.state;
+    const {  departmentList} = this.state;
+    let options = null;
+
+      options = departmentList.map((option) => (
+        <option key={option.DepartmentId} value={option.value}>
+          {option.DepartmentName}
+        </option>
+      ));
+    
     return (
       <div>
         <NavbarField showLogout={false} />
@@ -217,19 +226,18 @@ class Register extends Component {
                     </select>
                   </div>
                   <div className="input-group mb-3">
-                    <select
-                      name="department"
-                      className="form-control"
-                      value={department}
-                      onChange={this.handleChange}
-                    >
-                      <option value="">Select your department ......</option>
-                      {departmentList.map((item) => (
-                        <option key={item.DepartmentId} value={item.value}>
-                          {item.DepartmentName}
-                        </option>
-                      ))}
-                    </select>
+                  <select
+                                name="department"
+                                className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
+                                onChange={this.handleChange}
+                                value= {this.state.department}
+                              >
+                                <option value="" disabled="">
+                                  Select
+                                </option>
+                                {options}
+                              </select>
+
                   </div>
                   <div className="row">
                     <div className="col-12">
