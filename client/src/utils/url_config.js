@@ -6,8 +6,9 @@ const url = {
   projectDetail: "/detail/:id",
   sample: "/sample",
   BASE_URL: "http://localhost:3000",
-  videosview : "/videosview",
-  photosview : "/photosview"
+  videosview: "/videosview",
+  photosview: "/photosview",
+  documentview: "/documentview",
 };
 
 export default url;

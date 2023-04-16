@@ -19,6 +19,7 @@ import Details from "./components/details.jsx";
 import VideoPlayer from "./components/videoplayer.jsx";
 import Videos from "./components/videos.jsx";
 import PhotosView from "./components/photosview.jsx";
+import DocumentView from "./components/DocumentView.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -190,24 +191,24 @@ class App extends React.Component {
             }}
           />
 
-
           <Route
             exact
             path={url.videosview}
-            render={(props) => (
-              <Videos {...props} additionalProp="value" />
-            )}
+            render={(props) => <Videos {...props} additionalProp="value" />}
           />
           <Route
             exact
             path={url.photosview}
-            render={(props) => (
-              <PhotosView {...props} additionalProp="value" />
-            )}
+            render={(props) => <PhotosView {...props} additionalProp="value" />}
           />
 
-
-
+          <Route
+            exact
+            path={url.documentview}
+            render={(props) => (
+              <DocumentView {...props} additionalProp="value" />
+            )}
+          />
         </Switch>
       </Router>
     );

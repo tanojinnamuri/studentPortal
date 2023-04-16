@@ -71,6 +71,10 @@ const projectchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    singledocument: {
+      type: String,
+    },
+    otherdocument: [String],
   },
   {
     timestamps: true,

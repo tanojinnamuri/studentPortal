@@ -177,7 +177,7 @@ class Dashborad extends Component {
             const msgs = err.response.data.messages.map((v) =>
               toast.error(v.msg)
             );
-              this.setState({ projects: [] });
+            this.setState({ projects: [] });
             console.log(msgs);
           }
           throw err;
@@ -236,16 +236,16 @@ class Dashborad extends Component {
     return (
       <>
         <div>
-          <nav style={{ backgroundColor: '#333', padding: '10px' }}>
+          <nav style={{ backgroundColor: "#333", padding: "10px" }}>
             <ul>
               <li>
-                <a href="/videosview" >Videos</a>
+                <a href="/videosview">Videos</a>
               </li>
               <li>
-                <a href="/photosview" >Photos</a>
+                <a href="/photosview">Photos</a>
               </li>
               <li>
-                <a href="/contact">Document</a>
+                <a href="/documentview">Document</a>
               </li>
             </ul>
           </nav>
