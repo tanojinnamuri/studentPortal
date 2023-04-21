@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
+
 import url from "../utils/url_config";
 
 class ProjectModal extends Component {
@@ -37,13 +37,11 @@ class ProjectModal extends Component {
     superVisorEmail: "",
     presenterSignatureFirstname: "",
     presenterSignatureLastname: "",
-<<<<<<< HEAD
-    departmentList : []
-=======
+    departmentList : [],
     projectDocument: "",
     projectDocumentFile: null,
     otherdocument: [],
->>>>>>> d6e6d4f2ed69c44a4479d7709523df945c4a4588
+    departmentList : []
   };
   handleClose = () => {
     this.setState({ show: false });
