@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import url from "../utils/url_config";
 import { Link } from "react-router-dom";
 import "./sample.css";
+import Rating from "react-rating-stars-component";
 
 class Dashborad extends Component {
   constructor(props) {
@@ -238,13 +239,13 @@ class Dashborad extends Component {
         <div>
           <nav style={{ backgroundColor: "#333", padding: "10px" }}>
             <ul>
-              <li>
+              <li className="dashboardli">
                 <a href="/videosview">Videos</a>
               </li>
-              <li>
+              <li className="dashboardli">
                 <a href="/photosview">Photos</a>
               </li>
-              <li>
+              <li className="dashboardli">
                 <a href="/documentview">Document</a>
               </li>
             </ul>
@@ -403,9 +404,10 @@ class Dashborad extends Component {
                                         {project.teamMembers}
                                       </p>
                                       <p>
-                                        <strong>Creation Date:</strong>{" "}
-                                        {createdDate}
+                                        <strong>Professor:</strong>{" "}
+                                        {project.superVisorFirstname} {project.superVisorLastname}
                                       </p>
+                                      <Rating count={5} size={30} activeColor="#ffd700" />
                                     </div>
                                     <div className="project-description">
                                       <p>{project.description}</p>

@@ -55,8 +55,8 @@
     justify-content: center;
     padding-right: 0;
     align-items: flex-start;
-    margin-left: 1px; /* adjust this as needed */
-    width: 70%; /* adjust this as needed */
+    margin-left: 1px; 
+    width: 70%; 
   }
   
   .project-card {
@@ -98,7 +98,7 @@
     border-top: 1px solid #fff;
   }
   
-  li {
+  .dashboardli{
     margin: 0 30px;
     padding : 6px 50px;
     text-align: center;
@@ -108,7 +108,7 @@
  
   }
 
-  li:hover {
+  .dashboardli:hover {
     background-color: #EEB211;
     padding: 6px 50px;
     display: block;

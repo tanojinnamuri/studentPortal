@@ -141,12 +141,12 @@ class ProjectDetails extends Component {
           </div>
 
           <div>
-            <div style={{ width: "640", height: "360" }}>
-        <div style = {{border: "13px solid #ddd", marginLeft: "30px" , marginRight : "30px"}}>
+            <div style={{ width: "140", height: "260" }}>
+        <div style = {{border: "13px solid #ddd", marginLeft: "250px" , marginRight : "250px"}}>
 
                 <video
                 src={this.state.projectDetails.demoVideo}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "80%" }}
                 controls
                 autoPlay
                 muted
