@@ -257,7 +257,7 @@ class Dashborad extends Component {
               <div className="container-fluid">
                 <div className="row mb-2">
                   <div className="col-sm-9">
-                    <h1>UAlbany Projects</h1>
+                    <h1>UAlbany Showcase</h1>
                   </div>
                   <div className=" col-sm-3">
                     {this.props.disableAddNew ? (
