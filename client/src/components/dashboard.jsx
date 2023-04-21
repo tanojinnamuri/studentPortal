@@ -243,7 +243,7 @@ class Dashborad extends Component {
                 <a href="/videosview">Videos</a>
               </li>
               <li className="dashboardli">
-                <a href="/photosview">Photos</a>
+                <a href="/photosview">Poster View</a>
               </li>
               <li className="dashboardli">
                 <a href="/documentview">Document</a>
