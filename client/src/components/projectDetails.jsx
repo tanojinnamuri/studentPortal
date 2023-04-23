@@ -6,6 +6,7 @@ import url from "../utils/url_config";
 import ReactPlayer from "react-player";
 import Rating from "react-rating-stars-component";
 import "./projectdetails.css";
+import DownloadLink from "./DownloadLink";
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class ProjectDetails extends Component {
   }
 
   addComment = async () => {
-    if (this.state.comment !== "") {
+    if (this.state.comment !== "" && this.state.rating != 0) {
       if (this.props.disableAddNew) {
         this.props.history.push(url.login);
       } else {
@@ -21,6 +22,7 @@ class ProjectDetails extends Component {
           projectId: this.props.match.params.id,
           user_id: localStorage.getItem("_id"),
           comment: this.state.comment,
+          rating: this.state.rating,
         };
 
         await axios
@@ -70,6 +72,10 @@ class ProjectDetails extends Component {
       });
   };
 
+  changeRating = (e) => {
+    this.setState({ rating: e });
+  };
+
   async componentDidMount() {
     if (this.props.match.params.id === undefined) {
       window.location.reload();
@@ -96,7 +102,7 @@ class ProjectDetails extends Component {
       [e.target.name]: e.target.value,
     });
   }
-  state = { projectDetails: {}, comment: "" };
+  state = { projectDetails: {}, comment: "", rating: 0, showShare: false };
   render() {
     return (
       <>
@@ -140,25 +146,74 @@ class ProjectDetails extends Component {
             </div>
           </div>
 
+          <div className="grid-container1">
+            <div className="grid-item1">
+              <h4>documents</h4>
+              {}
+              {this.state.projectDetails.singledocument ? (
+                <>
+                  <DownloadLink
+                    base64String={this.state.projectDetails.singledocument}
+                    filename={"project details"}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+
+              {this.state.projectDetails.otherdocument &&
+              this.state.projectDetails.otherdocument.length > 0 ? (
+                <>
+                  {this.state.projectDetails.otherdocument.map((doc) => {
+                    return (
+                      <DownloadLink
+                        base64String={doc}
+                        filename={"other document"}
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+
           <div>
             <div style={{ width: "140", height: "260" }}>
-        <div style = {{border: "13px solid #ddd", marginLeft: "250px" , marginRight : "250px"}}>
-
+              <div
+                style={{
+                  border: "13px solid #ddd",
+                  marginLeft: "250px",
+                  marginRight: "250px",
+                }}
+              >
                 <video
-                src={this.state.projectDetails.demoVideo}
-                style={{ width: "100%", height: "80%" }}
-                controls
-                autoPlay
-                muted
-              />
-      
+                  src={this.state.projectDetails.demoVideo}
+                  style={{ width: "100%", height: "80%" }}
+                  controls
+                  autoPlay
+                  muted
+                />
               </div>
             </div>
-            <div className="comment-section" style = {{border: "13px solid #ddd", marginLeft: "30px" , marginRight : "30px"
-          ,padding : "30px"}}>
+            <div
+              className="comment-section"
+              style={{
+                border: "13px solid #ddd",
+                marginLeft: "30px",
+                marginRight: "30px",
+                padding: "30px",
+              }}
+            >
               <div className="rating-section">
                 <h4>Rate this project</h4>
-                <Rating count={5} size={30} activeColor="#ffd700" />
+                <Rating
+                  count={5}
+                  size={30}
+                  activeColor="#ffd700"
+                  onChange={(e) => this.changeRating(e)}
+                />
               </div>
               <div className="comment-form">
                 <h4>Leave a Comment</h4>
@@ -173,14 +228,71 @@ class ProjectDetails extends Component {
                       onChange={(e) => this.handleChange(e)}
                     />
                   </div>
-                  <button
-                    className="btn custbtn1"
-                    type="submit"
-                    onClick={() => this.addComment()}
-                  >
-                    <i className="fa fa-pencil fa-fw" /> Share
-                  </button>
+                  {this.state.comment.length > 0 && this.state.rating != 0 ? (
+                    <>
+                      <button
+                        className="btn custbtn1"
+                        type="submit"
+                        onClick={() => this.addComment()}
+                      >
+                        <i className="fa fa-pencil fa-fw" /> Share
+                      </button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </form>
+                {this.state.projectDetails.feedback &&
+                this.state.projectDetails.feedback.length > 0 ? (
+                  <>
+                    {this.state.projectDetails.feedback.map((fee) => {
+                      return (
+                        <>
+                          <div className="container">
+                            <div className="card">
+                              <div className="card-body">
+                                <div className="row">
+                                  <div className="col-md-2">
+                                    <img
+                                      src="https://image.ibb.co/jw55Ex/def_face.jpg"
+                                      className="img img-rounded img-fluid"
+                                    />
+                                  </div>
+                                  <div className="col-md-10">
+                                    <p>
+                                      <a
+                                        className="float-left"
+                                        href="#"
+                                        style={{ color: "black" }}
+                                      >
+                                        <strong>
+                                          {fee.userId.firstname}{" "}
+                                          {fee.userId.lastname}
+                                        </strong>
+                                      </a>
+                                    </p>
+                                    <br />
+                                    <Rating
+                                      count={5}
+                                      size={20}
+                                      value={fee.rating}
+                                      edit={false}
+                                      activeColor="#ffd700"
+                                    />
+                                    <div className="clearfix" />
+                                    <p>{fee.comment}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

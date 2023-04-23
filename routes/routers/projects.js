@@ -195,6 +195,7 @@ router.post(
       feedback: {
         userId: req.body.user_id,
         comment: req.body.comment,
+        rating: req.body.rating,
       },
     });
 

@@ -44,6 +44,7 @@ const projectchema = mongoose.Schema(
     teamMembers: String,
     department: String,
     year: String,
+
     feedback: [
       {
         userId: {
@@ -52,6 +53,9 @@ const projectchema = mongoose.Schema(
         },
         comment: {
           type: String,
+        },
+        rating: {
+          type: Number,
         },
       },
     ],
