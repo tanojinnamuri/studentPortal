@@ -97,7 +97,7 @@ class App extends React.Component {
                   isloggedIn={this.state.loggedIn}
                 />
               ) : (
-                <Redirect to={url.login} />
+                <Home {...props} />
               );
             }}
           />
