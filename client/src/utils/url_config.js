@@ -1,7 +1,7 @@
 const url = {
   login: "/login",
   register: "/signup",
-  dashboard: "/dashboard",
+  dashboard: "/",
   addProject: "/addProject",
   projectDetail: "/detail/:id",
   sample: "/sample",
