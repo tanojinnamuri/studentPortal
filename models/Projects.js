@@ -260,20 +260,20 @@ projectchema.method("addUserFeedBack", async function () {
     throw new APIError(404, "there is no Project with this id exists");
   }
 
-  const user = _.find(course.feedback, (result) => {
-    return result.userId.toString() == this.feedback[0].userId;
-  });
+  // const user = _.find(course.feedback, (result) => {
+  //   return result.userId.toString() == this.feedback[0].userId;
+  // });
 
-  if (user != undefined) {
-    return await this.model("Project").updateOne(
-      {
-        _id: this._id,
-        feedback: { $elemMatch: { userId: this.feedback[0].userId } },
-      },
-      { $set: { feedback: this.feedback[0] } },
-      { multi: true }
-    );
-  }
+  // if (user != undefined) {
+  //   return await this.model("Project").updateOne(
+  //     {
+  //       _id: this._id,
+  //       feedback: { $elemMatch: { userId: this.feedback[0].userId } },
+  //     },
+  //     { $set: { feedback: this.feedback[0] } },
+  //     { multi: true }
+  //   );
+  // }
 
   return await this.model("Project").updateOne(
     { _id: this._id },
