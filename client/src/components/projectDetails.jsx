@@ -117,7 +117,6 @@ class ProjectDetails extends Component {
             </div>
             <div className="box1">
               <h1>{this.state.projectDetails.name}</h1>
-              <p>{this.state.projectDetails.abstract}</p>
             </div>
           </div>
           <div className="grid-container">
@@ -128,14 +127,13 @@ class ProjectDetails extends Component {
             <div className="grid-item">
               <h4>Team Members</h4>
               <p>{this.state.projectDetails.teamMembers}</p>
-            </div>{" "}
+            </div>
           </div>
           <div className="grid-container1">
             <div className="grid-item1">
               <h4>Artifact Source</h4>
               <p>
-                {" "}
-                <a
+    <a
                   href={this.state.projectDetails.artfactLink}
                   target="_blank"
                   rel="noreferrer"
@@ -143,6 +141,10 @@ class ProjectDetails extends Component {
                   {this.state.projectDetails.artfactLink}
                 </a>
               </p>
+            </div>
+            <div className="grid-item">
+              <h4>Abstarct</h4>
+              <p> {this.state.projectDetails.abstract}</p>
             </div>
           </div>
 
@@ -252,12 +254,6 @@ class ProjectDetails extends Component {
                             <div className="card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col-md-2">
-                                    <img
-                                      src="https://image.ibb.co/jw55Ex/def_face.jpg"
-                                      className="img img-rounded img-fluid"
-                                    />
-                                  </div>
                                   <div className="col-md-10">
                                     <p>
                                       <a

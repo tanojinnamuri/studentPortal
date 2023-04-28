@@ -173,7 +173,7 @@ router.get(
         .catch(next);
     } else {
       project
-        .getProjectByYear(req.params.query)
+        .getProjectByDegree(req.params.query)
         .then((data) => {
           if (data.length == 0) {
             throw new APIError(404, "There is no project with this query");

@@ -242,9 +242,9 @@ projectchema.method("getProjectByDepartment", async function (department) {
   return pro;
 });
 
-projectchema.method("getProjectByYear", async function (year) {
+projectchema.method("getProjectByDegree", async function (degree) {
   let Project = this.model("Project");
-  let pro = await Project.find({ year: year }).populate({
+  let pro = await Project.find({ studentStatus: degree }).populate({
     path: "feedback.userId",
     select: "-pswd", // exclude the password field
   });

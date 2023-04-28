@@ -119,3 +119,8 @@
     color: #fff;
   }
   
+  .row {
+    display: flex;
+    align-items: center;
+  }
+  

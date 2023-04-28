@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import url from "../utils/url_config";
 import { Link } from "react-router-dom";
 import "./sample.css";
-import Rating from "react-rating-stars-component";
+import StarRating from './starRating';
 
 class Dashborad extends Component {
   constructor(props) {
@@ -16,11 +16,14 @@ class Dashborad extends Component {
       type: "",
       query: "",
       departmentOptions: [],
-      yearOptions: [],
+      degreeOptions: [],
+      sortOrder: "asc"
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleChange1 = this.handleChange1.bind(this);
     this.filterData = this.filterData.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.sort = this.sort.bind(this);
   }
 
   async getAllData() {
@@ -38,14 +41,12 @@ class Dashborad extends Component {
                 {newData.name}
               </Link>
             );
-            // newData.poster = (
-            //   <Link to={`/detail/${newData._id}`} className="projectPoster">
-            //     <img src={newData.poster} alt="Project Poster" />
-            //   </Link>
-            // );
-
-            // newData.poster = (<Link to = {`/detail/${newData._id}`} className="projectPoster"><img src={newData.poster} alt="Red dot" /></Link>);
             newData.poster = <img src={newData.poster} alt="Red dot" />;
+            let totalRating = element.feedback.reduce((acc, curr) => acc + curr.rating, 0);
+            let avgRating = totalRating / element.feedback.length;
+            newData.avgRating = avgRating.toFixed(1);
+
+
             newData.isApproved = element.isApproved
               ? "Approved"
               : "Not Approved";
@@ -78,6 +79,18 @@ class Dashborad extends Component {
         throw err;
       });
   }
+  async getDegreeList(){
+    await axios
+    .get("http://localhost:3000/api/degrees/getAll")
+    .then((res) => {
+      let data = [];
+
+      this.setState({ degreeOptions: res.data });
+    })
+    .catch((err) => {
+      throw err;
+    });
+  }
   changeScreen = (id) => {
     window.location.href = `/detail/${id}`;
   };
@@ -89,10 +102,28 @@ class Dashborad extends Component {
       this.setState({ [name]: value });
     }
   }
+  handleChange1(e) {
+      this.setState({ sortOrder: e.target.value });
+  }
   cancel = async () => {
     await this.getAllData();
   };
-
+  sort() {
+    if (this.state.sortOrder === "asc") {
+      const strAscending = [...this.state.projects].sort((a, b) =>
+        String(a.name.props.children).localeCompare(String(b.name.props.children), undefined, { sensitivity: 'base' })
+      );
+      this.setState({ projects: strAscending });
+    } else {
+      const strDescending = [...this.state.projects].sort((a, b) =>
+        String(b.name.props.children).localeCompare(String(a.name.props.children), undefined, { sensitivity: 'base' })
+      );
+      this.setState({ projects: strDescending });
+    }
+  }
+  
+  
+  
   filterData = async () => {
     if (this.state.type !== "" && this.state.query !== "") {
       await axios
@@ -103,100 +134,48 @@ class Dashborad extends Component {
           let data = [];
 
           res.data.forEach((element) => {
-            let newData = element;
-            newData.name = (
-              <Link
-                style={{ fontWeight: "bold" }}
-                onClick={() => this.changeScreen(element._id)}
-              >
-                {newData.name}
-              </Link>
-            );
-            newData.poster = <img src={newData.poster} alt="Red dot" />;
-
-            data.push(newData);
+            if (element.isApproved) {
+              let newData = element;
+              newData.name = (
+                <Link to={`/detail/${newData._id}`} className="projectName">
+                  {newData.name}
+                </Link>
+              );
+              newData.poster = <img src={newData.poster} alt="Red dot" />;
+              let totalRating = element.feedback.reduce((acc, curr) => acc + curr.rating, 0);
+              let avgRating = totalRating / element.feedback.length;
+              newData.avgRating = avgRating.toFixed(1);
+  
+  
+              newData.isApproved = element.isApproved
+                ? "Approved"
+                : "Not Approved";
+              data.push(newData);
+            }
           });
-
-          this.setState({
-            data: {
-              columns: [
-                {
-                  label: "Name",
-                  field: "name",
-                  sort: "asc",
-                  width: 150,
-                },
-                {
-                  label: "Abstract",
-                  field: "abstract",
-                  sort: "asc",
-                  width: 270,
-                },
-                {
-                  label: "Poster",
-                  field: "poster",
-                  sort: "asc",
-                  width: 200,
-                },
-                {
-                  label: "Demo Video",
-                  field: "demoVideo",
-                  sort: "asc",
-                  width: 100,
-                },
-                {
-                  label: "artfact Link",
-                  field: "artfactLink",
-                  sort: "asc",
-                  width: 150,
-                },
-                {
-                  label: "Team Members",
-                  field: "teamMembers",
-                  sort: "asc",
-                  width: 150,
-                },
-                {
-                  label: "department",
-                  field: "department",
-                  sort: "asc",
-                  width: 100,
-                },
-                {
-                  label: "year",
-                  field: "year",
-                  sort: "asc",
-                  width: 100,
-                },
-              ],
-              rows: data,
-            },
-          });
+  
+          this.setState({ projects: data });
         })
         .catch((err) => {
           if (err.response && Array.isArray(err.response.data.messages)) {
             const msgs = err.response.data.messages.map((v) =>
-              toast.error(v.msg)
+              toast.error(v.msgs)
             );
             this.setState({ projects: [] });
             console.log(msgs);
           }
           throw err;
         });
+  
     } else {
       toast.error("please fill type and query");
     }
   };
 
   async componentDidMount() {
-    const currentYear = new Date().getFullYear();
-    let yearOptions = [];
-    for (let year = 1990; year <= currentYear; year++) {
-      yearOptions.push({ label: year, value: year });
-    }
-    this.setState({ yearOptions });
     await this.getAllData();
     await this.getdepartmentList();
+    await this.getDegreeList();
   }
 
   handleShow = () => {
@@ -209,17 +188,7 @@ class Dashborad extends Component {
 
   render() {
     const { projects } = this.state;
-    const Project = ({ project }) => {
-      const createdDate = new Date(project.created_at).toLocaleString(
-        "default",
-        {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        }
-      );
-    };
-    const { type, query, departmentOptions, yearOptions } = this.state;
+    const { type, query, departmentOptions, degreeOptions } = this.state;
     let options = null;
     if (type === "department") {
       options = departmentOptions.map((option) => (
@@ -227,10 +196,10 @@ class Dashborad extends Component {
           {option.DepartmentName}
         </option>
       ));
-    } else if (type === "year") {
-      options = yearOptions.map((option) => (
-        <option key={option.YearId} value={option.value}>
-          {option.label}
+    } else if (type === "degree") {
+      options = degreeOptions.map((option) => (
+        <option key={option.DegreeId} value={option.value}>
+          {option.DegreeName}
         </option>
       ));
     }
@@ -302,7 +271,7 @@ class Dashborad extends Component {
                                   Select
                                 </option>
                                 <option value="department">Department</option>
-                                <option value="year">Year</option>
+                                <option value="degree">Degree</option>
                               </select>
                             </div>
                           </div>
@@ -324,7 +293,7 @@ class Dashborad extends Component {
                             </div>
                           </div>
                           <div className="col-md-4 col-sm-4 col-12">
-                            <label className="m-0">Filter</label>
+                        
                             <div className="">
                               <div className="col-12 col-md-10 p-0">
                                 <div
@@ -350,43 +319,41 @@ class Dashborad extends Component {
                             </div>
                           </div>
                         </div>
+                        <div className="row m-0">
+                        <div className="col-md-4 col-sm-12 col-12">
+                            <div className="form-group">
+                              <select
+                                name="type"
+                                id="sortid"
+                                onChange={this.handleChange1}
+                                className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
+                              >
+                                <option value="asc">Ascending</option>
+                                <option value="des">Descending</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-4 col-md-4 p-0">
+                          <button
+                                    type="button"
+                                    className="btn custbtn1"
+                                    onClick={this.sort}
+                                  >
+                                    Sort
+                                  </button>
+                          </div>
+                        </div>
 
                         <div className="row float-right"></div>
 
                         <br />
-                        {/* <div className="row">
-                          {this.props.disableAddNew ||
-                            localStorage.getItem("isReviewer") ? (
-                            <></>
-                          ) : (
-                            <Button
-                              className="float-right custbtn"
-                              onClick={() => this.handleShow()}
-                            >
-                              Add new Project
-                            </Button>
-                          )}
-                        </div> */}
+                       
+                       
                         <div className="">
-                          {/* <MDBDataTable
-                            striped
-                            bordered
-                            hover
-                            noBottomColumns 
-                            searchLabel=""
-                            data={this.state.data}
-                          /> */}
-
+                      
                           <div className="project-list">
                             {projects.map((project) => {
-                              // Convert the creation date to the desired format
-                              const createdDate = new Date(
-                                project.createdAt
-                              ).toLocaleString("default", {
-                                month: "long",
-                                day: "numeric",
-                                year: "numeric",
-                              });
+                           
                               return (
                                 <div className="project-card" key={project._id}>
                                   <div className="project-image">
@@ -407,7 +374,9 @@ class Dashborad extends Component {
                                         <strong>Professor:</strong>{" "}
                                         {project.superVisorFirstname} {project.superVisorLastname}
                                       </p>
-                                      <Rating count={5} size={30} activeColor="#ffd700" />
+
+                                  
+                                      <StarRating value={parseFloat(project.avgRating)} size={25} displayHalf={true} />
                                     </div>
                                     <div className="project-description">
                                       <p>{project.description}</p>
@@ -421,33 +390,6 @@ class Dashborad extends Component {
                             })}
                           </div>
 
-                          {/* <div className="project-list">
-                            {projects.map((project) => {
-                              // Convert the creation date to the desired format
-                              const createdDate = new Date(
-                                project.createdAt
-                              ).toLocaleString("default", {
-                                month: "long",
-                                day: "numeric",
-                                year: "numeric",
-                              });
-                              return (
-                                <div className="project-card" key={project._id}>
-                                  <div className="project-details">
-                                    <div className="video">
-                                      <video
-                                        style={{ width: "600px" }}
-                                        src={project.demoVideo}
-                                        autoPlay
-                                        controls
-                                        muted
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div> */}
                         </div>
                       </div>
                       {/* /.card-body */}
