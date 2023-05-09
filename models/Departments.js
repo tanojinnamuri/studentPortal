@@ -10,6 +10,10 @@ const departmentSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    Color: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

@@ -124,3 +124,11 @@
     align-items: center;
   }
   
+  .project-department {
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 10px;
+  }
+
+  

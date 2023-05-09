@@ -37,12 +37,7 @@
     font-weight: bold;
 }
 
-.box1 p {
-  font-size: 1rem;
-  line-height: 1.5;
-  margin: 0;
-  font-family:   Arial;
-}
+
 
 .image-container1 {
   position: relative;
@@ -56,88 +51,7 @@
   object-fit: cover;
 }
 
-.grid-container {
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 1rem; */
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 0;
-}
 
-.grid-item {
-  
-  border: 1px solid #ddd;
-  padding: 20px;
-  text-align: center;
-  font-size: 16px;
-  background-color: #f4f4f4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.grid-item h4 {
-  font-size: 1.9rem;
-  margin-bottom: 0.1rem;
-  font-weight: bolder;
-  color: #555;
-  text-transform: uppercase;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.grid-item p {
-  font-size: 1.4rem;
-  margin-bottom: 0.2rem;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #555;
-}
-
-.grid-item1 h4 {
-  font-size: 1.9rem;
-  margin-bottom: 0.1rem;
-  font-weight: bolder;
-  color: #555;
-  text-transform: uppercase;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.grid-item1 p {
-  font-size: 0.8rem;
-  margin-bottom: 0.2rem;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bolder;
-}
-.grid-item1 a{
-  color: #555;
-}
-
-
-.grid-container1 {
-
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-gap: 0;
-  margin-bottom: 10px;
-  padding-bottom: 100px;
-}
-
-.grid-item1 {
-
-  
-  border: 1px solid #ddd;
-  padding: 20px;
-  text-align: center;
-  font-size: 16px;
-  background-color: #f4f4f4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 
 .comment-section {
   margin-top: 50px;
@@ -210,3 +124,48 @@
   border-color: #46166b !important;
 }
 
+
+.card-title1 {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 1.9rem;
+  margin-bottom: 0.1rem;
+  font-weight: bolder;
+  color: #46166b;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.card-body1 {
+  background-color: #fff;
+  border: 1px solid #46166b;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+
+.card-title1::after {
+  content: "";
+  display: block;
+  width: 40%;
+  height: 2px;
+  margin: 10px auto;
+  background-color: #46166b;
+}
+
+.card-body1 a{
+  color: #555;
+}
+
+
+.projectmain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* center cards horizontally */
+  align-items: center; /* center cards vertically */
+}
+
+.card1 {
+  margin: 20px; /* add margin between cards */
+}

@@ -7,6 +7,7 @@ import ReactPlayer from "react-player";
 import Rating from "react-rating-stars-component";
 import "./projectdetails.css";
 import DownloadLink from "./DownloadLink";
+import { CCard, CCardImage, CCardBody, CCardTitle, CCardText, CButton } from 'react-bootstrap';
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -106,6 +107,8 @@ class ProjectDetails extends Component {
   render() {
     return (
       <>
+
+
         <div className="parent-container">
           <div className="container1">
             <div className="image-container1">
@@ -114,72 +117,98 @@ class ProjectDetails extends Component {
                 className="img1"
                 alt="Placeholder"
               />
+
             </div>
+
+
+
             <div className="box1">
               <h1>{this.state.projectDetails.name}</h1>
             </div>
           </div>
-          <div className="grid-container">
-            <div className="grid-item">
-              <h4>Department</h4>
-              <p> {this.state.projectDetails.department}</p>
+          <div style={{ paddingBottom: "50px" }}>
+          <div class="row" className="projectmain">
+            <div class="col-sm-3">
+              <div class="card1">
+                <div class="card-body1">
+                  <h5 class="card-title1" text-center>Department</h5>
+                  <p class="card-text1">{this.state.projectDetails.department}</p>
+                </div>
+              </div>
             </div>
-            <div className="grid-item">
-              <h4>Team Members</h4>
-              <p>{this.state.projectDetails.teamMembers}</p>
+            <div class="col-sm-3">
+              <div class="card1">
+                <div class="card-body1">
+                  <h5 class="card-title1">Team Members</h5>
+                  <p class="card-text1">{this.state.projectDetails.teamMembers}</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="grid-container1">
-            <div className="grid-item1">
-              <h4>Artifact Source</h4>
-              <p>
-    <a
+            <div class="col-sm-3">
+              <div class="card1">
+                <div class="card-body1">
+                  <h5 class="card-title1">Artifact Source</h5>
+                  <p class="card-text1">  <a
                   href={this.state.projectDetails.artfactLink}
                   target="_blank"
                   rel="noreferrer"
                 >
                   {this.state.projectDetails.artfactLink}
-                </a>
-              </p>
+                </a></p>
+                </div>
+              </div>
             </div>
-            <div className="grid-item">
-              <h4>Abstarct</h4>
-              <p> {this.state.projectDetails.abstract}</p>
+            <div class="col-sm-3">
+              <div class="card1">
+              <div class="card-body1 text-center">
+  <h5 class="card-title1">Documents</h5>
+  <p>
+    {this.state.projectDetails.singledocument ? (
+      <>
+        <DownloadLink
+          base64String={this.state.projectDetails.singledocument}
+          filename={"project details"}
+        />
+      </>
+    ) : (
+      <></>
+    )}
+  </p>
+  <p>
+    {this.state.projectDetails.otherdocument &&
+      this.state.projectDetails.otherdocument.length > 0 ? (
+      <>
+        {this.state.projectDetails.otherdocument.map((doc) => {
+          return (
+            <DownloadLink
+              base64String={doc}
+              filename={"other document"}
+            />
+          );
+        })}
+      </>
+    ) : (
+      <></>
+    )}
+  </p>
+</div>
+
+              </div>
             </div>
           </div>
-
-          <div className="grid-container1">
-            <div className="grid-item1">
-              <h4>documents</h4>
-              {}
-              {this.state.projectDetails.singledocument ? (
-                <>
-                  <DownloadLink
-                    base64String={this.state.projectDetails.singledocument}
-                    filename={"project details"}
-                  />
-                </>
-              ) : (
-                <></>
-              )}
-
-              {this.state.projectDetails.otherdocument &&
-              this.state.projectDetails.otherdocument.length > 0 ? (
-                <>
-                  {this.state.projectDetails.otherdocument.map((doc) => {
-                    return (
-                      <DownloadLink
-                        base64String={doc}
-                        filename={"other document"}
-                      />
-                    );
-                  })}
-                </>
-              ) : (
-                <></>
-              )}
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card1">
+                <div class="card-body1">
+                  <h5 class="card-title1">Description</h5>
+                  <p class="card-text1">{this.state.projectDetails.abstract}</p>
+                </div>
+              </div>
             </div>
+
           </div>
+          </div>
+
 
           <div>
             <div style={{ width: "140", height: "260" }}>
@@ -245,7 +274,7 @@ class ProjectDetails extends Component {
                   )}
                 </form>
                 {this.state.projectDetails.feedback &&
-                this.state.projectDetails.feedback.length > 0 ? (
+                  this.state.projectDetails.feedback.length > 0 ? (
                   <>
                     {this.state.projectDetails.feedback.map((fee) => {
                       return (

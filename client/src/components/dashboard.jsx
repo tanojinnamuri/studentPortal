@@ -79,17 +79,17 @@ class Dashborad extends Component {
         throw err;
       });
   }
-  async getDegreeList(){
+  async getDegreeList() {
     await axios
-    .get("http://localhost:3000/api/degrees/getAll")
-    .then((res) => {
-      let data = [];
+      .get("http://localhost:3000/api/degrees/getAll")
+      .then((res) => {
+        let data = [];
 
-      this.setState({ degreeOptions: res.data });
-    })
-    .catch((err) => {
-      throw err;
-    });
+        this.setState({ degreeOptions: res.data });
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
   changeScreen = (id) => {
     window.location.href = `/detail/${id}`;
@@ -103,7 +103,7 @@ class Dashborad extends Component {
     }
   }
   handleChange1(e) {
-      this.setState({ sortOrder: e.target.value });
+    this.setState({ sortOrder: e.target.value });
   }
   cancel = async () => {
     await this.getAllData();
@@ -121,9 +121,9 @@ class Dashborad extends Component {
       this.setState({ projects: strDescending });
     }
   }
-  
-  
-  
+
+
+
   filterData = async () => {
     if (this.state.type !== "" && this.state.query !== "") {
       await axios
@@ -145,15 +145,15 @@ class Dashborad extends Component {
               let totalRating = element.feedback.reduce((acc, curr) => acc + curr.rating, 0);
               let avgRating = totalRating / element.feedback.length;
               newData.avgRating = avgRating.toFixed(1);
-  
-  
+
+
               newData.isApproved = element.isApproved
                 ? "Approved"
                 : "Not Approved";
               data.push(newData);
             }
           });
-  
+
           this.setState({ projects: data });
         })
         .catch((err) => {
@@ -166,7 +166,7 @@ class Dashborad extends Component {
           }
           throw err;
         });
-  
+
     } else {
       toast.error("please fill type and query");
     }
@@ -226,7 +226,7 @@ class Dashborad extends Component {
               <div className="container-fluid">
                 <div className="row mb-2">
                   <div className="col-sm-9">
-                    <h1>UAlbany Showcase</h1>
+                    <h1>UAlbany Showcase Projects</h1>
                   </div>
                   <div className=" col-sm-3">
                     {this.props.disableAddNew ? (
@@ -250,9 +250,9 @@ class Dashborad extends Component {
                 <div className="row">
                   <div className="col-12">
                     <div className="card">
-                      <div className="card-header">
-                        <h3 className="card-title">Submitted Projects</h3>
-                      </div>
+                      {/* <div className="card-header"> */}
+                        {/* <h3 className="card-title">Submitted Projects</h3> */}
+                      {/* </div> */}
 
                       {/* /.card-header */}
                       <div className="card-body">
@@ -293,7 +293,7 @@ class Dashborad extends Component {
                             </div>
                           </div>
                           <div className="col-md-4 col-sm-4 col-12">
-                        
+
                             <div className="">
                               <div className="col-12 col-md-10 p-0">
                                 <div
@@ -320,7 +320,7 @@ class Dashborad extends Component {
                           </div>
                         </div>
                         <div className="row m-0">
-                        <div className="col-md-4 col-sm-12 col-12">
+                          <div className="col-md-4 col-sm-12 col-12">
                             <div className="form-group">
                               <select
                                 name="type"
@@ -334,26 +334,34 @@ class Dashborad extends Component {
                             </div>
                           </div>
                           <div className="col-md-4 col-md-4 p-0">
-                          <button
-                                    type="button"
-                                    className="btn custbtn1"
-                                    onClick={this.sort}
-                                  >
-                                    Sort
-                                  </button>
+                            <button
+                              type="button"
+                              className="btn custbtn1"
+                              onClick={this.sort}
+                            >
+                              Sort
+                            </button>
                           </div>
                         </div>
 
                         <div className="row float-right"></div>
 
                         <br />
-                       
-                       
+
+
                         <div className="">
-                      
+
                           <div className="project-list">
                             {projects.map((project) => {
-                           
+                              let maincolor = "blue"
+                              if(departmentOptions.length > 0 && project.department !== undefined && project.department !== null){
+                                let color = departmentOptions.filter(y => y.DepartmentName == project.department);
+                                if(color.length > 0){
+                                  maincolor = color[0].Color;
+                                }
+                              }
+                            
+                       
                               return (
                                 <div className="project-card" key={project._id}>
                                   <div className="project-image">
@@ -375,7 +383,10 @@ class Dashborad extends Component {
                                         {project.superVisorFirstname} {project.superVisorLastname}
                                       </p>
 
-                                  
+                                      <div className="project-department" style={{backgroundColor: maincolor}}>
+                                        <span className="department-name">{project.department}</span>
+                                      </div>
+
                                       <StarRating value={parseFloat(project.avgRating)} size={25} displayHalf={true} />
                                     </div>
                                     <div className="project-description">

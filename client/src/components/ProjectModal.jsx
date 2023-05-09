@@ -8,6 +8,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import url from "../utils/url_config";
 
+
+
 class ProjectModal extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +55,12 @@ class ProjectModal extends Component {
 
   async componentDidMount() {
     await this.getdepartmentList();
+    if (!this.props.disableAddNew) {
+     this.state.presenterFirstName =  localStorage.getItem("firstname");
+      this.state.presenterLastName = localStorage.getItem("lastname");
+      this.state.studentEmail = localStorage.getItem("email");
+    }
+  
   }
 
 
@@ -268,6 +276,7 @@ class ProjectModal extends Component {
       ));
     return (
       <>
+   
         {/* <Button
           className="float-right custbtn"
           
@@ -504,6 +513,7 @@ class ProjectModal extends Component {
                 data-type="control_fullname"
                 id="id_12"
                 question-order={2}
+               
               >
                 <label
                   className="form-label form-label-top form-label-auto"
@@ -530,14 +540,18 @@ class ProjectModal extends Component {
                       style={{ verticalAlign: "top" }}
                       data-input-type="first"
                     >
-                      <input
-                        type="text"
-                        id="first_12"
-                        name="presenterFirstName"
-                        className="form-textbox validate[required]"
-                        onChange={(e) => this.handleChange(e)}
-                        required
-                      />
+                 <input
+  type="text"
+  id="first_12"
+  name="presenterFirstName"
+  className="form-textbox validate[required]"
+  value={this.state.presenterFirstName}
+  onChange={(e) => this.handleChange(e)}
+  readOnly
+  required
+/>
+
+
                       <label
                         className="form-sub-label"
                         htmlFor="first_12"
@@ -561,6 +575,8 @@ class ProjectModal extends Component {
                         size={15}
                         onChange={(e) => this.handleChange(e)}
                         required
+                        value={this.state.presenterLastName}
+                        readOnly
                       />
                       <label
                         className="form-sub-label"
@@ -787,11 +803,13 @@ class ProjectModal extends Component {
                 data-type="control_email"
                 id="id_15"
                 question-order={6}
+                
               >
                 <label
                   className="form-label form-label-top"
                   id="label_15"
                   htmlFor
+                
                 >
                   Email
                   <span
@@ -819,6 +837,8 @@ class ProjectModal extends Component {
                       style={{ width: "310px" }}
                       size={310}
                       required
+                      value={this.state.studentEmail}
+                readOnly
                     />
                     <label
                       className="form-sub-label"
@@ -1427,13 +1447,7 @@ class ProjectModal extends Component {
                   htmlFor="input_226"
                 >
                   Please select other document for project
-                  <span
-                    className="form-required"
-                    aria-label="Required"
-                    aria-describedby="requirement_description_0"
-                  >
-                    *
-                  </span>
+                
                 </label>
                 <div
                   id="cid_226"
@@ -1473,7 +1487,7 @@ class ProjectModal extends Component {
                   id="label_223"
                   htmlFor="input_223"
                 >
-                  demo video Link
+                  Project Video
                   <span
                     className="form-required"
                     aria-label="Required"

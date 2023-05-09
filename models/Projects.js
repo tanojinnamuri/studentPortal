@@ -121,96 +121,76 @@ projectchema.method("createProject", async function (project) {
   let ids = [];
   let user = new User();
   let userSent = false;
-  await user
-    .getRandomReviewer(project.department)
-    .then(async (da) => {
-      if (da) {
-        for (let us of da) {
-          ids.push({ userId: us._id });
-          console.log("hello , ", project);
-          console.log(project.submittedBy);
-          let createdUser = await user.getUser(project.submittedBy);
-          if (!userSent) {
-            userSent = true;
-            // send mail with defined transport object
-            let mailOptions = {
-              from: process.env.smtpEmail,
-              to: createdUser.email,
-              subject: `Project ${project.name} created`,
-              text: `Emails has been sent to selected reviewers waith for reviewer approval if project approve you will get email`,
-            };
+  
+  // Add reviewers from supervisor's team
+  let supervisor = {
+    email: project.superVisorEmail,
+    firstName: project.superVisorFirstname,
+    lastName: project.superVisorLastname
+  };
+  console.log(supervisor);
+ // if (supervisor) {
+    //for (let us of supervisor) {
+      //ids.push({ userId: us._id });
+      console.log("hello , ", project);
+      console.log(project.submittedBy);
+      let createdUser = await user.getUser(project.submittedBy);
+      if (!userSent) {
+        userSent = true;
+        // send mail with defined transport object
+        let mailOptions = {
+          from: process.env.smtpEmail,
+          to: createdUser.email,
+          subject: `Project ${project.name} created`,
+          text: `Hello
+          Selected reviewers have received an email.
+          Wait for the review process to complete, and you will be notified via email as soon as the professor alters the status.
+          Thanks & Regards,
+          Student Project Portal`,
+        };
 
-            transporter.sendMail(mailOptions, (error, info) => {
-              if (error) {
-                console.log(error);
-              } else {
-                console.log("Email sent: " + info.response);
-              }
-            });
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Email sent: " + info.response);
           }
-          // send mail with defined transport object
-          let mailOptions = {
-            from: process.env.smtpEmail,
-            to: us.email,
-            subject: `Review Project ${project.name} created by ${createdUser.firstname} ${createdUser.lastname}`,
-            text: `Kindly review project from portal project the created user email is ${createdUser.email}`,
-          };
-          console.log("world");
-          console.log(mailOptions);
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log("Email sent: " + info.response);
-            }
-          });
-          // const msg = {
-          //   to: us.email, // Change to your recipient
-          //   from: process.env.SENDER, // Change to your verified sender
-          //   subject: `Review Project ${project.name}`,
-          //   text: "Kindly review project from portal",
-          // };
-          // await sgMail
-          //   .send(msg)
-          //   .then(() => {
-          //     console.log("Email sent");
-          //   })
-          //   .catch((error) => {
-          //     console.error(error);
-          //   });
-        }
-        // da.forEach(async (element) => {
-        //   ids.push({ userId: element._id });
-
-        //   console.log(ids);
-
-        //   const msg = {
-        //     to: element.email, // Change to your recipient
-        //     from: process.env.SENDER, // Change to your verified sender
-        //     subject: `Review Project ${project.name}`,
-        //     text: "Kindly review project from portal",
-        //   };
-        //   await sgMail
-        //     .send(msg)
-        //     .then(() => {
-        //       console.log("Email sent");
-        //     })
-        //     .catch((error) => {
-        //       console.error(error);
-        //     });
-        // });
+        });
       }
-    })
-    .catch((erro) => {
-      console.log(erro);
-    });
+      // send mail with defined transport object
+      let mailOptions = {
+        from: process.env.smtpEmail,
+        to: supervisor.email,
+        subject: `A New Project is created by ${createdUser.firstname} ${createdUser.lastname}`,
+        text: `Hello Professor,
 
-  project.reviewer = ids;
+        A project has been created by ${createdUser.firstname} ${createdUser.lastname} on the Student Project Portal. The title of the project is "${project.name}".
+        
+        Please follow the link to review the project: [insert project link here]
+        
+        Thank you and regards,
+        
+        Student Project Portal
+        `,
+      };
+      console.log("world");
+      console.log(mailOptions);
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+    //}
+  //}
+  project.reviewer = [];
+  project.reviewer.push(supervisor);
 
-  console.log(ids);
 
   return await Project.create(project);
 });
+
 
 projectchema.method("getAllProjects", async function () {
   let Project = this.model("Project");

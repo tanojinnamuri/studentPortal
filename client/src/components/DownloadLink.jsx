@@ -7,7 +7,7 @@ function DownloadLink({ base64String, filename, type }) {
 
   return (
     <a href={downloadUrl} download={filename} style={{ color: "black" }}>
-      Download {filename}
+      {filename}
     </a>
   );
 }

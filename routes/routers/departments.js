@@ -25,10 +25,12 @@ const ejwtauth = exjwt({ secret: keys.jwtsecret, algorithms: ["HS256"] });
 
 
 // Create a new department
+// Create a new department
 router.post(
   '/departments',
   ejwtauth,
   body('DepartmentName').trim().isString().notEmpty(),
+  body('Color').trim().isString().notEmpty(),
   processValidationErrors,
   async (req, res, next) => {
     try {
@@ -36,7 +38,7 @@ router.post(
         throw new APIError(401, 'You are not authorized to create a new department.');
       }
 
-      const department = new Department({ DepartmentName: req.body.DepartmentName });
+      const department = new Department({ DepartmentName: req.body.DepartmentName, Color: req.body.Color });
 
       const savedDepartment = await department.save();
 
@@ -46,6 +48,7 @@ router.post(
     }
   }
 );
+
 
 /*
   --------
