@@ -22,7 +22,8 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 // Serve the uploaded video files using express.static middleware
 app.use("/uploads", express.static("uploads"));
@@ -30,6 +31,10 @@ app.use("/uploads", express.static("uploads"));
 app.use("/", indexRouter);
 app.use("/api", apiRouter);
 app.use(handleErrors);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -46,11 +51,10 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, "client/build")));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'));
-});
-
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client/build/index.html"));
+// });
 
 module.exports = app;
