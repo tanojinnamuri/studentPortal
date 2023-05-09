@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node ./bin/www",
+    "client": "cd client && npm start"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
@@ -36,5 +38,8 @@
     "uuidv4": "^6.2.6",
     "validator": "^13.5.2",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1"
   }
 }
