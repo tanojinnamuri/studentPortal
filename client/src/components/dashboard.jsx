@@ -353,7 +353,7 @@ class Dashborad extends Component {
 
                           <div className="project-list">
                             {projects.map((project) => {
-                              let maincolor = "blue"
+                              let maincolor = "#f5e98e"
                               if(departmentOptions.length > 0 && project.department !== undefined && project.department !== null){
                                 let color = departmentOptions.filter(y => y.DepartmentName == project.department);
                                 if(color.length > 0){

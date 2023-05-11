@@ -28,6 +28,13 @@ class Register extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    if (this.state.role === 'Student' ||this.state. role === 'Rewiewer') {
+      const emailRegex = /^[^\s@]+@albany\.edu$/;
+      const isValidEmail = emailRegex.test(this.state.email);
+      if(!isValidEmail){
+        toast.error("Check Email Address Format");
+      }
+    }
     if (
       this.state.firstname.length == 0 ||
       this.state.lastname.length == 0 ||
@@ -37,9 +44,9 @@ class Register extends Component {
       this.state.department.length == 0 ||
       this.state.confirmpassword.length == 0
     ) {
-      toast.error("Please fill all fields before sign up");
+      toast.error("Please enter required fields");
     } else if (this.state.password != this.state.confirmpassword) {
-      toast.error("password and confirm password are not matched");
+      toast.error("Password and confirm password doesn't match");
     } else {
       axios
         .post(`http://localhost:3000/api/users/register`, {
@@ -117,14 +124,15 @@ class Register extends Component {
       <div>
         <NavbarField showLogout={false} />
         <div className="hold-transition register-page">
-          <h1>Project Management</h1>
+          <h1>Student Project Portal</h1>
+      
           <div className="register-box">
             <div className="register-logo">
               <a href="#"></a>
             </div>
             <div className="card">
               <div className="card-body register-card-body">
-                <h5 className="login-box-msg">Register a new user</h5>
+               
                 <form action="" method="post">
                   <div className="input-group mb-3">
                     <input
@@ -169,6 +177,21 @@ class Register extends Component {
                     </div>
                   </div>
                   <div className="input-group mb-3">
+                    <select
+                      name="role"
+                      className="form-control"
+                      onChange={(e) => this.handleChange(e)}
+                    >
+                      <option value="" disabled selected>
+                        Select your role
+                      </option>
+                      <option value={"Student"}>Student</option>
+                      <option value={"Viewer"}>Viewer</option>
+                      <option value={"Rewiewer"}>Rewiewer</option>
+                    </select>
+                  </div>
+            
+                  <div className="input-group mb-3">
                     <input
                       type="email"
                       name="email"
@@ -181,7 +204,11 @@ class Register extends Component {
                         <span className="fas fa-envelope" />
                       </div>
                     </div>
+                    <span className="small text-muted">
+  @albany.edu if you are a student or a reviewer.
+</span>
                   </div>
+         
                   <div className="input-group mb-3">
                     <input
                       type="password"
@@ -212,20 +239,6 @@ class Register extends Component {
                   </div>
 
                   <div className="input-group mb-3">
-                    <select
-                      name="role"
-                      className="form-control"
-                      onChange={(e) => this.handleChange(e)}
-                    >
-                      <option value="" disabled selected>
-                        Select your role
-                      </option>
-                      <option value={"Student"}>Student</option>
-                      <option value={"Viewer"}>Viewer</option>
-                      <option value={"Rewiewer"}>Rewiewer</option>
-                    </select>
-                  </div>
-                  <div className="input-group mb-3">
                   <select
                                 name="department"
                                 className="filter-dropdown-height react-select theme-light react-select__control filter-dropdown-height is-untouched is-pristine av-valid form-control"
@@ -233,7 +246,7 @@ class Register extends Component {
                                 value= {this.state.department}
                               >
                                 <option value="" disabled="">
-                                  Select
+                                  Select Department
                                 </option>
                                 {options}
                               </select>
@@ -243,7 +256,7 @@ class Register extends Component {
                     <div className="col-12">
                       <button
                         type="submit"
-                        className="btn btn-primary btn-block"
+                        className="custbtn"
                         onClick={(e) => {
                           this.handleSubmit(e);
                         }}
@@ -255,7 +268,7 @@ class Register extends Component {
                   </div>
                 </form>
                 <br></br>
-                <Link to={url.login} className="text-center">
+                <Link to={url.login} className="signuplink text-center">
                   Already have an Account? Login
                 </Link>
               </div>

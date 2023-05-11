@@ -65,11 +65,10 @@ const projectchema = mongoose.Schema(
     },
     reviewer: [
       {
-        userId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
+        firstname: String,
+        lastname: String,
+        email: String
         },
-      },
     ],
     isApproved: {
       type: Boolean,
@@ -93,14 +92,46 @@ projectchema.method("ApproveProject", async function (projectId) {
     { new: true } // return the updated project document
   );
 
+  console.log(v)
   let user = new User();
-  let createdUser = await user.getUser(v.createdUser);
+
+  let createdUser = await user.getUser(v.submittedBy);
   // send mail with defined transport object
   let mailOptions = {
     from: process.env.smtpEmail,
-    to: us.email,
-    subject: `Project ${project.name} created by ${createdUser.firstname} ${createdUser.lastname}`,
-    text: `Congratulation your project has been approved`,
+    to: createdUser.email,
+    subject: `Project " ${v.name} " has been reviwed by Professor`,
+    text: `Hello ${createdUser.firstname},
+    Congratulations your project has been approved.`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+  return v;
+});
+
+projectchema.method("RejectProject", async function (projectId) {
+  let Project = this.model("Project");
+  let v = await Project.findOneAndUpdate(
+    { _id: projectId }, // find the project with the specified ID
+    { isApproved: false }, // update the isApproved field to true
+    { new: true } // return the updated project document
+  );
+
+  let user = new User();
+  let createdUser = await user.getUser(v.submittedBy);
+  // send mail with defined transport object
+  let mailOptions = {
+    from: process.env.smtpEmail,
+    to: createdUser.email,
+    subject: `Project " ${v.name} " has been reviwed by Professor`,
+    text: `Hello ${createdUser.firstname},
+    We regret to inform you that your project is rejected.`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -118,78 +149,83 @@ projectchema.method("createProject", async function (project) {
   if ((await Project.findOne({ name: project.name })) !== null) {
     throw new APIError(400, "Already a same project present with same name.");
   }
-  let ids = [];
   let user = new User();
   let userSent = false;
   
   // Add reviewers from supervisor's team
   let supervisor = {
     email: project.superVisorEmail,
-    firstName: project.superVisorFirstname,
-    lastName: project.superVisorLastname
+    firstname: project.superVisorFirstname,
+    lastname: project.superVisorLastname
   };
-  console.log(supervisor);
- // if (supervisor) {
-    //for (let us of supervisor) {
-      //ids.push({ userId: us._id });
-      console.log("hello , ", project);
-      console.log(project.submittedBy);
-      let createdUser = await user.getUser(project.submittedBy);
-      if (!userSent) {
-        userSent = true;
-        // send mail with defined transport object
-        let mailOptions = {
-          from: process.env.smtpEmail,
-          to: createdUser.email,
-          subject: `Project ${project.name} created`,
-          text: `Hello
-          Selected reviewers have received an email.
-          Wait for the review process to complete, and you will be notified via email as soon as the professor alters the status.
-          Thanks & Regards,
-          Student Project Portal`,
-        };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("Email sent: " + info.response);
-          }
-        });
-      }
-      // send mail with defined transport object
-      let mailOptions = {
-        from: process.env.smtpEmail,
-        to: supervisor.email,
-        subject: `A New Project is created by ${createdUser.firstname} ${createdUser.lastname}`,
-        text: `Hello Professor,
-
-        A project has been created by ${createdUser.firstname} ${createdUser.lastname} on the Student Project Portal. The title of the project is "${project.name}".
-        
-        Please follow the link to review the project: [insert project link here]
-        
-        Thank you and regards,
-        
-        Student Project Portal
-        `,
-      };
-      console.log("world");
-      console.log(mailOptions);
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Email sent: " + info.response);
-        }
-      });
-    //}
-  //}
   project.reviewer = [];
   project.reviewer.push(supervisor);
+  let createdProject;
+  let createdUser;
 
+  project.createdUser = await user.getUser(project.submittedBy);
+  try {
+    createdProject = await Project.create(project);
+  } catch (err) {
+    if (err.name === "ValidationError") {
+      throw new APIError(400, err.message);
+    } else {
+      throw new APIError(500, "Error creating project: " + err.message);
+    }
+  }
 
-  return await Project.create(project);
+  if (!userSent) {
+    userSent = true;
+    // send mail with defined transport object
+    let mailOptions = {
+      from: process.env.smtpEmail,
+      to: createdUser.email,
+      subject: `Project ${project.name} created`,
+      text: `Hello ${createdUser.firstname}
+      Selected reviewers have received an email.
+      Wait for the review process to complete, and you will be notified via email as soon as the professor alters the status.
+      Thanks & Regards,
+      Student Project Portal`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+  }
+  // send mail with defined transport object
+  let mailOptions = {
+    from: process.env.smtpEmail,
+    to: supervisor.email,
+    subject: `A New Project is created by ${createdUser.firstname} ${createdUser.lastname}`,
+    text: `Hello Professor,
+
+    A project has been created by ${createdUser.firstname} ${createdUser.lastname} on the Student Project Portal. The title of the project is "${project.name}".
+    
+    Please follow the link to review the project: You can view it here: http://ec2-3-88-172-167.compute-1.amazonaws.com:3000/detail/${createdProject._id}
+    
+    Thank you and regards,
+    
+    Student Project Portal
+    `,
+  };
+  console.log(mailOptions);
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      throw new APIError(500, "Error sending email: " + error.message);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+
+  return createdProject;
 });
+
 
 
 projectchema.method("getAllProjects", async function () {

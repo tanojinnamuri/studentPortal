@@ -3,11 +3,9 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import url from "../utils/url_config";
-import ReactPlayer from "react-player";
 import Rating from "react-rating-stars-component";
 import "./projectdetails.css";
 import DownloadLink from "./DownloadLink";
-import { CCard, CCardImage, CCardBody, CCardTitle, CCardText, CButton } from 'react-bootstrap';
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -72,6 +70,25 @@ class ProjectDetails extends Component {
         throw err;
       });
   };
+  RejectProject = async () => {
+    await axios
+      .get(
+        `http://localhost:3000/api/projects/RejectProject/${this.props.match.params.id}`
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          window.location = "/";
+        }
+      })
+      .catch((err) => {
+        if (err.response && Array.isArray(err.response.data.messages)) {
+          const msgs = err.response.data.messages.map((v) =>
+            toast.error(v.msg)
+          );
+        }
+        throw err;
+      });
+  };
 
   changeRating = (e) => {
     this.setState({ rating: e });
@@ -81,6 +98,7 @@ class ProjectDetails extends Component {
     if (this.props.match.params.id === undefined) {
       window.location.reload();
     }
+
     await axios
       .get(
         `http://localhost:3000/api/projects/getProject/${this.props.match.params.id}`
@@ -88,6 +106,10 @@ class ProjectDetails extends Component {
       .then((res) => {
         console.log(res.data);
         this.setState({ projectDetails: res.data });
+        if (this.state.projectDetails.reviewer !== undefined && this.state.projectDetails.reviewer.length > 0)
+          if (localStorage.getItem("email") === this.state.projectDetails.reviewer[0].email) {
+            this.setState({ showApprove: true });
+          }
       })
       .catch((err) => {
         if (err.response && Array.isArray(err.response.data.messages)) {
@@ -127,86 +149,86 @@ class ProjectDetails extends Component {
             </div>
           </div>
           <div style={{ paddingBottom: "50px" }}>
-          <div class="row" className="projectmain">
-            <div class="col-sm-3">
-              <div class="card1">
-                <div class="card-body1">
-                  <h5 class="card-title1" text-center>Department</h5>
-                  <p class="card-text1">{this.state.projectDetails.department}</p>
+            <div class="row" className="projectmain">
+              <div class="col-sm-3">
+                <div class="card1">
+                  <div class="card-body1">
+                    <h5 class="card-title1" text-center>Department</h5>
+                    <p class="card-text1">{this.state.projectDetails.department}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="card1">
-                <div class="card-body1">
-                  <h5 class="card-title1">Team Members</h5>
-                  <p class="card-text1">{this.state.projectDetails.teamMembers}</p>
+              <div class="col-sm-3">
+                <div class="card1">
+                  <div class="card-body1">
+                    <h5 class="card-title1">Team Members</h5>
+                    <p class="card-text1">{this.state.projectDetails.teamMembers}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="card1">
-                <div class="card-body1">
-                  <h5 class="card-title1">Artifact Source</h5>
-                  <p class="card-text1">  <a
-                  href={this.state.projectDetails.artfactLink}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {this.state.projectDetails.artfactLink}
-                </a></p>
+              <div class="col-sm-3">
+                <div class="card1">
+                  <div class="card-body1">
+                    <h5 class="card-title1">Artifact Source</h5>
+                    <p class="card-text1">  <a
+                      href={this.state.projectDetails.artfactLink}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {this.state.projectDetails.artfactLink}
+                    </a></p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="card1">
-              <div class="card-body1 text-center">
-  <h5 class="card-title1">Documents</h5>
-  <p>
-    {this.state.projectDetails.singledocument ? (
-      <>
-        <DownloadLink
-          base64String={this.state.projectDetails.singledocument}
-          filename={"project details"}
-        />
-      </>
-    ) : (
-      <></>
-    )}
-  </p>
-  <p>
-    {this.state.projectDetails.otherdocument &&
-      this.state.projectDetails.otherdocument.length > 0 ? (
-      <>
-        {this.state.projectDetails.otherdocument.map((doc) => {
-          return (
-            <DownloadLink
-              base64String={doc}
-              filename={"other document"}
-            />
-          );
-        })}
-      </>
-    ) : (
-      <></>
-    )}
-  </p>
-</div>
+              <div class="col-sm-3">
+                <div class="card1">
+                  <div class="card-body1 text-center">
+                    <h5 class="card-title1">Documents</h5>
+                    <p>
+                      {this.state.projectDetails.singledocument ? (
+                        <>
+                          <DownloadLink
+                            base64String={this.state.projectDetails.singledocument}
+                            filename={"project details"}
+                          />
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </p>
+                    <p>
+                      {this.state.projectDetails.otherdocument &&
+                        this.state.projectDetails.otherdocument.length > 0 ? (
+                        <>
+                          {this.state.projectDetails.otherdocument.map((doc) => {
+                            return (
+                              <DownloadLink
+                                base64String={doc}
+                                filename={"other document"}
+                              />
+                            );
+                          })}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </p>
+                  </div>
 
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="card1">
-                <div class="card-body1">
-                  <h5 class="card-title1">Description</h5>
-                  <p class="card-text1">{this.state.projectDetails.abstract}</p>
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card1">
+                  <div class="card-body1">
+                    <h5 class="card-title1">Description</h5>
+                    <p class="card-text1">{this.state.projectDetails.abstract}</p>
+                  </div>
+                </div>
+              </div>
 
-          </div>
+            </div>
           </div>
 
 
@@ -227,7 +249,35 @@ class ProjectDetails extends Component {
                   muted
                 />
               </div>
+
+       
             </div>
+            {this.state.showApprove && (
+              <div className="container2">
+                <div className="row">
+                  <div className="col-md-6">
+                  <button
+                        className="btn custbtn1"
+                        type="submit"
+                        onClick={() => this.ApproveProject()}
+                      >Approve
+                      </button>
+                    
+                  </div>
+                  <div className="col-md-6">
+                  <button
+                        className="btn custbtn1"
+                        type="submit"
+                        onClick={() => this.RejectProject()}
+                      >Reject
+                      </button>
+                  </div>
+                </div>
+              </div>
+             
+
+            )}
+
             <div
               className="comment-section"
               style={{
@@ -322,6 +372,17 @@ class ProjectDetails extends Component {
             </div>
           </div>
         </div>
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </>
     );
   }

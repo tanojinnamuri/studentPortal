@@ -125,7 +125,7 @@ router.post(
             }
           }
         } else {
-          next(new APIError(400, "Invalid Email or Password"));
+          next(new APIError(400, "Incorrect Password"));
         }
       })
       .catch(next);

@@ -66,18 +66,16 @@ class Login extends Component {
         <NavbarField showLogout={false} />
 
         <div className="hold-transition login-page align-top">
-          <h1>Project Management</h1>
+          <h1>Student Project Portal</h1>
 
           <div className="login-box">
             <div className="login-logo">
               <a href="../../index2.html">
-                {/* <h1>Project Management</h1> */}
               </a>
             </div>
             {/* /.login-logo */}
             <div className="card">
               <div className="card-body login-card-body">
-                <h5 className="login-box-msg">Welcome!</h5>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                   <div className="input-group mb-3">
                     <input
@@ -119,8 +117,8 @@ class Login extends Component {
                     {/* /.col */}
                   </div>
                 </form>
-                <p className="mb-0">
-                  <Link to={url.register} className="text-center">
+                <p className="mb-0" >
+                  <Link to={url.register}  className="signuplink text-center">
                     Not a Member? Register
                   </Link>
                 </p>

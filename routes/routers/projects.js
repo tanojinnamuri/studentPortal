@@ -156,6 +156,19 @@ router.get(
 );
 
 router.get(
+  "/projects/RejectProject/:id",
+  processValidationErrors,
+  (req, res, next) => {
+    const project = new Project();
+    project
+      .RejectProject(req.params.id)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch(next);
+  }
+);
+router.get(
   "/projects/getProject/:type/:query",
   processValidationErrors,
   (req, res, next) => {

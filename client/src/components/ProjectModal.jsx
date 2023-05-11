@@ -199,37 +199,14 @@ class ProjectModal extends Component {
     );
     formData.append("singledocument", this.state.projectDocument);
     formData.append("otherdocument", this.state.otherdocument);
-    // {
-    //   name: this.state.name,
-    //   abstract: this.state.abstract,
-    //   poster: this.state.poster,
-    //   demoVideo: this.state.demoVideo,
-    //   artfactLink: this.state.artfactLink,
-    //   teamMembers: this.state.teamMembers,
-    //   department: this.state.department.trim(),
-    //   year: this.state.year,
-    //   submittedBy: localStorage.getItem("_id"),
-    //   presenterFirstName: this.state.presenterFirstName,
-    //   presenterLastName: this.state.presenterLastName,
-    //   homeTown: this.state.homeTown,
-    //   studentStatus: this.state.studentStatus,
-    //   studentIdNumber: this.state.studentIdNumber,
-    //   studentEmail: this.state.studentEmail,
-    //   presenter: this.state.presenter,
-    //   presentationFormat: this.state.presentationFormat,
-    //   presentationArea: this.state.presentationArea,
-    //   superVisorFirstname: this.state.superVisorFirstname,
-    //   superVisorLastname: this.state.superVisorLastname,
-    //   superVisorEmail: this.state.superVisorEmail,
-    //   presenterSignatureFirstname: this.state.presenterSignatureFirstname,
-    //   presenterSignatureLastname: this.state.presenterSignatureLastname,
-    // }
+  
     await axios
       .post("http://localhost:3000/api/projects/add", formData)
       .then(async (res) => {
         if (res.data === "OK") {
+          // show success message and reset form on success
           toast.success("Project added successfully");
-
+  
           this.setState({
             show: false,
             name: "",
@@ -243,18 +220,22 @@ class ProjectModal extends Component {
           });
           window.location.href = "/";
         } else {
+          // show error message if response is not "OK"
           toast.error("There is an issue in saving the project");
         }
       })
       .catch((err) => {
         if (err.response && Array.isArray(err.response.data.messages)) {
-          const msgs = err.response.data.messages.map((v) =>
-            toast.error(v.msg)
-          );
+          // if error response contains an array of messages, show each message as a toast notification
+          err.response.data.messages.forEach((v) => toast.error(v.msg));
+        } else {
+          // if error response does not contain an array of messages, show a generic error message
+          toast.error("An error occurred while saving the project");
         }
-        throw err;
+        throw err; // re-throw the error so that it can be caught by a higher-level error handler if necessary
       });
   }
+  
 
   handleFileInput = (event) => {
     this.setState({ demoVideo: event.target.files[0] });
@@ -277,156 +258,7 @@ class ProjectModal extends Component {
     return (
       <>
    
-        {/* <Button
-          className="float-right custbtn"
-          
-          onClick={() => this.handleShow()}
-        >
-          Add new Project
-        </Button>
-
-        <Modal show={this.state.show} onHide={() => this.handleClose()}> */}
-        {/* <div className="container">
-          <Form onSubmit={(e) => this.handleSubmit(e)}>
-            <Modal.Header>
-              <Modal.Title className="text-center">Add new Project</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder=""
-                  autoFocus
-                  required
-                  name="name"
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Abstract</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder=""
-                  autoFocus
-                  required
-                  name="abstract"
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Project Poster</Form.Label>
-                <Form.Control
-                  type="file"
-                  placeholder=""
-                  autoFocus
-                  required
-                  name="poster"
-                  onChange={(e) => this.handleFileInputChange(e)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Demo Video Link</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder=""
-                  autoFocus
-                  required
-                  name="demoVideo"
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Artifact link</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder=""
-                  autoFocus
-                  name="artfactLink"
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>team members</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder=""
-                  autoFocus
-                  name="teamMembers"
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Department</Form.Label>
-                <Form.Select
-                  autoFocus
-                  required
-                  name="department"
-                  onChange={(e) => this.handleChange(e)}
-                >
-                  <option value="Select your department ......">
-                    Select your department ......
-                  </option>
-                  <option value="ComputerScience">Computer Science</option>
-                  <option value="Biology">BioLogy</option>
-                  <option value="Chemistry">Chemistry</option>
-                  <option value="Physics">Physics</option>
-                  <option value="Data Science">Data Science</option>
-                  <option value="Economics">Economics</option>
-                  <option value="Information Science">
-                    Information Science
-                  </option>
-                </Form.Select>
-              </Form.Group>
-
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Year</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder=""
-                  autoFocus
-                  required
-                  name="year"
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button className="float-right custbtn" type="submit">
-                Save
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </div> */}
-
-        {/* </Modal> */}
-
-        <form className="jotform-form" onSubmit={(e) => this.handleSubmit(e)}>
+      <form className="jotform-form" onSubmit={(e) => this.handleSubmit(e)}>
           <div role="main" className="form-all">
             <style
               dangerouslySetInnerHTML={{
@@ -1885,7 +1717,20 @@ class ProjectModal extends Component {
             </ul>
           </div>
         </form>
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </>
+      
+     
     );
   }
 }

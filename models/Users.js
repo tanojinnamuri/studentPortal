@@ -70,7 +70,7 @@ userschema.method("checkIfUserWithEmailExists", async function (email) {
   let user = await User.findOne({ email });
 
   if (user == null) {
-    throw new APIError(404, "No user with this email exists");
+    throw new APIError(404, "No Account found! Check the entered Email Address.");
   }
   return user;
 });
