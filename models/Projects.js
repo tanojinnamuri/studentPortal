@@ -163,8 +163,8 @@ projectchema.method("createProject", async function (project) {
   project.reviewer.push(supervisor);
   let createdProject;
   let createdUser;
-
-  project.createdUser = await user.getUser(project.submittedBy);
+  createdUser = await user.getUser(project.submittedBy);
+  project.createdUser = createdUser;
   try {
     createdProject = await Project.create(project);
   } catch (err) {
@@ -206,7 +206,7 @@ projectchema.method("createProject", async function (project) {
 
     A project has been created by ${createdUser.firstname} ${createdUser.lastname} on the Student Project Portal. The title of the project is "${project.name}".
     
-    Please follow the link to review the project: You can view it here: http://ec2-3-88-172-167.compute-1.amazonaws.com:3000/detail/${createdProject._id}
+    Please follow the link to review the project: You can view it here: http://localhost:3001/detail/${createdProject._id}
     
     Thank you and regards,
     

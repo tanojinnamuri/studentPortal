@@ -166,6 +166,7 @@ class ProjectModal extends Component {
   };
 
   async handleSubmit(e) {
+    toast.info("Please Wait while Portal is submitting the project!");
     e.preventDefault();
     const formData = new FormData();
     formData.append("video", this.state.demoVideo);

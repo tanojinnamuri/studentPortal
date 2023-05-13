@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const logger = require("../helpers/logger");
 const process = require("process");
+require('dotenv').config();
 
 class Database {
   MONGODB_URI = process.env.MONGODB_URI;

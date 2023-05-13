@@ -24,6 +24,7 @@ class Dashborad extends Component {
     this.filterData = this.filterData.bind(this);
     this.cancel = this.cancel.bind(this);
     this.sort = this.sort.bind(this);
+    console.log(this.props.disableAddNew);
   }
 
   async getAllData() {
@@ -188,6 +189,8 @@ class Dashborad extends Component {
 
   render() {
     const { projects } = this.state;
+
+    console.log(this.disableAddNew + "sdkjhbchbdrshbcsbusebn");
     const { type, query, departmentOptions, degreeOptions } = this.state;
     let options = null;
     if (type === "department") {
@@ -229,7 +232,8 @@ class Dashborad extends Component {
                     <h1>UAlbany Showcase Projects</h1>
                   </div>
                   <div className=" col-sm-3">
-                    {this.props.disableAddNew ? (
+                    {localStorage.getItem("isReviewer") == "true"  ? (
+                     
                       <></>
                     ) : (
                       <Button
