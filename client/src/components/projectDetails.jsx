@@ -10,7 +10,14 @@ import DownloadLink from "./DownloadLink";
 class ProjectDetails extends Component {
   constructor(props) {
     super(props);
-  }
+      this.state = {
+        projectDetails: {},
+        comment: "",
+        rating: 0,
+        showShare: false,
+        showApprove: false, // Define the state variable here
+      };
+    }
 
   addComment = async () => {
     if (this.state.comment !== "" && this.state.rating != 0) {
@@ -104,7 +111,6 @@ class ProjectDetails extends Component {
         `http://localhost:3000/api/projects/getProject/${this.props.match.params.id}`
       )
       .then((res) => {
-        console.log(res.data);
         this.setState({ projectDetails: res.data });
         if (this.state.projectDetails.reviewer !== undefined && this.state.projectDetails.reviewer.length > 0)
           if (localStorage.getItem("email") === this.state.projectDetails.reviewer[0].email) {
@@ -125,7 +131,6 @@ class ProjectDetails extends Component {
       [e.target.name]: e.target.value,
     });
   }
-  state = { projectDetails: {}, comment: "", rating: 0, showShare: false };
   render() {
     return (
       <>
@@ -149,28 +154,29 @@ class ProjectDetails extends Component {
             </div>
           </div>
           <div style={{ paddingBottom: "50px" }}>
-            <div class="row" className="projectmain">
-              <div class="col-sm-3">
-                <div class="card1">
-                  <div class="card-body1">
-                    <h5 class="card-title1" text-center>Department</h5>
-                    <p class="card-text1">{this.state.projectDetails.department}</p>
+            <div className="projectmain">
+            <div className="row">
+              <div className="col-sm-3">
+                <div className="card1">
+                  <div className="card-body1">
+                    <h5 className="card-title1 text-center">Department</h5>
+                    <p className="card-text1">{this.state.projectDetails.department}</p>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3">
-                <div class="card1">
-                  <div class="card-body1">
-                    <h5 class="card-title1">Team Members</h5>
-                    <p class="card-text1">{this.state.projectDetails.teamMembers}</p>
+              <div className="col-sm-3">
+                <div className="card1">
+                  <div className="card-body1">
+                    <h5 className="card-title1">Team Members</h5>
+                    <p className="card-text1">{this.state.projectDetails.teamMembers}</p>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3">
-                <div class="card1">
-                  <div class="card-body1">
-                    <h5 class="card-title1">Artifact Source</h5>
-                    <p class="card-text1">  <a
+              <div className="col-sm-3">
+                <div className="card1">
+                  <div className="card-body1">
+                    <h5 className="card-title1">Artifact Source</h5>
+                    <p className="card-text1">  <a
                       href={this.state.projectDetails.artfactLink}
                       target="_blank"
                       rel="noreferrer"
@@ -180,10 +186,10 @@ class ProjectDetails extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3">
-                <div class="card1">
-                  <div class="card-body1 text-center">
-                    <h5 class="card-title1">Documents</h5>
+              <div className="col-sm-3">
+                <div className="card1">
+                  <div className="card-body1 text-center">
+                    <h5 className="card-title1">Documents</h5>
                     <p>
                       {this.state.projectDetails.singledocument ? (
                         <>
@@ -218,12 +224,13 @@ class ProjectDetails extends Component {
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="card1">
-                  <div class="card-body1">
-                    <h5 class="card-title1">Description</h5>
-                    <p class="card-text1">{this.state.projectDetails.abstract}</p>
+            </div>
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card1">
+                  <div className="card-body1">
+                    <h5 className="card-title1">Description</h5>
+                    <p className="card-text1">{this.state.projectDetails.abstract}</p>
                   </div>
                 </div>
               </div>
@@ -252,7 +259,7 @@ class ProjectDetails extends Component {
 
        
             </div>
-            {this.state.showApprove && (
+            {this.state.showApprove == true ? (
               <div className="container2">
                 <div className="row">
                   <div className="col-md-6">
@@ -276,7 +283,7 @@ class ProjectDetails extends Component {
               </div>
              
 
-            )}
+            ) : (<></>)}
 
             <div
               className="comment-section"
