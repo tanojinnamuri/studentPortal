@@ -15,7 +15,7 @@ class ProjectDetails extends Component {
         comment: "",
         rating: 0,
         showShare: false,
-        showApprove: false, // Define the state variable here
+        showApprove: true, // Define the state variable here
       };
     }
 
@@ -112,10 +112,18 @@ class ProjectDetails extends Component {
       )
       .then((res) => {
         this.setState({ projectDetails: res.data });
-        if (this.state.projectDetails.reviewer !== undefined && this.state.projectDetails.reviewer.length > 0)
-          if (localStorage.getItem("email") === this.state.projectDetails.reviewer[0].email) {
-            this.setState({ showApprove: true });
-          }
+        const loginemail = localStorage.getItem("email");
+        if(loginemail === undefined || loginemail === null || localStorage.getItem("isReviewer") === true ||
+        localStorage.getItem("_id") === null || localStorage.getItem("_id") === undefined ){
+          this.setState({showApprove : false});
+        }
+       if(loginemail !== undefined && loginemail !== null){
+         if(loginemail !== res.data.superVisorEmail){
+          this.setState({showApprove : false});
+         }
+       }
+  
+  
       })
       .catch((err) => {
         if (err.response && Array.isArray(err.response.data.messages)) {

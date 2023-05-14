@@ -229,7 +229,7 @@ class Dashborad extends Component {
                     <h1>UAlbany Showcase Projects</h1>
                   </div>
                   <div className=" col-sm-3">
-                    {localStorage.getItem("isReviewer") == "true"  ? (
+                    {(localStorage.getItem("isReviewer") == "true" || localStorage.getItem("_id") === null || localStorage.getItem("_id") === undefined)  ? (
                      
                       <></>
                     ) : (
