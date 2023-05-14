@@ -21,7 +21,7 @@ class Login extends Component {
     e.preventDefault();
     // log in
     axios
-      .post("http://localhost:3000/api/users/login", {
+      .post("/api/users/login", {
         email: this.state.email,
         pswd: this.state.password,
       })

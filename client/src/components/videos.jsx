@@ -22,7 +22,7 @@ class Videos extends Component {
     async getAllData() {
         // let isReviewer = localStorage.getItem("isReviewer");
         await axios
-            .get("http://localhost:3000/api/projects/getAll")
+            .get("/api/projects/getAll")
             .then((res) => {
                 let data = [];
 

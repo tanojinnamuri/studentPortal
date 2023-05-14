@@ -88,7 +88,7 @@ class ProjectModal extends Component {
 
   async getdepartmentList() {
     await axios
-      .get("http://localhost:3000/api/departments/getAll")
+      .get("/api/departments/getAll")
       .then((res) => {
         let data = [];
 
@@ -202,7 +202,7 @@ class ProjectModal extends Component {
     formData.append("otherdocument", this.state.otherdocument);
   
     await axios
-      .post("http://localhost:3000/api/projects/add", formData)
+      .post("/api/projects/add", formData)
       .then(async (res) => {
         if (res.data === "OK") {
           // show success message and reset form on success

@@ -29,7 +29,7 @@ class Dashborad extends Component {
   async getAllData() {
     // let isReviewer = localStorage.getItem("isReviewer");
     await axios
-      .get("http://localhost:3000/api/projects/getAll")
+      .get("/api/projects/getAll")
       .then((res) => {
         let data = [];
 
@@ -69,7 +69,7 @@ class Dashborad extends Component {
 
   async getdepartmentList() {
     await axios
-      .get("http://localhost:3000/api/departments/getAll")
+      .get("/api/departments/getAll")
       .then((res) => {
         let data = [];
 
@@ -81,7 +81,7 @@ class Dashborad extends Component {
   }
   async getDegreeList() {
     await axios
-      .get("http://localhost:3000/api/degrees/getAll")
+      .get("/api/degrees/getAll")
       .then((res) => {
         let data = [];
 
@@ -128,7 +128,7 @@ class Dashborad extends Component {
     if (this.state.type !== "" && this.state.query !== "") {
       await axios
         .get(
-          `http://localhost:3000/api/projects/getProject/${this.state.type}/${this.state.query}`
+          `/api/projects/getProject/${this.state.type}/${this.state.query}`
         )
         .then((res) => {
           let data = [];
@@ -396,7 +396,7 @@ class Dashborad extends Component {
                                   </div>
                                 </div>
                                 /* <div className="video">
-                                    <video style={{width:"300px"}} src={"http://localhost:3000/" + project.demoVideo} autoPlay controls/>
+                                    <video style={{width:"300px"}} src={"/" + project.demoVideo} autoPlay controls/>
                             </div> */
                               );
                             })}

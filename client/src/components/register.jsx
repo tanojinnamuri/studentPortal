@@ -49,7 +49,7 @@ class Register extends Component {
       toast.error("Password and confirm password doesn't match");
     } else {
       axios
-        .post(`http://localhost:3000/api/users/register`, {
+        .post(`/api/users/register`, {
           firstname: this.state.firstname,
           lastname: this.state.lastname,
           username: this.state.username,
@@ -83,7 +83,7 @@ class Register extends Component {
 
   async componentDidMount() {
     try {
-      const response = await axios.get("http://localhost:3000/api/departments/getAll");
+      const response = await axios.get("/api/departments/getAll");
       const departmentList = response.data;
       this.setState({ departmentList });
     } catch (error) {
@@ -92,7 +92,7 @@ class Register extends Component {
   }
   async getdepartmentList() {
     await axios
-      .get("http://localhost:3000/api/departments/getAll")
+      .get("/api/departments/getAll")
       .then((res) => {
         let data = [];
 

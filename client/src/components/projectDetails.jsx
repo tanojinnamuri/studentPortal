@@ -32,7 +32,7 @@ class ProjectDetails extends Component {
         };
 
         await axios
-          .post("http://localhost:3000/api/projects/addFeedback", data)
+          .post("/api/projects/addFeedback", data)
           .then((res) => {
             if (res.status === 200) {
               setTimeout(() => {
@@ -61,7 +61,7 @@ class ProjectDetails extends Component {
   ApproveProject = async () => {
     await axios
       .get(
-        `http://localhost:3000/api/projects/ApproveProject/${this.props.match.params.id}`
+        `/api/projects/ApproveProject/${this.props.match.params.id}`
       )
       .then((res) => {
         if (res.status == 200) {
@@ -80,7 +80,7 @@ class ProjectDetails extends Component {
   RejectProject = async () => {
     await axios
       .get(
-        `http://localhost:3000/api/projects/RejectProject/${this.props.match.params.id}`
+        `/api/projects/RejectProject/${this.props.match.params.id}`
       )
       .then((res) => {
         if (res.status == 200) {
@@ -108,7 +108,7 @@ class ProjectDetails extends Component {
 
     await axios
       .get(
-        `http://localhost:3000/api/projects/getProject/${this.props.match.params.id}`
+        `/api/projects/getProject/${this.props.match.params.id}`
       )
       .then((res) => {
         this.setState({ projectDetails: res.data });
