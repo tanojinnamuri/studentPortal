@@ -113,7 +113,7 @@ class ProjectDetails extends Component {
       .then((res) => {
         this.setState({ projectDetails: res.data });
         const loginemail = localStorage.getItem("email");
-        if(loginemail === undefined || loginemail === null || localStorage.getItem("isReviewer") === true ||
+        if(loginemail === undefined || loginemail === null || localStorage.getItem("isReviewer") === false ||
         localStorage.getItem("_id") === null || localStorage.getItem("_id") === undefined ){
           this.setState({showApprove : false});
         }
